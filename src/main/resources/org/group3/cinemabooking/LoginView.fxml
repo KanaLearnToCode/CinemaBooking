@@ -76,14 +76,14 @@
                     <Font name="Roboto Medium" size="15.0" />
                 </font>
             </PasswordField>
-            <Label onMouseClicked="#onRecoverPassWord" prefHeight="26.0" prefWidth="174.0" text="Forgot your password?" textFill="#35a7ec">
+            <Label onMouseClicked="#onRecoverPassWord" prefHeight="26.0" prefWidth="174.0" styleClass="forgotPass" text="Forgot your password?" textFill="#35a7ec">
                 <font>
                     <Font name="Lato Medium" size="16.0" />
                 </font>
             </Label>
         </VBox>
         <VBox prefHeight="48.0" prefWidth="534.0">
-            <Button mnemonicParsing="false" onAction="#onLogin" prefHeight="38.0" prefWidth="546.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec); -fx-background-radius: 20;" text="Log in" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#onLogin" prefHeight="38.0" prefWidth="546.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec); -fx-background-radius: 20;" styleClass="logInButton" text="Log in" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="17.0" />
                 </font>
@@ -95,7 +95,7 @@
                     <Font name="Lato Medium" size="16.0" />
                 </font>
             </Label>
-            <Label onMouseClicked="#onSignUp" prefHeight="26.0" prefWidth="102.0" text="Sign up!" textFill="#35a7ec">
+            <Label onMouseClicked="#onSignUp" prefHeight="26.0" prefWidth="102.0" styleClass="signUpButton" text="Sign up!" textFill="#35a7ec">
                 <font>
                     <Font name="Lato Medium" size="16.0" />
                 </font>

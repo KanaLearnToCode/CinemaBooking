@@ -144,7 +144,7 @@
             </VBox>
         </VBox>
         <VBox fx:id="confirmVerificationCode" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0">
-            <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="534.0">
+            <VBox alignment="CENTER" prefHeight="222.0" prefWidth="614.0">
                 <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account" textAlignment="CENTER" wrappingWidth="604.7836456298828">
                     <font>
                         <Font name="Lato Black" size="64.0" />
@@ -154,19 +154,7 @@
                     </effect>
                 </Text>
             </VBox>
-         <VBox prefHeight="56.0" prefWidth="614.0">
-            <children>
-               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="We've sent a verification code to your email." textAlignment="CENTER" wrappingWidth="604.7836456298828">
-                  <font>
-                     <Font name="Lato Black" size="24.0" />
-                  </font>
-                  <effect>
-                     <DropShadow height="15.0" radius="8.0" width="19.0" />
-                  </effect>
-               </Text>
-            </children>
-         </VBox>
-            <VBox prefHeight="100.0" prefWidth="534.0">
+            <VBox prefHeight="112.0" prefWidth="614.0">
                 <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
                     <Label prefHeight="27.0" prefWidth="192.0" text="Confirm Verification Code" textFill="WHITE">
                         <font>
@@ -189,6 +177,18 @@
                         <Font name="Roboto Medium" size="15.0" />
                     </font>
                 </TextField>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="31.0" prefWidth="100.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="We've sent a verification code to your email." wrappingWidth="604.7836456298828">
+                     <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="15.0" radius="8.0" width="19.0" />
+                     </effect>
+                  </Text>
+               </children>
+            </VBox>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
                 <Button mnemonicParsing="false" onAction="#onCreateAccount" prefHeight="38.0" prefWidth="606.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec); -fx-background-radius: 20;" styleClass="btnContinue" text="Create" textFill="WHITE">

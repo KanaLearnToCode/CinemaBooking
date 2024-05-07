@@ -47,7 +47,7 @@ public class LoginController implements Initializable {
             if (userName.isBlank() || password.isBlank()) {
                 emailError.setText("Invalid email or password");
                 passErr.setText("Invalid email or password");
-                if (entityTransaction != null && entityTransaction.isActive()) {
+                if (entityTransaction.isActive()) {
                     entityTransaction.rollback();
                 }
                 entityManager.close();
@@ -68,7 +68,7 @@ public class LoginController implements Initializable {
                 passErr.setText("Invalid email or password");
                 return;
             } finally {
-                if (entityTransaction != null && entityTransaction.isActive()) {
+                if (entityTransaction.isActive()) {
                     entityTransaction.rollback();
                 }
                 entityManager.close();
@@ -94,8 +94,8 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void onRecoverPassWord(MouseEvent event) {
-
+    void onRecoverPassWord(MouseEvent event) throws Exception {
+        App.setRoot("Account/RecoverAccount", "Recover Account");
     }
 
     @FXML

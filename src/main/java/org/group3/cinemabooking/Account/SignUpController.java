@@ -148,7 +148,7 @@ public class SignUpController implements Initializable {
         }
     }
 
-    boolean checkEmailExist(String email) {
+    private boolean checkEmailExist(String email) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -171,18 +171,18 @@ public class SignUpController implements Initializable {
         return check;
     }
 
-    boolean checkLeapYear(int year) {
+    private boolean checkLeapYear(int year) {
         if (year % 400 == 0) return true;
         return year % 4 == 0 && year % 100 != 0;
     }
 
-    boolean checkPassword(String password) {
+    private boolean checkPassword(String password) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]{8,16}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
 
-    boolean checkEmail(String email) {
+    private boolean checkEmail(String email) {
         Pattern pattern = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
