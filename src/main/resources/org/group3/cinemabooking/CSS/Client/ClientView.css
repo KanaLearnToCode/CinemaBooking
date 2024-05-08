@@ -7,18 +7,22 @@
     -fx-border-color: #0f0f10;
 }
 
-.userName{
+.userName {
     -fx-font-family: "Lato Medium";
     -fx-font-size: 25px;
     -fx-text-fill: white;
 }
 
-.editProfileLabel{
+.editProfileLabel {
     -fx-font-family: "Roboto Medium";
     -fx-font-style: italic;
     -fx-font-size: 12px;
     -fx-text-fill: white;
 }
-.iage{
-    -fx-preserve-ratio: false;
+
+.historyLb {
+    -fx-text-fill: white;
+    -fx-font-family: "Lato Medium";
+    -fx-font-size: 15px;
 }
+
