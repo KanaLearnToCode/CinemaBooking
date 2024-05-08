@@ -1,22 +1,19 @@
-.emailLogin {
+.emailText {
     -fx-text-fill: white;
+    -fx-font: 15px "Roboto Medium";
 }
 
-.passLogin {
-    -fx-text-fill: white;
-}
-
-.signUpButton :hover{
+.btnContinue:hover {
     -fx-cursor: hand;
     -fx-underline: true;
 }
 
-.forgotPass :hover {
+.btnConfirm:hover {
     -fx-cursor: hand;
     -fx-underline: true;
 }
 
-.logInButton:hover {
+.backToLoginLabel:hover {
     -fx-cursor: hand;
     -fx-underline: true;
 }

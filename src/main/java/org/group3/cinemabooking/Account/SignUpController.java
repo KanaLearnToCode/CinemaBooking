@@ -21,9 +21,12 @@ import org.group3.cinemabooking.App;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("ALL")
 public class SignUpController implements Initializable {
 
     @FXML
@@ -75,6 +78,7 @@ public class SignUpController implements Initializable {
 
     @FXML
     void onCreateAccount(ActionEvent event) throws Exception {
+        codeConfirmErr.setText("");
         if (txCodeConfirm.getText().trim().equals(verificationCode)) {
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
             EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -90,7 +94,7 @@ public class SignUpController implements Initializable {
                 entityManager.persist(account);
                 entityTransaction.commit();
             } catch (Exception e) {
-                e.printStackTrace();
+                Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 if (entityTransaction.isActive()) {
                     entityTransaction.rollback();
@@ -99,6 +103,8 @@ public class SignUpController implements Initializable {
                 entityManagerFactory.close();
             }
             App.setRoot("LogInView", "Log In");
+        } else {
+            codeConfirmErr.setText("Invalid Code");
         }
     }
 
@@ -108,7 +114,7 @@ public class SignUpController implements Initializable {
     }
 
     @FXML
-    void onContinueCreateAccount(ActionEvent event) throws Exception {
+    void onContinueCreateAccount(ActionEvent event){
 
         emailErrorCreate.setText("");
         passErrCreate.setText("");
@@ -148,7 +154,7 @@ public class SignUpController implements Initializable {
         }
     }
 
-    private boolean checkEmailExist(String email) {
+    public boolean checkEmailExist(String email) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -171,23 +177,22 @@ public class SignUpController implements Initializable {
         return check;
     }
 
-    private boolean checkLeapYear(int year) {
+    public boolean checkLeapYear(int year) {
         if (year % 400 == 0) return true;
         return year % 4 == 0 && year % 100 != 0;
     }
 
-    private boolean checkPassword(String password) {
+    public boolean checkPassword(String password) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]{8,16}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
 
-    private boolean checkEmail(String email) {
+    public boolean checkEmail(String email) {
         Pattern pattern = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
