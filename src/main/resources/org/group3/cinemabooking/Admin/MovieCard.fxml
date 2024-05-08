@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="266.0" prefWidth="194.0" stylesheets="@../CSS/Admin/Booking/MovieCard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.Admin.Booking.MovieCardController">
+   <children>
+      <VBox prefHeight="266.0" prefWidth="194.0" styleClass="backgroundAP">
+         <children>
+            <ImageView fitHeight="210.0" fitWidth="194.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../Images/minionPoster.jpg" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="60.0">
+               <children>
+                  <Label text="Despicable Me 4" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat SemiBold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Cartoon/2D/Comic" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat SemiBold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

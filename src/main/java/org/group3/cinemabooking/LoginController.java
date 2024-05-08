@@ -60,9 +60,7 @@ public class LoginController implements Initializable {
             loggedInUser = account;
             if (account.getRole()) {
                 App.setRoot("Admin/AdminView", "Admin Controller");
-            } else {
-                App.setRoot("Client/ClientView", "Client Controller");
-            }
+            } 
             entityTransaction.commit();
         } catch (Exception e) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);

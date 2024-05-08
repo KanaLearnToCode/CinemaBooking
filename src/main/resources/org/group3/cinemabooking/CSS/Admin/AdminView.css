@@ -1,0 +1,64 @@
+.backgroundAnchorPane {
+    -fx-background-color: #25242c;
+}
+
+.accountView {
+    -fx-background-color: #212227;
+    -fx-border-color: #0f0f10;
+}
+
+.userName {
+    -fx-font-family: "Lato Medium";
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+.editProfileLabel {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-style: italic;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.editProfileLabel:hover {
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.historyLb {
+    -fx-text-fill: white;
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.historyLb:hover {
+    -fx-cursor: hand;
+}
+
+.showTimeLb {
+    -fx-text-fill: white;
+    -fx-font-size: 35px;
+    -fx-font-family: "Montserrat SemiBold";
+}
+
+.seeAllSTLb {
+    -fx-font-family: "Montserrat Medium";
+    -fx-font-size: 15px;
+    -fx-text-fill: #939396;
+}
+
+.seeAllSTLb:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.searchButton {
+    -fx-background-color: #0f0f10;
+    -fx-background-radius: 20px;
+    -fx-font-size: 15px;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-prompt-text-fill: #939396;
+    -fx-text-fill: white normal;
+}
+
+

@@ -15,4 +15,7 @@ module org.group3.cinemabooking {
     opens org.group3.cinemabooking.Admin to javafx.fxml;
     exports org.group3.cinemabooking.Client;
     opens org.group3.cinemabooking.Client to javafx.fxml;
+    opens org.group3.cinemabooking.Admin.Booking to javafx.fxml;
+    exports org.group3.cinemabooking.Admin.Booking;
+
 }

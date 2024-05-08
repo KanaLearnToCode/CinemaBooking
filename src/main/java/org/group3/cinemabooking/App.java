@@ -11,7 +11,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Client/ClientView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Admin/AdminView.fxml"));
         scene = new Scene(fxmlLoader.load(), 1344, 756);
 
         stage.setScene(scene);
