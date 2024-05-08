@@ -90,6 +90,11 @@ public class SignUpController implements Initializable {
                 account.setEmail(txEmailSU.getText());
                 account.setPassword(txPassSU.getText());
                 account.setRole(false);
+                if (txUserNameSU.getText().isBlank()) {
+                    account.setName(txEmailSU.getText());
+                } else {
+                    account.setName(txUserNameSU.getText());
+                }
 
                 entityManager.persist(account);
                 entityTransaction.commit();
@@ -114,7 +119,7 @@ public class SignUpController implements Initializable {
     }
 
     @FXML
-    void onContinueCreateAccount(ActionEvent event){
+    void onContinueCreateAccount(ActionEvent event) {
 
         emailErrorCreate.setText("");
         passErrCreate.setText("");

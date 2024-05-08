@@ -19,6 +19,10 @@ public class Account {
     @Column(name = "role", nullable = false)
     private Boolean role = false;
 
+    @Nationalized
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
+
     public String getEmail() {
         return email;
     }
@@ -41,6 +45,14 @@ public class Account {
 
     public void setRole(Boolean role) {
         this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
