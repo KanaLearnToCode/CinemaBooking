@@ -16,12 +16,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../CSS/Account/SignUp.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.Account.SignUpController">
-    <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../../../Images/universal.jpg" />
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" stylesheets="@../CSS/Account/SignUp.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.Account.SignUpController">
+    <ImageView fitHeight="756.0" fitWidth="1344.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../../../Images/a.jpg" />
     </ImageView>
-    <StackPane layoutX="678.0" layoutY="233.0" prefHeight="718.0" prefWidth="614.0">
-        <VBox fx:id="createAccountTable" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0" visible="false">
+    <StackPane layoutX="387.0" layoutY="45.0" prefHeight="673.0" prefWidth="614.0">
+        <VBox fx:id="createAccountTable" alignment="TOP_CENTER" prefHeight="576.0" prefWidth="614.0" visible="false">
             <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="534.0">
                 <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account" textAlignment="CENTER" wrappingWidth="604.7836456298828">
                     <font>
@@ -118,7 +118,7 @@
                     <ComboBox fx:id="yearInDOB" layoutX="455.0" layoutY="1.0" prefWidth="150.0" promptText="Year" styleClass="dateOfBirth" />
                 </AnchorPane>
             </VBox>
-            <VBox prefHeight="50.0" prefWidth="605.0">
+            <VBox prefHeight="68.0" prefWidth="614.0">
                 <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
                     <CheckBox fx:id="ckAcceptTerm" mnemonicParsing="false" text="I have read and agree to PLUSCinema's Terms of Service and Privacy Policy" textFill="WHITE">
                         <font>
@@ -190,7 +190,7 @@
                </children>
             </VBox>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
+            <VBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="614.0">
                 <Button mnemonicParsing="false" onAction="#onCreateAccount" prefHeight="38.0" prefWidth="606.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec); -fx-background-radius: 20;" styleClass="btnContinue" text="Create" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="17.0" />

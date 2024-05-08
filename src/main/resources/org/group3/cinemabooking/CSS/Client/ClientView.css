@@ -1,0 +1,24 @@
+.backgroundAnchorPane {
+    -fx-background-color: #25242c;
+}
+
+.accountView {
+    -fx-background-color: #212227;
+    -fx-border-color: #0f0f10;
+}
+
+.userName{
+    -fx-font-family: "Lato Medium";
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+.editProfileLabel{
+    -fx-font-family: "Roboto Medium";
+    -fx-font-style: italic;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+.iage{
+    -fx-preserve-ratio: false;
+}

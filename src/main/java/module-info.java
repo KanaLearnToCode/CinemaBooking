@@ -10,4 +10,9 @@ module org.group3.cinemabooking {
     exports org.group3.cinemabooking;
     exports org.group3.cinemabooking.Account;
     opens org.group3.cinemabooking.Account to javafx.fxml;
+    exports entity;
+    exports org.group3.cinemabooking.Admin;
+    opens org.group3.cinemabooking.Admin to javafx.fxml;
+    exports org.group3.cinemabooking.Client;
+    opens org.group3.cinemabooking.Client to javafx.fxml;
 }

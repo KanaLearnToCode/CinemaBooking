@@ -16,11 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@CSS/LoginView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.LoginController">
-    <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" stylesheets="@CSS/LoginView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.LoginController">
+    <ImageView fitHeight="756.0" fitWidth="1344.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../Images/universal.jpg" />
     </ImageView>
-    <VBox alignment="CENTER_LEFT" layoutX="385.0" layoutY="287.0" prefHeight="456.0" prefWidth="534.0">
+    <VBox alignment="CENTER_LEFT" layoutX="124.0" layoutY="155.0" prefHeight="456.0" prefWidth="534.0">
         <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="534.0">
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back!" textAlignment="CENTER" wrappingWidth="457.5835418701172">
                 <font>
@@ -102,12 +102,12 @@
             </Label>
         </HBox>
     </VBox>
-    <Text fill="WHITE" layoutX="1066.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema" wrappingWidth="520.3999633789062">
+    <Text fill="WHITE" layoutX="730.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema" wrappingWidth="520.3999633789062">
         <font>
             <Font name="Lato Black" size="150.0" />
         </font>
     </Text>
-    <Text layoutX="1055.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLUS" wrappingWidth="528.3998413085938">
+    <Text layoutX="719.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLUS" wrappingWidth="528.3998413085938">
         <font>
             <Font name="Lato Black" size="212.0" />
         </font>
