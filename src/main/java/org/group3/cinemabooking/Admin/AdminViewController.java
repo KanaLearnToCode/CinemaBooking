@@ -1,69 +1,49 @@
 package org.group3.cinemabooking.Admin;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import org.group3.cinemabooking.App;
 
 import java.io.IOException;
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
 public class AdminViewController implements Initializable {
 
     @FXML
-    private Label editProfileLb;
+    private Circle avatar;
 
     @FXML
-    private HBox hBoxComingSoon;
+    private AnchorPane detailTableEvent;
 
     @FXML
-    private HBox hBoxShowTimes;
+    void onBooking(MouseEvent event) throws Exception {
+        String url = "/org/group3/cinemabooking/Booking/Booking.fxml";
+        App.setTableEventVBox(url, detailTableEvent, 5, 0);
+    }
 
     @FXML
-    private AnchorPane bookingTable;
-
-
-    @FXML
-    void onEditProfile(MouseEvent event) {
+    void onFood(MouseEvent event) {
 
     }
 
     @FXML
-    void seeAllComingSoon(MouseEvent event) {
-
-    }
-
-    @FXML
-    void seeAllShowTimes(MouseEvent event) {
-
-    }
-
-    private void loadMovieCards() {
-        hBoxShowTimes.getChildren().clear();
-        hBoxComingSoon.getChildren().clear();
-        try {
-            for (int i = 0; i < 5; i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MovieCard.fxml"));
-                AnchorPane movieCard = fxmlLoader.load();
-                hBoxShowTimes.getChildren().add(movieCard);
-            }
-            for (int i = 0; i < 5; i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MovieCard.fxml"));
-                AnchorPane movieCard = fxmlLoader.load();
-                hBoxComingSoon.getChildren().add(movieCard);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void onEditProfile(MouseEvent event) throws Exception {
+        String urlFXML = "/org/group3/cinemabooking/EditProfile/EditProfile.fxml";
+        App.setTableEventHBox(urlFXML, detailTableEvent, 0, 0);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadMovieCards();
+        String urlFXML = "/org/group3/cinemabooking/Booking/Booking.fxml";
+        try {
+            App.setTableEventVBox(urlFXML, detailTableEvent, 5, 0);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

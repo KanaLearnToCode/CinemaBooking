@@ -54,13 +54,18 @@ public class LoginController implements Initializable {
             entityManager = entityManagerFactory.createEntityManager();
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
-            Account account = (Account) entityManager.createQuery("select a from Account a where a.email = :email and a.password = :password")
+            Account account;
+            account = (Account) entityManager.createQuery("select a from Account a where a.email = :email and a.password = :password")
                     .setParameter("email", userName).setParameter("password", password)
                     .getSingleResult();
             loggedInUser = account;
+            if (account == null) {
+                emailError.setText("Invalid email or password");
+                passErr.setText("Invalid email or password");
+            }
             if (account.getRole()) {
                 App.setRoot("Admin/AdminView", "Admin Controller");
-            } 
+            }
             entityTransaction.commit();
         } catch (Exception e) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);

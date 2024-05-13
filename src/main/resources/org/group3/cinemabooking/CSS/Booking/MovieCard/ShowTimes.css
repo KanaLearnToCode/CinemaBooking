@@ -1,0 +1,6 @@
+
+.ratingText{
+    -fx-text-fill: white;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 10px;
+}

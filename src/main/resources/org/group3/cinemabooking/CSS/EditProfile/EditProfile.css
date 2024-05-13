@@ -1,0 +1,13 @@
+.txName{
+    -fx-text-fill: white;
+    -fx-background-color: none;
+    -fx-border-color: orange;
+    -fx-border-radius: 20px;
+}
+
+.txPass{
+    -fx-text-fill: white;
+    -fx-background-color: none;
+    -fx-border-color: orange;
+    -fx-border-radius: 20px;
+}

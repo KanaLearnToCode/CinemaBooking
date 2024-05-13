@@ -28,7 +28,7 @@
 .historyLb {
     -fx-text-fill: white;
     -fx-font-family: "Montserrat ExtraBold";
-    -fx-font-size: 15px;
+    -fx-font-size: 11px;
 }
 
 .historyLb:hover {
@@ -41,17 +41,6 @@
     -fx-font-family: "Montserrat SemiBold";
 }
 
-.seeAllSTLb {
-    -fx-font-family: "Montserrat Medium";
-    -fx-font-size: 15px;
-    -fx-text-fill: #939396;
-}
-
-.seeAllSTLb:hover {
-    -fx-cursor: hand;
-    -fx-underline: true;
-}
-
 .searchButton {
     -fx-background-color: #0f0f10;
     -fx-background-radius: 20px;
@@ -59,6 +48,11 @@
     -fx-font-family: "Montserrat SemiBold";
     -fx-prompt-text-fill: #939396;
     -fx-text-fill: white normal;
+}
+
+
+.editProfileLabel:hover {
+    -fx-cursor: hand;
 }
 
 

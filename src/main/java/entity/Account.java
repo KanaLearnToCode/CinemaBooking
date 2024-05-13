@@ -3,25 +3,48 @@ package entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import org.hibernate.annotations.Nationalized;
+
+import java.time.LocalDate;
 
 @Entity
 public class Account {
     @Id
-    @Nationalized
-    @Column(name = "email", nullable = false, length = 50)
+    @Column(name = "IDAccount", nullable = false, length = 10)
+    private String iDAccount;
+
+    @Column(name = "Name", length = 50)
+    private String name;
+
+    @Column(name = "Email", length = 50)
     private String email;
 
-    @Nationalized
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "Password", length = 20)
     private String password;
 
-    @Column(name = "role", nullable = false)
-    private Boolean role = false;
+    @Column(name = "PhoneNumber", length = 10)
+    private String phoneNumber;
 
-    @Nationalized
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
+    @Column(name = "DateOfBirth")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "Role")
+    private Boolean role;
+
+    public String getIDAccount() {
+        return iDAccount;
+    }
+
+    public void setIDAccount(String iDAccount) {
+        this.iDAccount = iDAccount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
@@ -39,20 +62,28 @@ public class Account {
         this.password = password;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public Boolean getRole() {
         return role;
     }
 
     public void setRole(Boolean role) {
         this.role = role;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
