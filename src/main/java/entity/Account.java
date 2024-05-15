@@ -30,6 +30,9 @@ public class Account {
     @Column(name = "Role")
     private Boolean role;
 
+    @Column(name = "Avatar", length = 50)
+    private String avatar;
+
     public String getIDAccount() {
         return iDAccount;
     }
@@ -84,6 +87,14 @@ public class Account {
 
     public void setRole(Boolean role) {
         this.role = role;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 }

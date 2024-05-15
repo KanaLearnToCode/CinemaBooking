@@ -63,10 +63,20 @@ public class LoginController implements Initializable {
                 emailError.setText("Invalid email or password");
                 passErr.setText("Invalid email or password");
             }
+            if (!account.getEmail().equals(txEmail.getText())) {
+                emailError.setText("Invalid email or password");
+                passErr.setText("Invalid email or password");
+            }
+            if (!account.getPassword().equals(txPass.getText())) {
+                passErr.setText("Invalid email or password");
+            }
             if (account.getRole()) {
                 App.setRoot("Admin/AdminView", "Admin Controller");
             }
             entityTransaction.commit();
+        } catch (NoResultException e) {
+            emailError.setText("Invalid email or password");
+            passErr.setText("Invalid email or password");
         } catch (Exception e) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);
         } finally {

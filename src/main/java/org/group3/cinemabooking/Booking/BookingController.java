@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import org.group3.cinemabooking.Admin.AdminViewController;
 import org.group3.cinemabooking.Booking.MovieCard.ComingSoonController;
 import org.group3.cinemabooking.Booking.MovieCard.ShowTimesController;
 
@@ -54,7 +53,7 @@ public class BookingController implements Initializable {
 
             entityTransaction.commit();
         } catch (Exception e) {
-            Logger.getLogger(AdminViewController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(BookingController.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             assert entityTransaction != null;
             if (entityTransaction.isActive()) {
@@ -81,7 +80,7 @@ public class BookingController implements Initializable {
 
             entityTransaction.commit();
         } catch (Exception e) {
-            Logger.getLogger(AdminViewController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(BookingController.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             assert entityTransaction != null;
             if (entityTransaction.isActive()) {
@@ -98,24 +97,24 @@ public class BookingController implements Initializable {
         hBoxComingSoon.getChildren().clear();
         showTimesList = showTimesList();
         comingSoonList = comingSoonList();
-        try {
-            for (int i = 0; i < 5; i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ShowTimes.fxml"));
-                AnchorPane movieCard = fxmlLoader.load();
-                ShowTimesController showTimesController = fxmlLoader.getController();
-                showTimesController.setData(showTimesList.get(i));
-                hBoxShowTimes.getChildren().add(movieCard);
-            }
-            for (int i = 0; i < 5; i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ComingSoon.fxml"));
-                AnchorPane movieCard = fxmlLoader.load();
-                ComingSoonController comingSoonController = fxmlLoader.getController();
-                comingSoonController.setData(comingSoonList.get(i));
-                hBoxComingSoon.getChildren().add(movieCard);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            for (int i = 0; i < 5; i++) {
+//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ShowTimes.fxml"));
+//                AnchorPane movieCard = fxmlLoader.load();
+//                ShowTimesController showTimesController = fxmlLoader.getController();
+//                showTimesController.setData(showTimesList.get(i));
+//                hBoxShowTimes.getChildren().add(movieCard);
+//            }
+//            for (int i = 0; i < 5; i++) {
+//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ComingSoon.fxml"));
+//                AnchorPane movieCard = fxmlLoader.load();
+//                ComingSoonController comingSoonController = fxmlLoader.getController();
+//                comingSoonController.setData(comingSoonList.get(i));
+//                hBoxComingSoon.getChildren().add(movieCard);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

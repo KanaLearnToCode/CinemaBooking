@@ -204,7 +204,7 @@ public class SignUpController implements Initializable {
 
         createAccountTable.setVisible(true);
         confirmVerificationCode.setVisible(false);
-
+        LocalDate currentTime = LocalDate.now();
         txEmailSU.setPromptText("Email");
         txUserNameSU.setPromptText("User Name");
         txPassSU.setPromptText("Password");

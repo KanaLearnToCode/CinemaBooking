@@ -8,13 +8,13 @@
 }
 
 .userName {
-    -fx-font-family: "Lato Medium";
-    -fx-font-size: 25px;
+    -fx-font-family: "Lato Heavy";
+    -fx-font-size: 15px;
     -fx-text-fill: white;
 }
 
 .editProfileLabel {
-    -fx-font-family: "Roboto Medium";
+    -fx-font-family: "Montserrat Medium";
     -fx-font-style: italic;
     -fx-font-size: 12px;
     -fx-text-fill: white;
@@ -53,6 +53,10 @@
 
 .editProfileLabel:hover {
     -fx-cursor: hand;
+}
+
+.avatar {
+    -fx-stroke: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec) 1px;
 }
 
 

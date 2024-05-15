@@ -25,6 +25,12 @@ public class Movie {
     @Column(name = "typeOfMovie", length = 50)
     private String typeOfMovie;
 
+    @Column(name = "ImagesPoster", length = 50)
+    private String imagesPoster;
+
+    @Column(name = "ImagesBackdrop", length = 50)
+    private String imagesBackdrop;
+
     public String getIDMovie() {
         return iDMovie;
     }
@@ -71,6 +77,22 @@ public class Movie {
 
     public void setTypeOfMovie(String typeOfMovie) {
         this.typeOfMovie = typeOfMovie;
+    }
+
+    public String getImagesPoster() {
+        return imagesPoster;
+    }
+
+    public void setImagesPoster(String imagesPoster) {
+        this.imagesPoster = imagesPoster;
+    }
+
+    public String getImagesBackdrop() {
+        return imagesBackdrop;
+    }
+
+    public void setImagesBackdrop(String imagesBackdrop) {
+        this.imagesBackdrop = imagesBackdrop;
     }
 
 }

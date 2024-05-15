@@ -8,7 +8,7 @@
 
         <properties>
             <property name="hibernate.connection.url"
-                      value="jdbc:sqlserver://localhost:1433;databaseName=Cinema;user=sa;password=123;encrypt=true;trustServerCertificate=true"/>
+                      value="jdbc:sqlserver://localhost:1433;databaseName=CinemaBooking;user=sa;password=123;encrypt=true;trustServerCertificate=true"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value="123"/>
             <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>

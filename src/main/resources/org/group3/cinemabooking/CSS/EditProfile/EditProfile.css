@@ -11,3 +11,19 @@
     -fx-border-color: orange;
     -fx-border-radius: 20px;
 }
+
+.dateOfBirth {
+    -fx-background-color: none;
+    -fx-border-color: orange;
+    -fx-border-radius: 20px;
+}
+
+.dateOfBirth .list-view .list-cell:hover {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.dateOfBirth .cell:selected {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
