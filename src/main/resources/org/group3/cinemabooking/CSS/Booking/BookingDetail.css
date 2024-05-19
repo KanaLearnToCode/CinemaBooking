@@ -1,0 +1,63 @@
+.bdBackground {
+    -fx-background-color: #222235;
+}
+
+.poster {
+    -fx-background-color: linear-gradient(from 100.0% 32.9545% to 100.0% 100.0%, #4d6aeb00 0.0%, #4d6aeb00 0.6729%, #000000 100.0%);
+}
+
+.movieName {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Lato Black";
+    -fx-font-size: 30px;
+
+}
+
+.title {
+    -fx-text-fill: #636472;
+    -fx-font-family: "Lato Medium";
+    -fx-font-size: 14px;
+}
+
+.detailInfor {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Lato Black";
+    -fx-font-size: 15px;
+}
+
+
+.rowSeat {
+    -fx-background-color: white;
+    -fx-text-fill: white;
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.seat {
+    -fx-fill: #80abff;
+    -fx-stroke: none;
+}
+
+.vacancySeat {
+    -fx-fill: #ed6775;
+    -fx-stroke: none;
+}
+
+.occupiedSeat {
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.vacancy {
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.totalButton {
+    -fx-background-color: #4c67ec;
+    -fx-font-family: "Montserrat Black";
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-border-width: 20;
+}

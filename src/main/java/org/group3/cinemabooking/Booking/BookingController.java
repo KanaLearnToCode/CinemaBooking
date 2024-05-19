@@ -11,11 +11,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import org.group3.cinemabooking.App;
 import org.group3.cinemabooking.Booking.MovieCard.ComingSoonController;
 import org.group3.cinemabooking.Booking.MovieCard.ShowTimesController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,8 +32,11 @@ public class BookingController implements Initializable {
     @FXML
     private HBox hBoxShowTimes;
 
+    private static Movie choosenMovie;
+
     private List<Movie> showTimesList;
     private List<Movie> comingSoonList;
+    private LocalDate currentTime = LocalDate.now();
 
     @FXML
     void onSeeAllCSMovie(MouseEvent event) {
@@ -49,7 +54,12 @@ public class BookingController implements Initializable {
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
 
-            movieList = entityManager.createQuery("SELECT m from Movie m").getResultList();
+//            movieList = entityManager.createQuery
+//                            ("SELECT m from Movie m join ShowTime st on m.iDMovie = st.iDMovie " +
+//                                    "where st.date=:currentTime").setParameter("currentTime", currentTime)
+//                    .getResultList();
+
+            movieList = entityManager.createQuery("SELECT m from Movie m ").getResultList();
 
             entityTransaction.commit();
         } catch (Exception e) {
@@ -76,7 +86,11 @@ public class BookingController implements Initializable {
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
 
-            movieList = entityManager.createQuery("SELECT m from Movie m").getResultList();
+//            movieList = entityManager.createQuery
+//                            ("SELECT m from Movie m join ShowTime st on m.iDMovie = st.iDMovie " +
+//                                    "where st.date > :currentTime").setParameter("currentTime", currentTime)
+//                    .getResultList();
+            movieList = entityManager.createQuery("SELECT m from Movie m ").getResultList();
 
             entityTransaction.commit();
         } catch (Exception e) {
@@ -97,28 +111,36 @@ public class BookingController implements Initializable {
         hBoxComingSoon.getChildren().clear();
         showTimesList = showTimesList();
         comingSoonList = comingSoonList();
-//        try {
-//            for (int i = 0; i < 5; i++) {
-//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ShowTimes.fxml"));
-//                AnchorPane movieCard = fxmlLoader.load();
-//                ShowTimesController showTimesController = fxmlLoader.getController();
-//                showTimesController.setData(showTimesList.get(i));
-//                hBoxShowTimes.getChildren().add(movieCard);
-//            }
-//            for (int i = 0; i < 5; i++) {
-//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ComingSoon.fxml"));
-//                AnchorPane movieCard = fxmlLoader.load();
-//                ComingSoonController comingSoonController = fxmlLoader.getController();
-//                comingSoonController.setData(comingSoonList.get(i));
-//                hBoxComingSoon.getChildren().add(movieCard);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            for (int i = 0; i < 5; i++) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ShowTimes.fxml"));
+                AnchorPane movieCard = fxmlLoader.load();
+                ShowTimesController showTimesController = fxmlLoader.getController();
+                showTimesController.setData(showTimesList.get(i));
+                hBoxShowTimes.getChildren().add(movieCard);
+            }
+            for (int i = 0; i < 5; i++) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking/Booking/MovieCard/ComingSoon.fxml"));
+                AnchorPane movieCard = fxmlLoader.load();
+                ComingSoonController comingSoonController = fxmlLoader.getController();
+                comingSoonController.setData(comingSoonList.get(i));
+                hBoxComingSoon.getChildren().add(movieCard);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadMovieCards();
+    }
+
+    public static Movie getMovie() {
+        return choosenMovie;
+    }
+
+    public static void setMovie(Movie movie){
+        choosenMovie = movie;
     }
 }
