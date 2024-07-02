@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" stylesheets="@../CSS/Account/SignUp.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.Account.SignUpController">
+    <ImageView fitHeight="756.0" fitWidth="1344.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../../../Images/background.jpg" />
+    </ImageView>
+    <StackPane layoutX="387.0" layoutY="45.0" prefHeight="673.0" prefWidth="614.0">
+        <VBox fx:id="createAccountTable" alignment="TOP_CENTER" prefHeight="576.0" prefWidth="614.0" visible="false">
+            <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="534.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="64.0" />
+                    </font>
+                    <effect>
+                        <DropShadow height="15.0" radius="8.0" width="19.0" />
+                    </effect>
+                </Text>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="534.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="54.0" text="EMAIL" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="emailErrorCreate" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <TextField fx:id="txEmailSU" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: orange; -fx-border-radius: 20;" styleClass="emailText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="534.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="98.0" text="USERNAME" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                </HBox>
+                <TextField fx:id="txUserNameSU" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: orange; -fx-border-radius: 20;" styleClass="userNameText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="534.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="26.0" prefWidth="94.0" text="PASSWORD" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="passErrCreate" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <PasswordField fx:id="txPassSU" prefHeight="36.0" prefWidth="354.0" style="-fx-border-color: orange; -fx-background-color: none; -fx-border-radius: 20;" styleClass="passText">
+                    <font>
+                        <Font name="Roboto Medium" size="8.0" />
+                    </font>
+                </PasswordField>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="605.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="26.0" prefWidth="125.0" text="DATE OF BIRTH" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="dobErrCreate" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                    <ComboBox fx:id="monthInDOB" layoutY="2.0" prefHeight="26.0" prefWidth="219.0" promptText="Month" styleClass="dateOfBirth" />
+                    <ComboBox fx:id="dayInDOB" layoutX="259.0" layoutY="2.0" prefHeight="26.0" prefWidth="155.0" promptText="Day" styleClass="dateOfBirth" />
+                    <ComboBox fx:id="yearInDOB" layoutX="455.0" layoutY="1.0" prefWidth="150.0" promptText="Year" styleClass="dateOfBirth" />
+                </AnchorPane>
+            </VBox>
+            <VBox prefHeight="68.0" prefWidth="614.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <CheckBox fx:id="ckAcceptTerm" mnemonicParsing="false" text="I have read and agree to PLUSCinema's Terms of Service and Privacy Policy" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Medium" size="13.0" />
+                        </font>
+                    </CheckBox>
+                </HBox>
+                <Text fx:id="acceptTermCheckErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                    <font>
+                        <Font name="Lato Medium" size="15.0" />
+                    </font>
+                </Text>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
+                <Button mnemonicParsing="false" onAction="#onContinueCreateAccount" prefHeight="38.0" prefWidth="606.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec); -fx-background-radius: 20;" styleClass="btnContinue" text="Continue" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Button>
+            </VBox>
+            <VBox prefHeight="50.0" prefWidth="606.0">
+                <Label onMouseClicked="#onBackToLogin" styleClass="backToLoginLabel" text="Already have an account?" textFill="WHITE" />
+            </VBox>
+        </VBox>
+        <VBox fx:id="confirmVerificationCode" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0">
+            <VBox alignment="CENTER" prefHeight="222.0" prefWidth="614.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="64.0" />
+                    </font>
+                    <effect>
+                        <DropShadow height="15.0" radius="8.0" width="19.0" />
+                    </effect>
+                </Text>
+            </VBox>
+            <VBox prefHeight="112.0" prefWidth="614.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="192.0" text="Confirm Verification Code" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="codeConfirmErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <TextField fx:id="txCodeConfirm" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: orange; -fx-border-radius: 20;" styleClass="emailText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="31.0" prefWidth="100.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="We've sent a verification code to your email." wrappingWidth="604.7836456298828">
+                     <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="15.0" radius="8.0" width="19.0" />
+                     </effect>
+                  </Text>
+               </children>
+            </VBox>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="614.0">
+                <Button mnemonicParsing="false" onAction="#onCreateAccount" prefHeight="38.0" prefWidth="606.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec); -fx-background-radius: 20;" styleClass="btnContinue" text="Create" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Button>
+            </VBox>
+            <VBox prefHeight="50.0" prefWidth="606.0">
+                <Label onMouseClicked="#onBackToLogin" styleClass="backToLoginLabel" text="Already have an account?" textFill="WHITE" />
+            </VBox>
+        </VBox>
+    </StackPane>
+</AnchorPane>

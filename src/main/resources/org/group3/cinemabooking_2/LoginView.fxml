@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" stylesheets="@CSS/LoginView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.LoginController">
+    <ImageView fitHeight="756.0" fitWidth="1344.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../../Images/background.jpg" />
+    </ImageView>
+    <VBox alignment="CENTER_LEFT" layoutX="124.0" layoutY="155.0" prefHeight="456.0" prefWidth="534.0">
+        <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="534.0">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back!" textAlignment="CENTER" wrappingWidth="457.5835418701172">
+                <font>
+                    <Font name="Lato Black" size="64.0" />
+                </font>
+                <effect>
+                    <DropShadow height="15.0" radius="8.0" width="19.0" />
+                </effect>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="We're excited to see you again!" textAlignment="CENTER">
+                <font>
+                    <Font name="Lato Heavy" size="21.0" />
+                </font>
+                <effect>
+                    <DropShadow height="15.0" radius="8.0" width="19.0" />
+                </effect>
+            </Text>
+        </VBox>
+        <VBox prefHeight="89.0" prefWidth="534.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                <Label prefHeight="31.0" prefWidth="62.0" text="EMAIL" textFill="WHITE">
+                    <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                    </font>
+                </Label>
+                <Text fx:id="emailError" fill="#fa4f4f" strokeType="OUTSIDE" strokeWidth="0.0">
+                    <font>
+                        <Font name="Lato Medium" size="15.0" />
+                    </font>
+                </Text>
+            </HBox>
+            <TextField fx:id="txEmail" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;">
+                <font>
+                    <Font name="Roboto Medium" size="15.0" />
+                </font>
+            </TextField>
+        </VBox>
+        <VBox prefHeight="123.0" prefWidth="534.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                <Label prefHeight="26.0" prefWidth="104.0" text="PASSWORD" textFill="WHITE">
+                    <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                    </font>
+                </Label>
+                <Text fx:id="passErr" fill="#fa4f4f" strokeType="OUTSIDE" strokeWidth="0.0">
+                    <font>
+                        <Font name="Lato Medium" size="15.0" />
+                    </font>
+                </Text>
+            </HBox>
+            <PasswordField fx:id="txPass" prefHeight="36.0" prefWidth="354.0" style="-fx-border-color: white; -fx-background-color: none; -fx-border-radius: 4;">
+                <font>
+                    <Font name="Roboto Medium" size="15.0" />
+                </font>
+            </PasswordField>
+            <Label onMouseClicked="#onRecoverPassWord" prefHeight="26.0" prefWidth="174.0" styleClass="forgotPass" text="Forgot your password?" textFill="#36a8eb">
+                <font>
+                    <Font name="Lato Medium" size="16.0" />
+                </font>
+            </Label>
+        </VBox>
+        <VBox prefHeight="48.0" prefWidth="534.0">
+            <Button mnemonicParsing="false" onAction="#onLogin" prefHeight="38.0" prefWidth="546.0" styleClass="logInButton" text="Log in" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="17.0" />
+                </font>
+            </Button>
+        </VBox>
+        <HBox prefHeight="26.0" prefWidth="354.0" />
+    </VBox>
+    <Text fill="WHITE" layoutX="730.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema" wrappingWidth="520.3999633789062">
+        <font>
+            <Font name="Lato Heavy" size="150.0" />
+        </font>
+    </Text>
+    <Text layoutX="719.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLUS" wrappingWidth="528.3998413085938">
+        <font>
+            <Font name="Lato Black" size="212.0" />
+        </font>
+        <fill>
+            <RadialGradient centerX="0.12389380003498723" centerY="0.2272727344975327" focusAngle="-30.96" focusDistance="-0.14678902582291076" radius="0.7293577981651376">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color red="0.6313725709915161" green="0.364705890417099" blue="0.7137255072593689" />
+                        </color>
+                    </Stop>
+                    <Stop offset="0.4341463414634146">
+                        <color>
+                            <Color red="0.2980392277240753" green="0.40392157435417175" blue="0.9254902005195618" />
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.2078431397676468" green="0.6549019813537598" blue="0.9254902005195618" />
+                        </color>
+                    </Stop>
+                </stops>
+            </RadialGradient>
+        </fill>
+        <effect>
+            <DropShadow height="1.0" offsetX="5.0" offsetY="8.0" radius="0.0" width="0.0" />
+        </effect>
+    </Text>
+</AnchorPane>

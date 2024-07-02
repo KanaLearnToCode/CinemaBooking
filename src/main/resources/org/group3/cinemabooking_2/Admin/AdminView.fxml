@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" styleClass="backgroundAnchorPane" stylesheets="@../CSS/Admin/AdminView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Admin.AdminViewController">
+    <VBox alignment="TOP_CENTER" prefHeight="756.0" prefWidth="182.0" spacing="50.0" styleClass="accountView">
+        <VBox prefHeight="427.0" prefWidth="181.0">
+            <VBox alignment="CENTER" prefHeight="181.0" prefWidth="222.0">
+                <Circle fx:id="avatar" fill="DODGERBLUE" radius="71.0" stroke="BLACK" strokeType="INSIDE" styleClass="avatar" />
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="93.0" prefWidth="222.0">
+                <Text fx:id="userName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="userName" text="Text" textAlignment="CENTER" wrappingWidth="170.0" />
+                <Label alignment="TOP_CENTER" onMouseClicked="#onEditProfile" styleClass="editProfileLabel" text="Edit Profile" />
+            </VBox>
+            <HBox alignment="TOP_CENTER" prefHeight="28.0" prefWidth="181.0" spacing="5.0" styleClass="elementAdmin">
+                <ImageView fitHeight="18.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../../Images/icon/bookingIcon.png" />
+                </ImageView>
+                <Label onMouseClicked="#onBooking" prefHeight="19.0" prefWidth="84.0" styleClass="historyLb" text="BOOKING" />
+            </HBox>
+            <HBox alignment="TOP_CENTER" onMouseClicked="#onFood" prefHeight="28.0" prefWidth="181.0" spacing="5.0" styleClass="elementAdmin">
+                <ImageView fitHeight="18.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../../Images/icon/foodAndDrinkIcon.png" />
+                </ImageView>
+                <Label onMouseClicked="#onBooking" prefHeight="19.0" prefWidth="84.0" styleClass="historyLb" text="FOOD" />
+            </HBox>
+            <HBox fx:id="dashboardTableAd" alignment="TOP_CENTER" onMouseClicked="#onDashboardAd" prefHeight="28.0" prefWidth="181.0" spacing="5.0" styleClass="elementAdmin">
+                <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../../Images/icon/dashboardIcon.png" />
+                </ImageView>
+                <Label alignment="BOTTOM_LEFT" prefHeight="19.0" prefWidth="84.0" styleClass="historyLb" text="DASHBOARD" />
+            </HBox>
+            <HBox fx:id="historyTableAd" alignment="TOP_CENTER" onMouseClicked="#onHistoryAd" prefHeight="28.0" prefWidth="181.0" spacing="5.0" styleClass="elementAdmin">
+                <ImageView fitHeight="18.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../../Images/icon/historyIcon.png" />
+                </ImageView>
+                <Label prefHeight="19.0" prefWidth="84.0" styleClass="historyLb" text="HISTORY" />
+            </HBox>
+            <HBox fx:id="databaseTableAd" alignment="TOP_CENTER" onMouseClicked="#onDataBaseAd" prefHeight="28.0" prefWidth="181.0" spacing="5.0" styleClass="elementAdmin">
+                <ImageView fitHeight="18.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../../Images/icon/databaseIcon.png" />
+                </ImageView>
+                <Label prefHeight="19.0" prefWidth="84.0" styleClass="historyLb" text="DATABASE" wrapText="true" />
+            </HBox>
+        </VBox>
+        <HBox alignment="TOP_CENTER" onMouseClicked="#onLogOut" prefHeight="28.0" prefWidth="84.0" spacing="5.0" styleClass="elementAdmin">
+            <ImageView fitHeight="18.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <Image url="@../../../../Images/backIcon.png" />
+            </ImageView>
+            <Label prefHeight="19.0" prefWidth="84.0" styleClass="historyLb" text="LOG OUT" />
+        </HBox>
+    </VBox>
+    <AnchorPane fx:id="detailTableEvent" layoutX="182.0" prefHeight="756.0" prefWidth="1162.0" />
+    <Text fill="WHITE" layoutX="27.0" layoutY="692.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema" wrappingWidth="126.0">
+        <font>
+            <Font name="Lato Heavy" size="37.0" />
+        </font>
+    </Text>
+    <Text layoutX="25.0" layoutY="729.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLUS" wrappingWidth="132.39981079101562">
+        <font>
+            <Font name="Lato Black" size="53.0" />
+        </font>
+        <fill>
+            <RadialGradient centerX="0.12389380003498723" centerY="0.2272727344975327" focusAngle="-30.96" focusDistance="-0.14678902582291076" radius="0.7293577981651376">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color red="0.6313725709915161" green="0.364705890417099" blue="0.7137255072593689" />
+                        </color>
+                    </Stop>
+                    <Stop offset="0.4341463414634146">
+                        <color>
+                            <Color red="0.2980392277240753" green="0.40392157435417175" blue="0.9254902005195618" />
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.2078431397676468" green="0.6549019813537598" blue="0.9254902005195618" />
+                        </color>
+                    </Stop>
+                </stops>
+            </RadialGradient>
+        </fill>
+    </Text>
+</AnchorPane>

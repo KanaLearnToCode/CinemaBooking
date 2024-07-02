@@ -1,0 +1,76 @@
+.backgroundAnchorPane {
+    -fx-background-color: linear-gradient(from 100.0% 32.9545% to 100.0% 100.0%, #2c2c4a 0.0%, #000000 100.0%);
+}
+
+.accountView {
+    -fx-background-color: linear-gradient(from 100.0% 32.9545% to 100.0% 100.0%, #222235 0.0%, #000000 100.0%);
+    -fx-border-color: #0f0f10;
+}
+
+.userName {
+    -fx-font-family: "Lato Heavy";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.editProfileLabel {
+    -fx-font-family: "Montserrat Medium";
+    -fx-font-style: italic;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.editProfileLabel:hover {
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.historyLb {
+    -fx-text-fill: white;
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 11px;
+}
+
+.historyLb:hover {
+    -fx-text-fill: #4c67ec;
+}
+
+.elementAdmin:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #4c67ec;
+}
+
+.showTimeLb {
+    -fx-text-fill: white;
+    -fx-font-size: 35px;
+    -fx-font-family: "Montserrat SemiBold";
+}
+
+.searchButton {
+    -fx-background-color: #0f0f10;
+    -fx-background-radius: 20px;
+    -fx-font-size: 15px;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-prompt-text-fill: #939396;
+    -fx-text-fill: white normal;
+}
+
+
+.editProfileLabel:hover {
+    -fx-cursor: hand;
+}
+
+.avatar {
+    -fx-stroke: white;
+}
+
+.logOutBtn {
+    -fx-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: "Montserrat ExtraBold";
+}
+
+
+
+
+

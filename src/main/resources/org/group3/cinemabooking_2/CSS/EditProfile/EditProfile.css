@@ -1,0 +1,99 @@
+.txName {
+    -fx-background-color: rgb(76, 76, 236, 0.05);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+}
+
+.txPass {
+    -fx-background-color: rgb(76, 76, 236, 0.05);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+}
+
+.avatarOnEdit {
+    -fx-stroke: white;
+}
+
+.dateOfBirth {
+    -fx-background-color: rgb(76, 76, 236, 0.05);
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.dateOfBirth .list-view .list-cell {
+    -fx-text-fill: black;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: none;
+}
+
+.dateOfBirth .list-view .list-cell:hover {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: rgb(76, 76, 236, 0.8);
+}
+
+.dateOfBirth .cell:selected {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: rgb(76, 76, 236, 0.05);
+}
+
+.dateOfBirth .arrow {
+    -fx-background-color: white;
+}
+
+.dateOfBirth .arrow-button {
+    -fx-background-color: rgb(76, 76, 236, 0.05);
+}
+
+
+.dateOfBirth .scroll-bar .track {
+    -fx-background-color: lightgray;
+    -fx-background-radius: 10;
+}
+
+.dateOfBirth .scroll-bar .thumb {
+    -fx-background-color: gray;
+    -fx-background-radius: 10;
+}
+
+.dateOfBirth .scroll-bar .increment-button,
+.dateOfBirth .scroll-bar .decrement-button {
+    -fx-background-color: darkgray;
+    -fx-background-radius: 10;
+}
+
+.logInButton {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec);
+    -fx-background-radius: 4px;
+}
+
+.logInButton:hover {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #263fb6, #1b7bb3);
+    -fx-cursor: hand;
+}
+
+.dialog {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #35a7ec, #4c67ec);
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.dialog *.header-panel {
+    -fx-pref-height: 0px;
+}
+
+.dialog .content {
+    -fx-text-fill: white;
+}
+
+.dialog > *.button-bar *.button {
+    -fx-background-color: white;
+}
+
+.dialog > *.button-bar *.button:hover {
+    -fx-background-color: #a7b4b8;
+}

@@ -1,0 +1,46 @@
+.dBButton {
+    -fx-background-color: rgb(76, 76, 236, 0.1);
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+
+}
+
+.dBButton:hover {
+    -fx-cursor: hand;
+}
+
+.sortConditionDB {
+    -fx-background-color: rgb(76, 76, 236, 0.1);
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.sortConditionDB .list-view .list-cell:hover {
+    -fx-text-fill: black;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: rgb(76, 76, 236, 0.3);
+}
+
+.sortConditionDB .list-view .list-cell {
+    -fx-text-fill: black;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: transparent;
+}
+
+.sortConditionDB .arrow {
+    -fx-background-color: white;
+}
+
+.sortConditionDB .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.sortConditionDB .cell:selected {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: transparent;
+}

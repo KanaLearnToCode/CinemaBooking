@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" stylesheets="@../CSS/Account/RecoverAccount.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Account.RecoverAccountController">
+    <ImageView fitHeight="756.0" fitWidth="1344.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../../../../Images/background.jpg" />
+    </ImageView>
+    <StackPane layoutX="393.0" layoutY="126.0" prefHeight="618.0" prefWidth="614.0">
+        <VBox fx:id="enterEmailRecover" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0">
+            <VBox alignment="CENTER" prefHeight="222.0" prefWidth="614.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Revover Your Account" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="64.0" />
+                    </font>
+                </Text>
+            </VBox>
+            <VBox prefHeight="112.0" prefWidth="614.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="85.0" text="Your E-mail" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="emailErrorRecover" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <TextField fx:id="txEmailRecover" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="emailText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
+                <Button mnemonicParsing="false" onAction="#onContinueRecover" prefHeight="38.0" prefWidth="621.0" styleClass="btnContinue" text="Continue" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Button>
+            </VBox>
+            <VBox prefHeight="50.0" prefWidth="606.0">
+                <Label onMouseClicked="#onBackToLogin" styleClass="backToLoginLabel" text="Back To Log In ?" textFill="WHITE" />
+            </VBox>
+        </VBox>
+        <VBox fx:id="confirmVerificationCode" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0" visible="false">
+            <VBox alignment="CENTER" prefHeight="222.0" prefWidth="614.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Revover Your Account" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="64.0" />
+                    </font>
+                </Text>
+            </VBox>
+            <VBox prefHeight="112.0" prefWidth="614.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="192.0" text="Confirm Verification Code" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="codeVerificationErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <TextField fx:id="txVerificationCode" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="emailText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+                <VBox alignment="BOTTOM_CENTER" prefHeight="31.0" prefWidth="614.0">
+                    <VBox alignment="BOTTOM_CENTER" prefHeight="31.0" prefWidth="614.0">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="We've sent a verification code to your email." wrappingWidth="604.7836456298828">
+                            <font>
+                                <Font name="Lato Heavy" size="16.0" />
+                            </font>
+                            <effect>
+                                <DropShadow height="15.0" radius="8.0" width="19.0" />
+                            </effect>
+                        </Text>
+                    </VBox>
+                </VBox>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
+                <Button mnemonicParsing="false" onAction="#onConfirmRecover" prefHeight="38.0" prefWidth="606.0" styleClass="btnContinue" text="Confirm" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Button>
+            </VBox>
+            <VBox prefHeight="50.0" prefWidth="606.0">
+                <Label onMouseClicked="#onBackToLogin" styleClass="backToLoginLabel" text="Already have an account?" textFill="WHITE" />
+            </VBox>
+        </VBox>
+        <VBox fx:id="updatePassTable" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0" visible="false">
+            <VBox alignment="TOP_CENTER" prefHeight="133.0" prefWidth="534.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Password" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="64.0" />
+                    </font>
+                </Text>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="534.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="150.0" text="Your New Password" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="passwordErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <PasswordField fx:id="txNewPass" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="emailText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </PasswordField>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="534.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                    <Label prefHeight="27.0" prefWidth="213.0" text="Confirm Your New Password" textFill="WHITE">
+                        <font>
+                            <Font name="Lato Heavy" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="1.0" text="*" textAlignment="CENTER" textFill="#ff3162">
+                        <font>
+                            <Font name="Lato Heavy" size="21.0" />
+                        </font>
+                    </Label>
+                    <Text fx:id="passwordCfErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                        <font>
+                            <Font name="Lato Medium" size="15.0" />
+                        </font>
+                    </Text>
+                </HBox>
+                <PasswordField fx:id="txNewPassCf" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="emailText">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </PasswordField>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
+                <Button mnemonicParsing="false" onAction="#onConfirmNewPass" prefHeight="38.0" prefWidth="606.0" styleClass="btnContinue" text="Confirm" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Button>
+            </VBox>
+            <VBox prefHeight="50.0" prefWidth="606.0">
+                <Label onMouseClicked="#onBackToLogin" styleClass="backToLoginLabel" text="Already have an account?" textFill="WHITE" />
+            </VBox>
+        </VBox>
+        <VBox fx:id="Congratulaiton" alignment="TOP_CENTER" prefHeight="662.0" prefWidth="606.0" visible="false">
+            <VBox alignment="TOP_CENTER" prefHeight="170.0" prefWidth="614.0">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulation" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="64.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Now you can keep logging in!" textAlignment="CENTER" wrappingWidth="604.7836456298828">
+                    <font>
+                        <Font name="Lato Black" size="30.0" />
+                    </font>
+                </Text>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="606.0">
+                <Button mnemonicParsing="false" onAction="#onBackToLoginButton" prefHeight="38.0" prefWidth="606.0" styleClass="btnContinue" text="Back to Log in" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Button>
+            </VBox>
+            <VBox prefHeight="50.0" prefWidth="606.0" />
+        </VBox>
+    </StackPane>
+</AnchorPane>

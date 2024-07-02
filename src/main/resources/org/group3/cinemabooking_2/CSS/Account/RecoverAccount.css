@@ -1,0 +1,25 @@
+.emailText {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.btnContinue {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec);
+    -fx-font-size: 17;
+    -fx-font-family: "Montserrat ExtraBold";
+}
+
+.btnContinue:hover {
+    -fx-cursor: hand;
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #263fb6, #1b7bb3);
+}
+
+.backToLoginLabel {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.backToLoginLabel:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}

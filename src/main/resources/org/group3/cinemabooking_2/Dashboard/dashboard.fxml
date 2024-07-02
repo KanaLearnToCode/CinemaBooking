@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1150.0" spacing="20.0" stylesheets="@../CSS/Dashboard/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Dashboard.DashBoard1">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <HBox prefHeight="17.0" prefWidth="1140.0" spacing="30.0">
+        <Button mnemonicParsing="false" onAction="#ticketdashboardByDay" styleClass="dBButton" text="Ticket Dashboard" />
+        <Button mnemonicParsing="false" onAction="#fooddashboardByDay" styleClass="dBButton" text="Food Dashboard" />
+        <Button mnemonicParsing="false" onAction="#totaldashboardByDay" styleClass="dBButton" text="Total DashBoard" />
+    </HBox>
+    <HBox prefHeight="22.0" prefWidth="1140.0" spacing="10.0">
+        <ComboBox fx:id="periodComboBox" onAction="#handlePeriodComboBoxAction" prefHeight="25.0" prefWidth="113.0" styleClass="sortConditionDB" />
+        <ComboBox fx:id="tableComboBox" onAction="#handlePeriodComboBoxAction" visible="false" />
+    </HBox>
+    <AnchorPane fx:id="anchorPane" prefHeight="765.0" prefWidth="1140.0" />
+</VBox>

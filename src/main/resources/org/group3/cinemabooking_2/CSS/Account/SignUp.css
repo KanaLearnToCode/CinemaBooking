@@ -1,0 +1,53 @@
+.dateOfBirth {
+    -fx-background-color: none;
+    -fx-border-color: orange;
+    -fx-border-radius: 20px;
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.dateOfBirth .list-view .list-cell:hover {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.dateOfBirth .cell:selected {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+
+.emailText {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.userNameText {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.passText {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.backToLoginLabel {
+    -fx-text-fill: #35a7ec;
+    -fx-font: 15px "Lato Medium";
+}
+
+.backToLoginLabel:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.btnContinue:hover{
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.Error{
+    -fx-text-fill: red;
+    -fx-font: 15px "Montserrat Medium";
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox fx:id="editProfileScene" alignment="CENTER" prefHeight="756.0" prefWidth="1162.0" stylesheets="@../CSS/EditProfile/EditProfile.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.EditProfile.EditProfileController">
+    <VBox alignment="CENTER" prefHeight="756.0" prefWidth="633.0">
+        <VBox prefHeight="89.0" prefWidth="534.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                <Label prefHeight="27.0" prefWidth="46.0" text="Name" textFill="WHITE">
+                    <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                    </font>
+                </Label>
+                <Text fx:id="newNameErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                    <font>
+                        <Font name="Lato Medium" size="15.0" />
+                    </font>
+                </Text>
+            </HBox>
+            <TextField fx:id="txNewName" prefHeight="36.0" prefWidth="354.0" styleClass="txName">
+                <font>
+                    <Font name="Roboto Medium" size="15.0" />
+                </font>
+            </TextField>
+        </VBox>
+        <VBox prefHeight="89.0" prefWidth="534.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                <Label prefHeight="27.0" prefWidth="75.0" text="Password" textFill="WHITE">
+                    <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                    </font>
+                </Label>
+                <Text fx:id="newPassErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                    <font>
+                        <Font name="Lato Medium" size="15.0" />
+                    </font>
+                </Text>
+            </HBox>
+            <PasswordField fx:id="txNewPass" prefHeight="36.0" prefWidth="354.0" styleClass="txPass">
+                <font>
+                    <Font name="Roboto Medium" size="15.0" />
+                </font>
+            </PasswordField>
+        </VBox>
+        <VBox prefHeight="89.0" prefWidth="534.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                <Label prefHeight="27.0" prefWidth="116.0" text="PhoneNumber" textFill="WHITE">
+                    <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                    </font>
+                </Label>
+                <Text fx:id="newPhoneNumberErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0">
+                    <font>
+                        <Font name="Lato Medium" size="15.0" />
+                    </font>
+                </Text>
+            </HBox>
+            <TextField fx:id="txNewPhoneNumber" prefHeight="36.0" prefWidth="354.0" styleClass="txPass">
+                <font>
+                    <Font name="Roboto Medium" size="15.0" />
+                </font>
+            </TextField>
+        </VBox>
+        <VBox prefHeight="74.0" prefWidth="636.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+                <Label prefHeight="26.0" prefWidth="125.0" text="DATE OF BIRTH" textFill="WHITE">
+                    <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                    </font>
+                </Label>
+            </HBox>
+            <AnchorPane prefHeight="39.0" prefWidth="636.0">
+                <ComboBox fx:id="monthInDOB" layoutY="2.0" prefHeight="26.0" prefWidth="219.0" promptText="Month" styleClass="dateOfBirth" />
+                <ComboBox fx:id="dayInDOB" layoutX="277.0" layoutY="2.0" prefHeight="26.0" prefWidth="155.0" promptText="Day" styleClass="dateOfBirth" />
+                <ComboBox fx:id="yearInDOB" layoutX="485.0" layoutY="1.0" prefWidth="150.0" promptText="Year" styleClass="dateOfBirth" />
+            </AnchorPane>
+        </VBox>
+        <VBox alignment="CENTER" prefHeight="89.0" prefWidth="636.0">
+            <Button mnemonicParsing="false" onAction="#onConfirmEditProfile" prefHeight="38.0" prefWidth="546.0" styleClass="logInButton" text="Confirm" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="17.0" />
+                </font>
+            </Button>
+        </VBox>
+    </VBox>
+    <AnchorPane prefHeight="756.0" prefWidth="348.0">
+        <Circle fx:id="avatarEdit" fill="DODGERBLUE" layoutX="208.0" layoutY="312.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="avatarOnEdit" />
+        <Label alignment="TOP_CENTER" layoutX="181.0" layoutY="426.0" onMouseClicked="#onEditAvatar" styleClass="editProfileLabel" text="Edit Avatar" />
+    </AnchorPane>
+</HBox>

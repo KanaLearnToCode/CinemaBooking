@@ -1,0 +1,270 @@
+.bdBackground {
+    -fx-background-color: linear-gradient(from 100.0% 32.9545% to 100.0% 100.0%, #222235 0.0%, #000000 100.0%);
+}
+
+.poster {
+    -fx-background-color: linear-gradient(from 100.0% 32.9545% to 100.0% 100.0%, #4d6aeb00 0.0%, #4d6aeb00 0.6729%, #000000 100.0%);
+}
+
+.movieName {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Lato Black";
+    -fx-font-size: 30px;
+}
+
+.title {
+    -fx-text-fill: #636472;
+    -fx-font-family: "Lato Medium";
+    -fx-font-size: 14px;
+}
+
+.detailInfor {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Lato Black";
+    -fx-font-size: 15px;
+}
+
+.rowSeat {
+    -fx-background-color: white;
+    -fx-text-fill: white;
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.selected {
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+    -fx-fill: #FFA500;
+}
+
+.vacancy {
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.seat {
+    -fx-fill: #1e90ff;
+    -fx-stroke: none;
+}
+
+.selectedSeat {
+    -fx-fill: #FFA500;
+    -fx-stroke: none;
+}
+
+.vacancySeat {
+    -fx-fill: #ed6775;
+    -fx-stroke: none;
+}
+
+.occupiedSeat {
+    -fx-font-family: "Montserrat ExtraBold";
+    -fx-font-size: 15px;
+}
+
+.totalButton:hover {
+    -fx-background-color: #2a43bd;
+    -fx-cursor: hand;
+}
+
+.totalButton {
+    -fx-background-color: #4c67ec;
+    -fx-font-family: "Montserrat Black";
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-background-radius: 4px;
+}
+
+.dateTimeST {
+    -fx-background-color: rgb(76, 76, 236, 0.1);
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+}
+
+.dateTimeST .list-view .list-cell:hover {
+    -fx-text-fill: black;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: rgb(76, 76, 236, 0.3);
+}
+
+.dateTimeST .list-view .list-cell {
+    -fx-text-fill: black;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: transparent;
+}
+
+.dateTimeST .arrow {
+    -fx-background-color: white;
+}
+
+.dateTimeST .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.dateTimeST .cell:selected {
+    -fx-text-fill: white;
+    -fx-font: 15px "Montserrat Medium";
+    -fx-background-color: transparent;
+}
+
+.seatInfor {
+}
+
+.seatBooked {
+    -fx-background-color: #313339;
+    -fx-background-radius: 4px;
+    -fx-border-color: rgba(254, 254, 255, 0.5);
+    -fx-border-radius: 4px;
+}
+
+.seatBookedTitle {
+    -fx-font-family: "Lato Black";
+    -fx-fill: white;
+    -fx-font-size: 30px;
+}
+
+.seatBookedColumn {
+    -fx-font-family: "Lato Medium";
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+}
+
+.seatBookedColumn2 {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+}
+
+.tfBookingSeat {
+    -fx-background-color: none;
+    -fx-border-radius: 20px;
+    -fx-border-color: white;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.seatList {
+}
+
+.paymentTitle {
+    -fx-font-family: "Lato Black";
+    -fx-fill: white;
+    -fx-font-size: 80px;
+}
+
+.inputElement {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 15px;
+    -fx-fill: white;
+}
+
+.inputTF {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.inputElementErr {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 15px;
+    -fx-fill: #fa4f4f;
+}
+
+.checkOutBtn {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec);
+    -fx-background-radius: 4;
+    -fx-font-size: 17;
+    -fx-font-family: "Montserrat ExtraBold";
+}
+
+.checkOutBtn:hover {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #263fb6, #1b7bb3);
+    -fx-cursor: hand;
+}
+
+.tbPayment .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.tbPayment .corner {
+    -fx-background-color: transparent;
+}
+
+.tbPayment .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, rgb(76, 103, 236), rgba(53, 167, 236, 0.27));
+    -fx-background-radius: 7px 7px 0px 0px;
+}
+
+.tbPayment .column-header {
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+    -fx-font-size: 17;
+    -fx-font-family: "Montserrat ExtraBold";
+}
+
+.tbPayment {
+    -fx-text-background-color: white;
+    -fx-background-color: transparent;
+}
+
+.tbPayment .table-cell {
+    -fx-border-color: transparent;
+    -fx-alignment: center;
+    -fx-font-size: 15;
+    -fx-font-family: "Montserrat SemiBold";
+}
+
+
+.table-row-cell:odd {
+    -fx-background-color: rgb(76, 103, 236, 0.27);
+    -fx-background-insets: 0, 0 0 0 0;
+}
+
+.table-row-cell:odd:hover, .table-row-cell:even:hover {
+    -fx-background-color: white;
+    -fx-text-background-color: black;
+}
+
+.table-row-cell:even {
+    -fx-background-color: rgb(76, 103, 236, 0.23);
+    -fx-background-insets: 0, 0 0 0 0;
+}
+
+.tbPayment .virtual-flow .scroll-bar:vertical,
+.tbPayment .virtual-flow .scroll-bar:vertical .track,
+.tbPayment .virtual-flow .scroll-bar:vertical .track-background,
+.tbPayment .virtual-flow .scroll-bar:horizontal,
+.tbPayment .virtual-flow .scroll-bar:horizontal .track,
+.tbPayment .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar .increment-button,
+.table-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to right, rgb(76, 103, 236), rgba(53, 167, 236, 0.27));
+}
+
+.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color: transparent;
+}
+
+.backToBookingBtn {
+    -fx-font-size: 15;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-text-fill: white;
+}
+
+.backToBookingBtn:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+

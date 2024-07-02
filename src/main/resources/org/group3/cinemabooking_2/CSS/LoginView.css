@@ -1,0 +1,30 @@
+.emailLogin {
+    -fx-text-fill: white;
+}
+
+.passLogin {
+    -fx-text-fill: white;
+}
+
+.signUpButton:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+    -fx-text-fill: #1382c3;
+}
+
+.forgotPass:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.logInButton {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec);
+    -fx-background-radius: 4;
+    -fx-font-size: 17;
+    -fx-font-family: "Montserrat ExtraBold";
+}
+
+.logInButton:hover {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #263fb6, #1b7bb3);
+    -fx-cursor: hand;
+}

@@ -1,0 +1,12 @@
+
+.ratingText{
+    -fx-text-fill: white;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 12px;
+}
+
+.movieName{
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-size: 17px;
+    -fx-text-fill: white;
+}

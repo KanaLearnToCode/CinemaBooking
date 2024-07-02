@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: none;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Booking.SeatController">
+    <Circle fx:id="seat" fill="DODGERBLUE" layoutX="10.0" layoutY="10.0" onMouseClicked="#onBooking" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.3">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></Circle>
+</AnchorPane>

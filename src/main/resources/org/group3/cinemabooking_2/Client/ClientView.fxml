@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" styleClass="backgroundAnchorPane" stylesheets="@../CSS/Client/ClientView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking.Client.ClientViewController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="756.0" prefWidth="224.0" styleClass="accountView">
+         <children>
+            <VBox alignment="CENTER" prefHeight="181.0" prefWidth="222.0">
+               <children>
+                  <Circle fill="DODGERBLUE" radius="71.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="222.0">
+               <children>
+                  <Label alignment="TOP_CENTER" styleClass="userName" text="Label" />
+                  <Label fx:id="editProfileLb" alignment="TOP_CENTER" onMouseClicked="#onEditProfile" styleClass="editProfileLabel" text="Edit Profile" />
+               </children>
+            </VBox>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="WHITE" glyphName="HISTORY" selectionFill="#ec0a0a" size="20" styleClass="iconHistory" />
+                  <Label styleClass="historyLb" text="HISTORY" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

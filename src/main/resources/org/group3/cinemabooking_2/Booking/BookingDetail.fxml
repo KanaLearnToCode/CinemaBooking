@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1344.0" styleClass="bdBackground" stylesheets="@../CSS/Booking/BookingDetail.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Booking.BookingDetailController">
+    <VBox layoutX="50.0" layoutY="24.0" prefHeight="200.0" prefWidth="331.0" spacing="20.0">
+        <Group>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema" wrappingWidth="136.39996337890625">
+                <font>
+                    <Font name="Lato Black" size="40.0" />
+                </font>
+            </Text>
+            <Text layoutX="136.0" layoutY="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLUS" wrappingWidth="102.26652526855469">
+                <font>
+                    <Font name="Lato Black" size="40.0" />
+                </font>
+                <fill>
+                    <RadialGradient centerX="0.12389380003498723" centerY="0.2272727344975327" focusAngle="-30.96" focusDistance="-0.14678902582291076" radius="0.7293577981651376">
+                        <stops>
+                            <Stop>
+                                <color>
+                                    <Color red="0.6313725709915161" green="0.364705890417099" blue="0.7137255072593689" />
+                                </color>
+                            </Stop>
+                            <Stop offset="0.43145455142303774">
+                                <color>
+                                    <Color red="0.2980392277240753" green="0.40392157435417175" blue="0.9254902005195618" />
+                                </color>
+                            </Stop>
+                            <Stop offset="1.0">
+                                <color>
+                                    <Color red="0.2078431397676468" green="0.6549019813537598" blue="0.9254902005195618" />
+                                </color>
+                            </Stop>
+                        </stops>
+                    </RadialGradient>
+                </fill>
+            </Text>
+        </Group>
+        <ImageView fitHeight="614.0" fitWidth="373.0" pickOnBounds="true" preserveRatio="true" styleClass="seat">
+            <Image url="@../../../../Images/kungfupanda4.jpg" />
+        </ImageView>
+    </VBox>
+    <VBox layoutX="78.0" layoutY="533.0" prefHeight="122.0" prefWidth="238.0" spacing="25.0">
+        <Text fx:id="movieName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="movieName" text="Text" wrappingWidth="268.67998123168945" />
+        <VBox prefHeight="200.0" prefWidth="100.0">
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <Text fill="#8f8f99" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Author" wrappingWidth="65.33798789978027" />
+                <Text fx:id="author" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="detailInfor" text="Text" />
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <Text fill="#8f8f99" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Duration" wrappingWidth="65.47300720214844" />
+                <Text fx:id="durationMovie" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="detailInfor" text="Text" />
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <Text fill="#8f8f99" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Type" wrappingWidth="66.24901008605957" />
+                <Text fx:id="typeOfMovie" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="detailInfor" text="Text" />
+            </HBox>
+        </VBox>
+    </VBox>
+    <ImageView fitHeight="31.0" fitWidth="25.0" layoutX="1295.0" layoutY="37.0" onMouseClicked="#onbackToBookingTable" pickOnBounds="true" preserveRatio="true">
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+        <Image url="@../../../../Images/backIcon.png" />
+    </ImageView>
+    <VBox fx:id="bookingSeat" layoutX="430.0" layoutY="105.0" prefHeight="598.0" prefWidth="855.0" spacing="34.0">
+        <HBox alignment="CENTER" prefHeight="59.0" prefWidth="855.0" spacing="150.0">
+            <ComboBox fx:id="dateOfST" prefHeight="26.0" prefWidth="219.0" promptText="Month" styleClass="dateTimeST" />
+            <ComboBox fx:id="timeOfST" prefHeight="30.0" prefWidth="259.0" promptText="13:00:00 - 13:00:00" styleClass="dateTimeST" />
+            <ComboBox fx:id="theaterOfST" prefHeight="26.0" prefWidth="219.0" promptText="Month" styleClass="dateTimeST" />
+        </HBox>
+        <HBox prefHeight="438.0" prefWidth="878.0" styleClass="seatList">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="27.0">
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="700.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="A" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="B" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="C" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="D" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="E" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="F" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="G" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="700.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="H" />
+                </HBox>
+            </VBox>
+            <VBox fx:id="seatManage" alignment="CENTER" prefHeight="522.0" prefWidth="711.0" spacing="27.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="27.0">
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="700.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="A" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="B" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="C" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="D" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="E" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="F" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="G" />
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="700.0">
+                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="rowSeat" text="H" />
+                </HBox>
+            </VBox>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="855.0" spacing="39.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="102.0" spacing="7.0">
+                <Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.3" styleClass="seat" />
+                <Text fill="#80abff" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="occupiedSeat" text="Vacancy" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="163.0" spacing="7.0">
+                <Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.3" styleClass="vacancySeat" />
+                <Text fill="#ed6775" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="vacancy" text="Occupied places" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="103.0" spacing="7.0">
+                <Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.3" styleClass="selectedSeat" />
+                <Text fill="#80abff" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="selected" text="Selected" />
+            </HBox>
+            <Button fx:id="btnCheckOut" mnemonicParsing="false" onAction="#onCheckOut" prefHeight="39.0" prefWidth="183.0" styleClass="totalButton" text="Check Out" />
+        </HBox>
+    </VBox>
+    <AnchorPane fx:id="checkingSeatBooked" prefHeight="756.0" prefWidth="1344.0" visible="false">
+        <AnchorPane onMouseClicked="#onBackToBookDetail" opacity="0.46" prefHeight="756.0" prefWidth="1344.0" style="-fx-background-color: black;" />
+        <VBox alignment="TOP_CENTER" layoutX="354.5" layoutY="202.0" prefHeight="352.0" prefWidth="635.0" styleClass="seatBooked">
+            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="694.0">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="seatBookedTitle" text="SEAT INFORMATION" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="221.0" prefWidth="694.0" spacing="20.0">
+                <VBox alignment="CENTER_RIGHT" prefHeight="222.0" prefWidth="398.0" spacing="10.0">
+                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Seat Number:" />
+                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Movie Name:" />
+                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Theater:" />
+                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="156.0" styleClass="seatBookedColumn" text="Date Time Book:" />
+                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="151.0" styleClass="seatBookedColumn" text="Email Customer:" />
+                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="166.0" styleClass="seatBookedColumn" text="Account Book:" />
+                </VBox>
+                <VBox alignment="CENTER_LEFT" prefHeight="493.0" prefWidth="437.0" spacing="10.0">
+                    <Label fx:id="seatIDBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                    <Label fx:id="movieNameBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                    <Label fx:id="theaterNameBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                    <Label fx:id="dateTimeBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                    <Label fx:id="emailCustomerBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                    <Label fx:id="NameAdminBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                </VBox>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="64.0" prefWidth="694.0">
+                <Button mnemonicParsing="false" onAction="#onOK" prefHeight="39.0" prefWidth="183.0" styleClass="totalButton" text="OK">
+                    <effect>
+                        <DropShadow blurType="GAUSSIAN" height="1.0" offsetY="1.0" radius="0.0" spread="0.06" width="0.0" />
+                    </effect>
+                </Button>
+            </VBox>
+        </VBox>
+    </AnchorPane>
+    <VBox fx:id="payment" alignment="TOP_CENTER" layoutX="430.0" layoutY="105.0" prefHeight="598.0" prefWidth="855.0" spacing="30.0" visible="false">
+        <HBox prefHeight="10.0" prefWidth="855.0">
+            <Label onMouseClicked="#onBackToBooking" styleClass="backToBookingBtn" text="Back To Booking ?" />
+        </HBox>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="paymentTitle" text="PAYMENT" />
+        <TableView fx:id="tbPayment" prefHeight="268.0" prefWidth="855.0" styleClass="tbPayment">
+            <columns>
+                <TableColumn id="seatNumber" fx:id="seatNumber" maxWidth="315.0" prefWidth="315.0" text="Seat Number" />
+                <TableColumn id="price" fx:id="price" maxWidth="215.0" minWidth="0.0" prefWidth="215.0" text="Price" />
+                <TableColumn id="deleteButton" fx:id="deleteBtn" maxWidth="321.0" minWidth="0.0" prefWidth="321.0" />
+            </columns>
+        </TableView>
+        <HBox alignment="CENTER" prefHeight="58.0" prefWidth="855.0" spacing="17.0">
+            <VBox prefHeight="58.0" prefWidth="268.0" spacing="5.0">
+                <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputElement" text="Name" />
+                    <Text fx:id="namePaymentErr" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputElementErr" />
+                </HBox>
+                <TextField fx:id="txName" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="inputTF">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="297.0" spacing="5.0">
+                <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputElement" text="Email" />
+                    <Text fx:id="emailPaymentErr" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputElementErr" />
+                </HBox>
+                <TextField fx:id="txEmail" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="inputTF">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            </VBox>
+            <VBox prefHeight="58.0" prefWidth="234.0" spacing="5.0">
+                <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputElement" text="Phone Number" />
+                    <Text fx:id="phonePaymentErr" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputElementErr" />
+                </HBox>
+                <TextField fx:id="txPhoneNumber" prefHeight="36.0" prefWidth="354.0" style="-fx-background-color: none; -fx-border-color: white; -fx-border-radius: 4;" styleClass="inputTF">
+                    <font>
+                        <Font name="Roboto Medium" size="15.0" />
+                    </font>
+                </TextField>
+            </VBox>
+        </HBox>
+        <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#onPayment" prefHeight="38.0" prefWidth="546.0" styleClass="checkOutBtn" text="Check out" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="17.0" />
+            </font>
+        </Button>
+    </VBox>
+</AnchorPane>
