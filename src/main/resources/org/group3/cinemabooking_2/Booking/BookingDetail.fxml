@@ -56,9 +56,7 @@
                 </fill>
             </Text>
         </Group>
-        <ImageView fitHeight="614.0" fitWidth="373.0" pickOnBounds="true" preserveRatio="true" styleClass="seat">
-            <Image url="@../../../../Images/kungfupanda4.jpg" />
-        </ImageView>
+        <ImageView fx:id="moviePoster" fitHeight="614.0" fitWidth="373.0" pickOnBounds="true" preserveRatio="true" styleClass="seat" />
     </VBox>
     <VBox layoutX="78.0" layoutY="533.0" prefHeight="122.0" prefWidth="238.0" spacing="25.0">
         <Text fx:id="movieName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="movieName" text="Text" wrappingWidth="268.67998123168945" />
@@ -160,39 +158,43 @@
             <Button fx:id="btnCheckOut" mnemonicParsing="false" onAction="#onCheckOut" prefHeight="39.0" prefWidth="183.0" styleClass="totalButton" text="Check Out" />
         </HBox>
     </VBox>
-    <AnchorPane fx:id="checkingSeatBooked" prefHeight="756.0" prefWidth="1344.0" visible="false">
-        <AnchorPane onMouseClicked="#onBackToBookDetail" opacity="0.46" prefHeight="756.0" prefWidth="1344.0" style="-fx-background-color: black;" />
-        <VBox alignment="TOP_CENTER" layoutX="354.5" layoutY="202.0" prefHeight="352.0" prefWidth="635.0" styleClass="seatBooked">
-            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="694.0">
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="seatBookedTitle" text="SEAT INFORMATION" />
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="221.0" prefWidth="694.0" spacing="20.0">
-                <VBox alignment="CENTER_RIGHT" prefHeight="222.0" prefWidth="398.0" spacing="10.0">
-                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Seat Number:" />
-                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Movie Name:" />
-                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Theater:" />
-                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="156.0" styleClass="seatBookedColumn" text="Date Time Book:" />
-                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="151.0" styleClass="seatBookedColumn" text="Email Customer:" />
-                    <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="166.0" styleClass="seatBookedColumn" text="Account Book:" />
-                </VBox>
-                <VBox alignment="CENTER_LEFT" prefHeight="493.0" prefWidth="437.0" spacing="10.0">
-                    <Label fx:id="seatIDBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
-                    <Label fx:id="movieNameBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
-                    <Label fx:id="theaterNameBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
-                    <Label fx:id="dateTimeBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
-                    <Label fx:id="emailCustomerBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
-                    <Label fx:id="NameAdminBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
-                </VBox>
-            </HBox>
-            <VBox alignment="CENTER" prefHeight="64.0" prefWidth="694.0">
-                <Button mnemonicParsing="false" onAction="#onOK" prefHeight="39.0" prefWidth="183.0" styleClass="totalButton" text="OK">
-                    <effect>
-                        <DropShadow blurType="GAUSSIAN" height="1.0" offsetY="1.0" radius="0.0" spread="0.06" width="0.0" />
-                    </effect>
-                </Button>
-            </VBox>
-        </VBox>
-    </AnchorPane>
+   <VBox fx:id="checkingSeatBooked" prefHeight="756.0" prefWidth="1344.0">
+      <children>
+          <AnchorPane prefHeight="756.0" prefWidth="1344.0">
+              <AnchorPane onMouseClicked="#onBackToBookDetail" opacity="0.46" prefHeight="756.0" prefWidth="1344.0" style="-fx-background-color: black;" />
+              <VBox alignment="TOP_CENTER" layoutX="354.5" layoutY="202.0" prefHeight="352.0" prefWidth="635.0" styleClass="seatBooked">
+                  <HBox alignment="CENTER" prefHeight="54.0" prefWidth="694.0">
+                      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="seatBookedTitle" text="SEAT INFORMATION" />
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="221.0" prefWidth="694.0" spacing="20.0">
+                      <VBox alignment="CENTER_RIGHT" prefHeight="222.0" prefWidth="398.0" spacing="10.0">
+                          <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Seat Number:" />
+                          <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Movie Name:" />
+                          <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="127.0" styleClass="seatBookedColumn" text="Theater:" />
+                          <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="156.0" styleClass="seatBookedColumn" text="Date Time Book:" />
+                          <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="151.0" styleClass="seatBookedColumn" text="Email Customer:" />
+                          <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="166.0" styleClass="seatBookedColumn" text="Account Book:" />
+                      </VBox>
+                      <VBox alignment="CENTER_LEFT" prefHeight="493.0" prefWidth="437.0" spacing="10.0">
+                          <Label fx:id="seatIDBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                          <Label fx:id="movieNameBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                          <Label fx:id="theaterNameBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                          <Label fx:id="dateTimeBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                          <Label fx:id="emailCustomerBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                          <Label fx:id="NameAdminBooked" prefHeight="26.0" prefWidth="411.0" styleClass="seatBookedColumn2" text="Seat Number:" />
+                      </VBox>
+                  </HBox>
+                  <VBox alignment="CENTER" prefHeight="64.0" prefWidth="694.0">
+                      <Button mnemonicParsing="false" onAction="#onOK" prefHeight="39.0" prefWidth="183.0" styleClass="totalButton" text="OK">
+                          <effect>
+                              <DropShadow blurType="GAUSSIAN" height="1.0" offsetY="1.0" radius="0.0" spread="0.06" width="0.0" />
+                          </effect>
+                      </Button>
+                  </VBox>
+              </VBox>
+          </AnchorPane>
+      </children>
+   </VBox>
     <VBox fx:id="payment" alignment="TOP_CENTER" layoutX="430.0" layoutY="105.0" prefHeight="598.0" prefWidth="855.0" spacing="30.0" visible="false">
         <HBox prefHeight="10.0" prefWidth="855.0">
             <Label onMouseClicked="#onBackToBooking" styleClass="backToBookingBtn" text="Back To Booking ?" />

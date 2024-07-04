@@ -12,55 +12,50 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1150.0" stylesheets="@../CSS/Booking/Booking.css"
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.group3.cinemabooking_2.Booking.BookingController">
+<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1150.0" stylesheets="@../CSS/Booking/Booking.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Booking.BookingController">
     <HBox alignment="CENTER" prefHeight="40.0" prefWidth="1150.0">
         <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="1111.0">
             <Label prefHeight="56.0" prefWidth="948.0" text="ShowTimes" textFill="WHITE">
                 <font>
-                    <Font name="Lato Black" size="30.0"/>
+                    <Font name="Lato Black" size="30.0" />
                 </font>
             </Label>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                <TextField fx:id="searchButton" layoutY="12.0" onKeyReleased="#onSearchMovieBooking" prefHeight="25.0"
-                           prefWidth="143.0" promptText="Search Movie" styleClass="searchMovieLb"/>
-                <ImageView fx:id="clearBtn" fitHeight="20.0" fitWidth="15.0" layoutX="124.0" layoutY="17.0"
-                           onMouseClicked="#onClearSearchMovie" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../../../../Images/pngwing.com.png"/>
+                <TextField fx:id="searchButton" layoutY="12.0" onKeyReleased="#onSearchMovieBooking" prefHeight="25.0" prefWidth="143.0" promptText="Search Movie" styleClass="searchMovieLb" />
+                <ImageView fx:id="clearBtn" fitHeight="20.0" fitWidth="15.0" layoutX="124.0" layoutY="17.0" onMouseClicked="#onClearSearchMovie" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../../Images/pngwing.com.png" />
                 </ImageView>
             </AnchorPane>
         </HBox>
     </HBox>
     <HBox alignment="CENTER" prefHeight="340.0" prefWidth="1110.0">
         <ScrollPane fx:id="spST" prefHeight="318.0" prefWidth="1110.0" styleClass="sPMovie">
-            <HBox fx:id="hBoxShowTimes" alignment="CENTER" prefHeight="300.0" prefWidth="1110.0" spacing="15.0"/>
+            <HBox fx:id="hBoxShowTimes" alignment="CENTER_LEFT" prefHeight="300.0" prefWidth="1110.0" spacing="15.0" />
         </ScrollPane>
     </HBox>
     <HBox alignment="CENTER" prefHeight="42.0" prefWidth="1150.0">
         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="1103.0" spacing="13.0">
-            <Label prefHeight="54.0" prefWidth="829.0" text="ComingSoon" textFill="WHITE">
+            <Label prefHeight="42.0" prefWidth="876.0" text="ComingSoon" textFill="WHITE">
                 <font>
-                    <Font name="Lato Black" size="30.0"/>
+                    <Font name="Lato Black" size="30.0" />
                 </font>
             </Label>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by:">
                 <font>
-                    <Font name="Montserrat SemiBold" size="12.0"/>
+                    <Font name="Montserrat SemiBold" size="12.0" />
                 </font>
             </Text>
-            <DatePicker fx:id="dateSelected" prefHeight="26.0" prefWidth="126.0" styleClass="dateSelected"/>
-            <Text fill="WHITE" onMouseClicked="#onClearSortCondition" strokeType="OUTSIDE" strokeWidth="0.0"
-                  styleClass="clearConditionSortBtn" text="Clear">
+            <DatePicker fx:id="dateSelected" prefHeight="26.0" prefWidth="126.0" styleClass="dateSelected" />
+            <Text fill="WHITE" onMouseClicked="#onClearSortCondition" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clearConditionSortBtn" text="Clear">
                 <font>
-                    <Font name="Montserrat SemiBold" size="12.0"/>
+                    <Font name="Montserrat SemiBold" size="12.0" />
                 </font>
             </Text>
         </HBox>
     </HBox>
     <HBox alignment="CENTER" prefHeight="330.0" prefWidth="1110.0">
         <ScrollPane fx:id="spCS" prefHeight="320.0" prefWidth="1110.0" styleClass="sPMovie">
-            <HBox fx:id="hBoxComingSoon" alignment="CENTER" prefHeight="300.0" prefWidth="200.0" spacing="15.0"/>
+            <HBox fx:id="hBoxComingSoon" alignment="CENTER_LEFT" prefHeight="300.0" prefWidth="1110.0" spacing="15.0" />
         </ScrollPane>
     </HBox>
 </VBox>

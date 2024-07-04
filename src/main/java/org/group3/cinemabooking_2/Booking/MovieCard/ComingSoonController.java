@@ -64,9 +64,9 @@ public class ComingSoonController {
                 movie.setImagesBackdrop(rS.getString("ImagesBackdrop"));
                 movie.setAmoutOfLimit(rS.getInt("AmoutOfLimit"));
             }
-            inputStreamImage = new FileInputStream(movie.getImagesPoster());
+            inputStreamImage = new FileInputStream(movie.getImagesBackdrop());
         } catch (FileNotFoundException e) {
-            System.out.println("not found");
+            System.out.println("not found" + movie.getImagesPoster());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -79,6 +79,6 @@ public class ComingSoonController {
         movieName.setText(movie.getMovieName());
         categoryMovie.setText(movie.getTypeOfMovie());
         this.movie = movie;
-        dayTime.setText(movie.getAuthor());
+        dayTime.setText(movie.getAmoutOfLimit() + " mins");
     }
 }

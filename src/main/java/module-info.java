@@ -6,8 +6,10 @@ module org.group.cinemabooking_ {
     requires java.mail;
     requires jakarta.persistence;
     requires java.desktop;
+    requires com.microsoft.sqlserver.jdbc;
 
     opens entity.entity;
+    exports entity.entity to javafx.fxml;
     opens org.group3.cinemabooking_2 to javafx.fxml;
     exports org.group3.cinemabooking_2;
     exports org.group3.cinemabooking_2.Account;

@@ -131,9 +131,3 @@
     -fx-background-color: white;
 }
 
-
-.dateSelected .text-field:hover,
-.dateSelected.text-field,
-.dateSelected.text-field:focused {
-    -fx-background-color: rgba(0, 0, 0, 0);
-}

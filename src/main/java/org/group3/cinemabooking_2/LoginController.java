@@ -93,6 +93,7 @@ public class LoginController implements Initializable {
                 account.setDateOfBirth(LocalDate.parse(resultSet.getString("DateOfBirth")));
             }
             loggedInUser = account;
+
             if (account == null) {
                 emailError.setText("Invalid email");
                 passErr.setText("Invalid password");

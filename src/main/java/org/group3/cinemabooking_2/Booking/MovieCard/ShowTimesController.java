@@ -65,7 +65,7 @@ public class ShowTimesController {
                 movie.setAmoutOfLimit(rS.getInt("AmoutOfLimit"));
             }
 
-            inputStreamImage = new FileInputStream(movie.getImagesPoster());
+            inputStreamImage = new FileInputStream(movie.getImagesBackdrop());
         } catch (FileNotFoundException e) {
             System.out.println("not found");
         } catch (SQLException e) {
@@ -79,7 +79,7 @@ public class ShowTimesController {
         posterMovie.setImage(image);
         movieName.setText(movie.getMovieName());
         categoryMovie.setText(movie.getTypeOfMovie());
-        author.setText(movie.getAuthor());
+        author.setText(movie.getAmoutOfLimit() + " mins");
         this.movie = movie;
     }
 

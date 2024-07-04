@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class BookingController implements Initializable {
 
@@ -101,7 +102,7 @@ public class BookingController implements Initializable {
             Connection connection = null;
             try {
                 connection = JDBCUtil.getConnection();
-                String sql = "select Movie.IDMovie from Movie join ShowTimes on ShowTimes.IDMovie = Movie.IDMovie where " +
+                String sql = "select distinct Movie.IDMovie from Movie join ShowTimes on ShowTimes.IDMovie = Movie.IDMovie where " +
                         "CONVERT(date, ShowTimes.date) = ? " +
                         "AND CONVERT(time, ShowTimes.StartTime) > CONVERT(time, ?)" +
                         "AND Movie.MovieName LIKE ?";
@@ -119,6 +120,7 @@ public class BookingController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
+                assert connection != null;
                 JDBCUtil.closeConnection(connection);
             }
         }
@@ -134,7 +136,7 @@ public class BookingController implements Initializable {
             Connection connection = null;
             try {
                 connection = JDBCUtil.getConnection();
-                String sql = "select Movie.IDMovie from Movie join ShowTimes on ShowTimes.IDMovie = Movie.IDMovie where " +
+                String sql = "select distinct Movie.IDMovie from Movie join ShowTimes on ShowTimes.IDMovie = Movie.IDMovie where " +
                         "CONVERT(date, ShowTimes.date) > CONVERT(DATE,?) AND Movie.MovieName LIKE ?";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, String.valueOf(LocalDate.now()));
@@ -149,6 +151,7 @@ public class BookingController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
+                assert connection != null;
                 JDBCUtil.closeConnection(connection);
             }
         }
@@ -164,7 +167,7 @@ public class BookingController implements Initializable {
             Connection connection = null;
             try {
                 connection = JDBCUtil.getConnection();
-                String sql = "select Movie.IDMovie from Movie join ShowTimes on ShowTimes.IDMovie = Movie.IDMovie where " +
+                String sql = "select distinct Movie.IDMovie from Movie join ShowTimes on ShowTimes.IDMovie = Movie.IDMovie where " +
                         "CONVERT(date, ShowTimes.date) = ? AND Movie.MovieName LIKE ?";
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, String.valueOf(specificDate));
@@ -179,6 +182,7 @@ public class BookingController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
+                assert connection != null;
                 JDBCUtil.closeConnection(connection);
             }
         }
@@ -191,7 +195,7 @@ public class BookingController implements Initializable {
         try {
             connection = JDBCUtil.getConnection();
 
-            String sql = "SELECT IDMovie from ShowTimes WHERE CONVERT(date, ShowTimes.date) = ?" +
+            String sql = "SELECT distinct IDMovie from ShowTimes WHERE CONVERT(date, ShowTimes.date) = ?" +
                     "AND CONVERT(time, StartTime) > CONVERT(time, ?)";
 
             PreparedStatement pS = connection.prepareStatement(sql);
@@ -249,7 +253,7 @@ public class BookingController implements Initializable {
         Connection connection = null;
         try {
             connection = JDBCUtil.getConnection();
-            String sql = "SELECT DISTINCT IDMovie from ShowTimes WHERE CONVERT(date, ShowTimes.date) = ?";
+            String sql = "SELECT DISTINCT IDMovie from ShowTimes WHERE CONVERT(date, ShowTimes.date) > ?";
 
             PreparedStatement pS = connection.prepareStatement(sql);
             pS.setString(1, String.valueOf(specificDate));
@@ -280,8 +284,8 @@ public class BookingController implements Initializable {
             } else {
                 spST.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 spST.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-
             }
+
             for (int s : showTimesList) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking_2/Booking/MovieCard/ShowTimes.fxml"));
                 AnchorPane movieCard = fxmlLoader.load();
@@ -297,6 +301,7 @@ public class BookingController implements Initializable {
                 spCS.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 spCS.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             }
+
             for (int s : comingSoonList) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group3/cinemabooking_2/Booking/MovieCard/ComingSoon.fxml"));
                 AnchorPane movieCard = fxmlLoader.load();
@@ -328,51 +333,32 @@ public class BookingController implements Initializable {
 
             public LocalDate fromString(String string) {
                 if (string != null && !string.isEmpty()) {
-                    try {
-                        List<DateTimeFormatter> formatterList = new ArrayList<>();
-                        formatterList.add(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                        formatterList.add(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                        formatterList.add(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-                        formatterList.add(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-                        formatterList.add(DateTimeFormatter.ofPattern("yyyy/dd/MM"));
-                        formatterList.add(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-                        formatterList.add(DateTimeFormatter.ofPattern("yyyy-dd-MM"));
-                        formatterList.add(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        formatterList.add(DateTimeFormatter.ofPattern("yyyy-dd-MM"));
-
-                        for (DateTimeFormatter dateTimeFormatter : formatterList) {
-                            try {
-                                return LocalDate.parse(string, dateTimeFormatter);
-                            } catch (DateTimeParseException e) {
-                                // Continue to the next formatter
-                            }
-                        }
-                        //System.out.println("wrong format");
-                        return null;
-                    } catch (DateTimeParseException e) {
-
-                        return null;
-                    }
+                    DateTimeFormatter desiredFormatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
+                    return LocalDate.parse(string, desiredFormatter);
                 } else {
                     return null;
                 }
             }
         });
 
-        dateSelected.valueProperty().addListener((observable, oldValue, newValue) -> {
-            String condition = searchButton.getText();
-            if (newValue != null) {
-                if (newValue.isAfter(LocalDate.now()))
-                    if (condition.isBlank()) {
-                        loadMovieCards(showTimesList(), comingSoonList(newValue));
-                    } else {
-                        loadMovieCards(updateSTList(condition), updateCSList(condition, newValue));
+        dateSelected.valueProperty().
+
+                addListener((observable, oldValue, newValue) ->
+
+                {
+                    String condition = searchButton.getText();
+                    if (newValue != null) {
+                        if (newValue.isAfter(LocalDate.now()))
+                            if (condition.isBlank()) {
+                                loadMovieCards(showTimesList(), comingSoonList(newValue));
+                            } else {
+                                loadMovieCards(updateSTList(condition), updateCSList(condition, newValue));
+                            }
+                        else {
+                            loadMovieCards(showTimesList(), setDefulatComingSoonList());
+                        }
                     }
-                else {
-                    loadMovieCards(showTimesList(), setDefulatComingSoonList());
-                }
-            }
-        });
+                });
     }
 
     public static Movie getMovie() {

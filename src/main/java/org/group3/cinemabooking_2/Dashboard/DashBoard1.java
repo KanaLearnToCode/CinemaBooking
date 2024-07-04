@@ -11,7 +11,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ResourceBundle;
+
 
 public class DashBoard1 {
 
@@ -47,7 +47,6 @@ public class DashBoard1 {
                 "  UNION ALL " +
                 "  SELECT Hour + 1 FROM AllHours WHERE Hour < 24 " +
                 ") ";
-
 
         LocalDate currentDate = LocalDate.now();
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -120,18 +119,17 @@ public class DashBoard1 {
                 "  SELECT Hour + 1 FROM AllHours WHERE Hour < 24 " +
                 ") ";
 
-
         LocalDate currentDate = LocalDate.now();
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         String query = tempTable +
-                "SELECT COALESCE(AH.Hour, DATEPART(HOUR, f.dateTimeBook)) AS Period, " +
-                "       SUM(COALESCE(f.Total, 0)) AS Revenue " +
+                "SELECT COALESCE(AH.Hour, DATEPART(HOUR, o.DateTime)) AS Period, " +
+                "       SUM(COALESCE(o.Total, 0)) AS Revenue " +
                 "FROM AllHours AH " +
-                "LEFT JOIN Food f ON AH.Hour = DATEPART(HOUR, f.dateTimeBook) " +
-                "WHERE CAST(f.dateTimeBook AS DATE) = '" + formattedDate + "' " +
-                "GROUP BY COALESCE(AH.Hour, DATEPART(HOUR, f.dateTimeBook)) " +
-                "ORDER BY COALESCE(AH.Hour, DATEPART(HOUR, f.dateTimeBook))";
+                "LEFT JOIN Orders o ON AH.Hour = DATEPART(HOUR, o.DateTime) " +
+                "WHERE CAST(o.DateTime AS DATE) = '" + formattedDate + "' " +
+                "GROUP BY COALESCE(AH.Hour, DATEPART(HOUR, o.DateTime)) " +
+                "ORDER BY COALESCE(AH.Hour, DATEPART(HOUR, o.DateTime))";
 
         displayChart(query, "Hour", "Period", "Revenue");
         setTableComboBox("Food");
@@ -145,12 +143,12 @@ public class DashBoard1 {
         String formattedCurrentDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String formattedStartOfWeek = startOfWeek.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        String query = "SELECT DATENAME(WEEKDAY, f.dateTimeBook) AS DayOfWeek, " +
-                "       SUM(COALESCE(f.Total, 0)) AS Revenue " +
-                "FROM Food f " +
-                "WHERE CAST(f.dateTimeBook AS DATE) BETWEEN '" + formattedStartOfWeek + "' AND '" + formattedCurrentDate + "' " +
-                "GROUP BY DATENAME(WEEKDAY, f.dateTimeBook), DATEPART(WEEKDAY, f.dateTimeBook) " +
-                "ORDER BY DATEPART(WEEKDAY, f.dateTimeBook)";
+        String query = "SELECT DATENAME(WEEKDAY, o.DateTime) AS DayOfWeek, " +
+                "       SUM(COALESCE(o.Total, 0)) AS Revenue " +
+                "FROM Orders o " +
+                "WHERE CAST(o.DateTime AS DATE) BETWEEN '" + formattedStartOfWeek + "' AND '" + formattedCurrentDate + "' " +
+                "GROUP BY DATENAME(WEEKDAY, o.DateTime), DATEPART(WEEKDAY, o.DateTime) " +
+                "ORDER BY DATEPART(WEEKDAY, o.DateTime)";
 
         displayChart(query, "Day of Week", "DayOfWeek", "Revenue");
         setTableComboBox("Food");
@@ -161,13 +159,13 @@ public class DashBoard1 {
         LocalDate currentDate = LocalDate.now();
         String formattedMonth = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM"));
 
-        String query = "SELECT DATEPART(DAY, dateTimeBook) AS Period, SUM(Total) AS FoodRevenue " +
-                "FROM Food " +
-                "WHERE FORMAT(dateTimeBook, 'yyyy-MM') = '" + formattedMonth + "' " +
-                "GROUP BY DATEPART(DAY, dateTimeBook) " +
+        String query = "SELECT DATEPART(DAY, DateTime) AS Period, SUM(Total) AS Revenue " +
+                "FROM Orders " +
+                "WHERE FORMAT(DateTime, 'yyyy-MM') = '" + formattedMonth + "' " +
+                "GROUP BY DATEPART(DAY, DateTime) " +
                 "ORDER BY Period";
 
-        displayChart(query, "Day", "Period", "FoodRevenue");
+        displayChart(query, "Day", "Period", "Revenue");
     }
 
     @FXML
@@ -175,15 +173,14 @@ public class DashBoard1 {
         LocalDate currentDate = LocalDate.now();
         String formattedYear = currentDate.format(DateTimeFormatter.ofPattern("yyyy"));
 
-        String query = "SELECT DATEPART(MONTH, dateTimeBook) AS Period, SUM(Total) AS FoodRevenue " +
-                "FROM Food " +
-                "WHERE FORMAT(dateTimeBook, 'yyyy') = '" + formattedYear + "' " +
-                "GROUP BY DATEPART(MONTH, dateTimeBook) " +
+        String query = "SELECT DATEPART(MONTH, DateTime) AS Period, SUM(Total) AS Revenue " +
+                "FROM Orders " +
+                "WHERE FORMAT(DateTime, 'yyyy') = '" + formattedYear + "' " +
+                "GROUP BY DATEPART(MONTH, DateTime) " +
                 "ORDER BY Period";
 
-        displayChart(query, "Month", "Period", "FoodRevenue");
+        displayChart(query, "Month", "Period", "Revenue");
     }
-
 
     @FXML
     public void totaldashboardByDay(ActionEvent actionEvent) {
@@ -198,16 +195,14 @@ public class DashBoard1 {
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         String query = tempTable +
-                "SELECT COALESCE(AH.Hour, DATEPART(HOUR, t.dateTimeBook)) AS Period, " +
-                "       SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(f.Total, 0)) AS TotalRevenue " +
+                "SELECT AH.Hour AS Period, " +
+                "       SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(o.Total, 0)) AS TotalRevenue " +
                 "FROM AllHours AH " +
-                "LEFT JOIN Ticket t ON AH.Hour = DATEPART(HOUR, t.dateTimeBook) " +
-                "LEFT JOIN Food f ON AH.Hour = DATEPART(HOUR, f.dateTimeBook) " +
-                "WHERE CAST(t.dateTimeBook AS DATE) = '" + formattedDate + "' " +
-                "   OR CAST(f.dateTimeBook AS DATE) = '" + formattedDate + "' " +
-                "GROUP BY COALESCE(AH.Hour, DATEPART(HOUR, t.dateTimeBook)) " +
-                "ORDER BY COALESCE(AH.Hour, DATEPART(HOUR, t.dateTimeBook))";
-
+                "LEFT JOIN Ticket t ON AH.Hour = DATEPART(HOUR, t.dateTimeBook) AND CAST(t.dateTimeBook AS DATE) = '" + formattedDate + "' " +
+                "LEFT JOIN Orders o ON AH.Hour = DATEPART(HOUR, o.DateTime) AND CAST(o.DateTime AS DATE) = '" + formattedDate + "' " +
+                "GROUP BY AH.Hour " +
+                "HAVING SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(o.Total, 0)) > 0 " +
+                "ORDER BY AH.Hour";
         displayChart(query, "Hour", "Period", "TotalRevenue");
         setTableComboBox("Total");
     }
@@ -221,13 +216,13 @@ public class DashBoard1 {
         String formattedCurrentDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String formattedStartOfWeek = startOfWeek.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        String query = "SELECT DATENAME(WEEKDAY, t.dateTimeBook) AS DayOfWeek, " +
-                "       SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(f.Total, 0)) AS TotalRevenue " +
+        String query = "SELECT DATENAME(WEEKDAY, COALESCE(t.dateTimeBook, o.DateTime)) AS DayOfWeek, " +
+                "       SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(o.Total, 0)) AS TotalRevenue " +
                 "FROM Ticket t " +
-                "LEFT JOIN Food f ON CAST(t.dateTimeBook AS DATE) = CAST(f.dateTimeBook AS DATE) " +
-                "WHERE CAST(t.dateTimeBook AS DATE) BETWEEN '" + formattedStartOfWeek + "' AND '" + formattedCurrentDate + "' " +
-                "GROUP BY DATENAME(WEEKDAY, t.dateTimeBook), DATEPART(WEEKDAY, t.dateTimeBook) " +
-                "ORDER BY DATEPART(WEEKDAY, t.dateTimeBook)";
+                "FULL OUTER JOIN Orders o ON CAST(t.dateTimeBook AS DATE) = CAST(o.DateTime AS DATE) " +
+                "WHERE CAST(COALESCE(t.dateTimeBook, o.DateTime) AS DATE) BETWEEN '" + formattedStartOfWeek + "' AND '" + formattedCurrentDate + "' " +
+                "GROUP BY DATENAME(WEEKDAY, COALESCE(t.dateTimeBook, o.DateTime)), DATEPART(WEEKDAY, COALESCE(t.dateTimeBook, o.DateTime)) " +
+                "ORDER BY DATEPART(WEEKDAY, COALESCE(t.dateTimeBook, o.DateTime))";
 
         displayChart(query, "Day of Week", "DayOfWeek", "TotalRevenue");
         setTableComboBox("Total");
@@ -238,11 +233,12 @@ public class DashBoard1 {
         LocalDate currentDate = LocalDate.now();
         String formattedMonth = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM"));
 
-        String query = "SELECT DATEPART(DAY, COALESCE(t.dateTimeBook, f.dateTimeBook)) AS Period, SUM(COALESCE(t.Total, 0) + COALESCE(f.Total, 0)) AS Revenue " +
+        String query = "SELECT DATEPART(DAY, COALESCE(t.dateTimeBook, o.DateTime)) AS Period, " +
+                "       SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(o.Total, 0)) AS TotalRevenue " +
                 "FROM Ticket t " +
-                "FULL OUTER JOIN Food f ON CAST(t.dateTimeBook AS DATE) = CAST(f.dateTimeBook AS DATE) " +
-                "WHERE FORMAT(COALESCE(t.dateTimeBook, f.dateTimeBook), 'yyyy-MM') = '" + formattedMonth + "' " +
-                "GROUP BY DATEPART(DAY, COALESCE(t.dateTimeBook, f.dateTimeBook)) " +
+                "FULL OUTER JOIN Orders o ON CAST(t.dateTimeBook AS DATE) = CAST(o.DateTime AS DATE) " +
+                "WHERE FORMAT(COALESCE(t.dateTimeBook, o.DateTime), 'yyyy-MM') = '" + formattedMonth + "' " +
+                "GROUP BY DATEPART(DAY, COALESCE(t.dateTimeBook, o.DateTime)) " +
                 "ORDER BY Period";
 
         displayChart(query, "Day", "Period", "Revenue");
@@ -253,17 +249,19 @@ public class DashBoard1 {
         LocalDate currentDate = LocalDate.now();
         String formattedYear = currentDate.format(DateTimeFormatter.ofPattern("yyyy"));
 
-        String query = "SELECT DATEPART(MONTH, COALESCE(t.dateTimeBook, f.dateTimeBook)) AS Period, SUM(COALESCE(t.Total, 0) + COALESCE(f.Total, 0)) AS Revenue " +
+        String query = "SELECT DATEPART(MONTH, COALESCE(t.dateTimeBook, o.DateTime)) AS Period, " +
+                "       SUM(COALESCE(t.Total, 0)) + SUM(COALESCE(o.Total, 0)) AS TotalRevenue " +
                 "FROM Ticket t " +
-                "FULL OUTER JOIN Food f ON CAST(t.dateTimeBook AS DATE) = CAST(f.dateTimeBook AS DATE) " +
-                "WHERE FORMAT(COALESCE(t.dateTimeBook, f.dateTimeBook), 'yyyy') = '" + formattedYear + "' " +
-                "GROUP BY DATEPART(MONTH, COALESCE(t.dateTimeBook, f.dateTimeBook)) " +
+                "FULL OUTER JOIN Orders o ON CAST(t.dateTimeBook AS DATE) = CAST(o.DateTime AS DATE) " +
+                "WHERE FORMAT(COALESCE(t.dateTimeBook, o.DateTime), 'yyyy') = '" + formattedYear + "' " +
+                "GROUP BY DATEPART(MONTH, COALESCE(t.dateTimeBook, o.DateTime)) " +
                 "ORDER BY Period";
 
         displayChart(query, "Month", "Period", "Revenue");
     }
 
     public void initialize() {
+
         ObservableList<String> tableList = FXCollections.observableArrayList(
                 "Ticket",
                 "Food",
@@ -385,5 +383,4 @@ public class DashBoard1 {
             e.printStackTrace();
         }
     }
-
 }

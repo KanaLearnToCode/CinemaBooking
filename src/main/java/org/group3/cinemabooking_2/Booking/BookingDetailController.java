@@ -28,6 +28,7 @@ import org.group3.cinemabooking_2.EditProfile.EditProfileController;
 import org.group3.cinemabooking_2.LoginController;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -52,9 +53,8 @@ public class BookingDetailController implements Initializable {
     private ArrayList<TicketJ> seatIDArrayList = new ArrayList<>();
     private Movie movie;
 
-
     @FXML
-    private AnchorPane checkingSeatBooked;
+    private VBox checkingSeatBooked;
 
     @FXML
     private Label NameAdminBooked;
@@ -141,6 +141,9 @@ public class BookingDetailController implements Initializable {
     private Button btnPayment;
 
     @FXML
+    private ImageView moviePoster;
+
+    @FXML
     void onBackToBookDetail(MouseEvent event) {
         checkingSeatBooked.setVisible(false);
     }
@@ -170,6 +173,7 @@ public class BookingDetailController implements Initializable {
     @FXML
     void onOK(ActionEvent event) {
         checkingSeatBooked.setVisible(false);
+        bookingSeat.setVisible(true);
     }
 
     private void createSeats() throws IOException {
@@ -206,6 +210,13 @@ public class BookingDetailController implements Initializable {
         durationMovie.setText(movie.getAmoutOfLimit() + "");
         author.setText(movie.getAuthor());
         typeOfMovie.setText(movie.getTypeOfMovie());
+        try {
+            InputStream inputStreamImage = new FileInputStream(movie.getImagesPoster());
+            Image image = new Image(inputStreamImage);
+            moviePoster.setImage(image);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         bookingSeat.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -215,18 +226,11 @@ public class BookingDetailController implements Initializable {
             }
         });
 
-        checkingSeatBooked.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                System.out.println(1);
-            }
-        });
-
         payment.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 paymentAction();
             }
         });
-
 
         try {
             List<LocalDate> listDateOfST = getDatesForShowTimes(String.valueOf(movie.getId()), String.valueOf(App.currentDay));
@@ -478,7 +482,8 @@ public class BookingDetailController implements Initializable {
     private List<LocalDate> getDatesForShowTimes(String movieId, String specificDate) throws SQLException {
         List<LocalDate> listDateOfST = new ArrayList<>();
         try (Connection connection = JDBCUtil.getConnection()) {
-            String getDate = "SELECT DISTINCT date FROM ShowTimes WHERE IDMovie = ? AND CONVERT(date, ShowTimes.date) >= ?";
+            String getDate = "SELECT DISTINCT date FROM ShowTimes WHERE IDMovie = ? AND CONVERT(date, ShowTimes.date) >= ? " +
+                    "ORDER BY date ASC";
             PreparedStatement pS = connection.prepareStatement(getDate);
             pS.setString(1, movieId);
             pS.setString(2, specificDate);
@@ -647,8 +652,13 @@ public class BookingDetailController implements Initializable {
     public void checkSeat(Circle seat) {
         TicketJ ticket = new TicketJ();
         if (seat.getFill().equals(Color.web("#ed6775"))) {
+            bookingSeat.setVisible(false);
             checkingSeatBooked.setVisible(true);
             getInforSeat(seat);
+
+            checkingSeatBooked.setOnKeyPressed(event -> {
+                bookingSeat.setOnKeyPressed(null);
+            });
         } else if (seat.getFill().equals(Color.web("#1e90ff"))) {
             seat.setFill(Color.web("#FFA500"));
             ticket.setSeatID(seat.getId());
