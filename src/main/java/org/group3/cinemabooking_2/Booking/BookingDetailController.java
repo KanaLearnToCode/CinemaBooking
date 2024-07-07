@@ -598,7 +598,7 @@ public class BookingDetailController implements Initializable {
                 seatIDBooked.setText(rS.getString("IDSeat"));
                 movieNameBooked.setText(BookingController.getMovie().getMovieName());
                 theaterNameBooked.setText(theaterOfST.getSelectionModel().getSelectedItem().split(" ")[1]);
-                dateTimeBooked.setText(rS.getString("dateTimeBook"));
+                dateTimeBooked.setText(rS.getString("dateTimeBook").split("\\.")[0]);
                 emailCustomerBooked.setText(rS.getString("EmailClient"));
                 nameAccountBooked = rS.getString("IDAccountBook");
             }

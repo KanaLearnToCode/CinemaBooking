@@ -17,7 +17,7 @@
         <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="1111.0">
             <Label prefHeight="56.0" prefWidth="948.0" text="ShowTimes" textFill="WHITE">
                 <font>
-                    <Font name="Lato Black" size="30.0" />
+                    <Font name="Lato Black" size="25.0" />
                 </font>
             </Label>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -37,7 +37,7 @@
         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="1103.0" spacing="13.0">
             <Label prefHeight="42.0" prefWidth="876.0" text="ComingSoon" textFill="WHITE">
                 <font>
-                    <Font name="Lato Black" size="30.0" />
+                    <Font name="Lato Black" size="25.0" />
                 </font>
             </Label>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by:">
