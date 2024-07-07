@@ -2,8 +2,6 @@ package entity.entity;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
-
 @Entity
 public class Product {
     @Id
@@ -14,10 +12,10 @@ public class Product {
     private String name;
 
     @Column(name = "Price")
-    private Instant price;
+    private Double price;
 
-    @Column(name = "Quantity")
-    private Double quantity;
+    @Column(name = "QuantityLeft")
+    private Integer quantityLeft;
 
     @Column(name = "ImageProduct", length = 50)
     private String imageProduct;
@@ -42,20 +40,20 @@ public class Product {
         this.name = name;
     }
 
-    public Instant getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Instant price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public Integer getQuantityLeft() {
+        return quantityLeft;
     }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
+    public void setQuantityLeft(Integer quantityLeft) {
+        this.quantityLeft = quantityLeft;
     }
 
     public String getImageProduct() {

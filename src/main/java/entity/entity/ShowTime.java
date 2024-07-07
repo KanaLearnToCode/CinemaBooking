@@ -9,7 +9,6 @@ import java.time.LocalTime;
 @Table(name = "ShowTimes")
 public class ShowTime {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDShowTimes", nullable = false)
     private Integer id;
 

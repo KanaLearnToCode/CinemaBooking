@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import org.group3.cinemabooking_2.App;
 import org.group3.cinemabooking_2.Booking.BookingController;
 import org.group3.cinemabooking_2.Connection.JDBCUtil;

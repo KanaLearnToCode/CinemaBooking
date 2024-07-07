@@ -97,8 +97,8 @@ create table Product(
 	IDProduct int identity(1,1) primary key,
 	Name varchar(20),
 	Price float,
-	Quantity int,
-	ImageProduct varchar(50),
+	QuantityLeft int,
+	ImageProduct varchar(150),
 	IDCategory int foreign key references CategoryProduct(IDCategory)
  )
 go
@@ -114,17 +114,18 @@ create table OrdersDetail(
 go
 
 INSERT INTO Account (Name,Email,Password,PhoneNumber,DateOfBirth,Role,Avatar) VALUES
-('Trinh Hoan Vu', '1', '1', '0398577140', '1998-04-25', 1, 'D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\CinemaPLUSLogo.png'),
-('Trinh Hoan Vu', 'llstylishv2@gmail.com', '1', '0398577140', '1998-04-25', 1, 'D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\CinemaPLUSLogo.png');
+('Trinh Hoan Vu', '1', '1', '0398577140', '1998-04-25', 'staff', 'D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\CinemaPLUSLogo.png'),
+('Trinh Hoan Vu', 'llstylishv2@gmail.com', '1', '0398577140', '1998-04-25', 'owner', 'D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\CinemaPLUSLogo.png');
 GO
 
 insert into Movie (MovieName,AmoutOfLimit,Author,TypeOfMovie,ImagesPoster,ImagesBackdrop)
 values
-('Two Faces',120,'Action','kar1a','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Kungfuphanda4.jpg',null),
-('Two Faces',120,'Action','kar1a','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Kungfuphanda4.jpg',null),
-('Now You See Me',120,'Action','kar1a','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Kungfuphanda4.jpg',null),
-('Kungfu Panda 4',120,'Action','kar1a','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Kungfuphanda4.jpg',null),
-('Kungfu Panda 4',120,'Action','kar1a','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Kungfuphanda4.jpg',null)
+('Kingdom of the Planet of the Apes',145,'Science Fiction Action','Wes Ball','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Poster\kingdomplanet.jpg','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Backdrop\kingdomplanet.jpg'),
+('Monkey Man',121,'Action Thriller','Dev Patel','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Poster\monkeyman.jpg','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Backdrop\monkeyman.jpg'),
+('No Way Up',90,'Survival Thriller','Claudio Fäh','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Poster\nowayup.jpg','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Backdrop\nowayup.jpg'),
+('The Garfield',101,'Adventure Comedy','Mark Dindal','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Poster\thegrafield.jpg','D:\T1.2308.A0\7. Java\3.JP2\JavaFX\CinemaBooking_2\CinemaBooking_2\src\main\resources\Images\Backdrop\thegrafield.jpg')
+
+
 
 
 insert into Theater values
@@ -159,29 +160,4 @@ insert into ShowTimes(StartTime,EndTime,date,IDMovie,IDTheater,Price) values
 ('13:00:00','15:00:00','2024-08-08',2, 1,6)
 go
 
-insert into Client values
-('imkar2a@gmail.com','0368577140','Matado')
-
-INSERT INTO Seat (IDSeat, IDShowTime) VALUES
-('A2', 6),
-('A3', 5),
-('A4', 5)
-GO
-
-INSERT INTO Ticket (DateTimeBook, EmailClient, IDSeat, IDSeatShowTime, IDAccountBook, Total) VALUES 
-('2024-05-30 12:30:00.000', 'imkar2a@gmail.com', 'A2', 6, 1, 5),
-('2024-05-30 12:30:00.000', 'imkar2a@gmail.com', 'A3', 5, 1, 5),
-('2024-05-30 12:30:00.000', 'imkar2a@gmail.com', 'A4', 5, 1, 5)
-
-GO
-
-SELECT date, startTime, endTime 
-FROM ShowTimes 
-WHERE IDMovie = 1 
-AND IDTheater = 1 
-AND (
-    (CONVERT(date, ShowTimes.date) = CONVERT(date, '2024/06/03') AND CONVERT(time, ShowTimes.StartTime) >= CONVERT(time, '16:00:00')) 
-    OR 
-    (CONVERT(date, ShowTimes.date) > CONVERT(date, '2024/06/03'))
-)
 

@@ -227,6 +227,7 @@ public class EditProfileController implements Initializable {
         } catch (Exception e) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
     }

@@ -207,7 +207,7 @@ public class BookingDetailController implements Initializable {
         btnCheckOut.setDisable(true);
 
         movieName.setText(movie.getMovieName());
-        durationMovie.setText(movie.getAmoutOfLimit() + "");
+        durationMovie.setText(movie.getAmoutOfLimit() + " mins");
         author.setText(movie.getAuthor());
         typeOfMovie.setText(movie.getTypeOfMovie());
         try {
@@ -248,7 +248,7 @@ public class BookingDetailController implements Initializable {
                 createSeats();
 
                 choosenDay = dateOfST.getSelectionModel().getSelectedItem();
-                choosenTheater = theaterOfST.getSelectionModel().getSelectedItem();
+                choosenTheater = theaterOfST.getSelectionModel().getSelectedItem().split(" ")[1];
                 choosenTime = timeOfST.getSelectionModel().getSelectedItem().split(" ")[0];
             }
 
@@ -266,7 +266,7 @@ public class BookingDetailController implements Initializable {
             theaterOfST.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     updateTimeComboBox(String.valueOf(movie.getId()), dateOfST.getSelectionModel().getSelectedItem(), newValue);
-                    choosenTheater = newValue;
+                    choosenTheater = newValue.split(" ")[1];
                 }
             });
 
@@ -474,6 +474,7 @@ public class BookingDetailController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
         return id;
@@ -506,7 +507,7 @@ public class BookingDetailController implements Initializable {
             pS.setString(1, movieId);
             pS.setString(2, specificDate.toString());
             pS.setString(3, timeSelected.split("\\.")[0]); // Handle fractional seconds
-            pS.setString(4, selectedTheater);
+            pS.setString(4, selectedTheater.split(" ")[1]);
 
             ResultSet rs = pS.executeQuery();
             while (rs.next()) {
@@ -529,7 +530,7 @@ public class BookingDetailController implements Initializable {
 
             ResultSet rsTheater = pSGetTheater.executeQuery();
             while (rsTheater.next()) {
-                listTheaterOfST.add(rsTheater.getString("IDTheater"));
+                listTheaterOfST.add("Theater: " + rsTheater.getString("IDTheater"));
             }
 
             ObservableList<String> listTheaterST = FXCollections.observableArrayList(listTheaterOfST);
@@ -550,7 +551,7 @@ public class BookingDetailController implements Initializable {
                     "(CONVERT(date, ?) > CONVERT(date, ?))) AND CONVERT(date, ShowTimes.date) = ?";
             PreparedStatement pS = finalConnection.prepareStatement(getDate);
             pS.setString(1, idMovie);
-            pS.setString(2, selectedTheater);
+            pS.setString(2, selectedTheater.split(" ")[1]);
             pS.setString(3, String.valueOf(selectedDate));
             pS.setString(4, String.valueOf(App.currentDay));
             pS.setString(5, String.valueOf(App.currentTime));
@@ -564,7 +565,6 @@ public class BookingDetailController implements Initializable {
                 String endTime = rs.getString("endTime").split("\\.")[0]; // Remove fractional seconds
                 listTimeOfSt.add(startTime + " - " + endTime);
             }
-
 
             ObservableList<String> listTimeST = FXCollections.observableArrayList(listTimeOfSt);
             timeOfST.setItems(listTimeST);
@@ -590,14 +590,14 @@ public class BookingDetailController implements Initializable {
             PreparedStatement pS = connection.prepareStatement(sql);
             pS.setString(1, String.valueOf(dateOfST.getSelectionModel().getSelectedItem()));
             pS.setString(2, timeOfST.getSelectionModel().getSelectedItem().split(" ")[0]);
-            pS.setString(3, theaterOfST.getSelectionModel().getSelectedItem());
+            pS.setString(3, theaterOfST.getSelectionModel().getSelectedItem().split(" ")[1]);
             pS.setString(4, seat.getId());
             ResultSet rS = pS.executeQuery();
 
             while (rS.next()) {
                 seatIDBooked.setText(rS.getString("IDSeat"));
                 movieNameBooked.setText(BookingController.getMovie().getMovieName());
-                theaterNameBooked.setText(theaterOfST.getSelectionModel().getSelectedItem());
+                theaterNameBooked.setText(theaterOfST.getSelectionModel().getSelectedItem().split(" ")[1]);
                 dateTimeBooked.setText(rS.getString("dateTimeBook"));
                 emailCustomerBooked.setText(rS.getString("EmailClient"));
                 nameAccountBooked = rS.getString("IDAccountBook");
@@ -656,9 +656,7 @@ public class BookingDetailController implements Initializable {
             checkingSeatBooked.setVisible(true);
             getInforSeat(seat);
 
-            checkingSeatBooked.setOnKeyPressed(event -> {
-                bookingSeat.setOnKeyPressed(null);
-            });
+            checkingSeatBooked.setOnKeyPressed(event -> bookingSeat.setOnKeyPressed(null));
         } else if (seat.getFill().equals(Color.web("#1e90ff"))) {
             seat.setFill(Color.web("#FFA500"));
             ticket.setSeatID(seat.getId());

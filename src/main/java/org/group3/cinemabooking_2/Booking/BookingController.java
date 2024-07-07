@@ -31,13 +31,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
+
 
 public class BookingController implements Initializable {
 
@@ -214,6 +213,7 @@ public class BookingController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
         return movieList;
@@ -239,6 +239,7 @@ public class BookingController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
         return movieList;
@@ -268,6 +269,7 @@ public class BookingController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
         return movieList;

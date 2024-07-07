@@ -27,10 +27,6 @@ public class Ticket {
     @Column(name = "Total")
     private Double total;
 
-    public String getSeatNumber() {
-        return seat != null ? seat.getId().getIDSeat() : null;
-    }
-
     public Integer getId() {
         return id;
     }
