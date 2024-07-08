@@ -1,0 +1,46 @@
+.root {
+    -fx-background-color: transparent;
+}
+
+.label {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-text-fill: black;
+}
+
+.payBtnFood {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4c67ec, #35a7ec);
+    -fx-text-fill: white;
+    -fx-border-radius: 4px;
+}
+
+.text-field {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+}
+
+.table-view {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-background-color: none;
+
+}
+
+.table-column {
+    -fx-background-color: none;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-text-fill: black;
+}
+
+.titlelabel {
+    -fx-text-fill: whitesmoke;
+}
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.group3.cinemabooking_2.Food.OrderSummaryController">
+   <children>
+      <VBox layoutX="-3.0" layoutY="-2.0" prefHeight="656.0" prefWidth="394.0" style="-fx-background-color: black;">
+         <children>
+            <VBox prefHeight="526.0" prefWidth="374.0">
+               <children>
+                  <TableView fx:id="tvOrderSummary" prefHeight="480.0" prefWidth="386.0" style="-fx-background-color: black;">
+                     <columns>
+                        <TableColumn fx:id="colOrderFood" prefWidth="184.79998779296875" text="Food" />
+                        <TableColumn fx:id="colOrderQuantity" prefWidth="108.0" text="Quantity" />
+                        <TableColumn fx:id="colOrderPrice" prefWidth="100.79998779296875" text="Price" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+            <HBox prefHeight="58.0" prefWidth="374.0">
+               <children>
+                  <Label contentDisplay="CENTER" text="TOTAL: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="50.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="orderTotal" contentDisplay="CENTER" prefHeight="27.0" prefWidth="84.0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox prefHeight="53.0" prefWidth="374.0">
+               <children>
+                  <Label fx:id="dateTimeLabel" prefHeight="18.0" prefWidth="113.0" style="-fx-text-fill: white;">
+                     <VBox.margin>
+                        <Insets left="240.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

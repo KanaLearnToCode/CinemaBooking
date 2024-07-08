@@ -146,6 +146,7 @@ public class BookingDetailController implements Initializable {
     @FXML
     void onBackToBookDetail(MouseEvent event) {
         checkingSeatBooked.setVisible(false);
+        bookingSeat.setVisible(true);
     }
 
     @FXML
@@ -240,12 +241,14 @@ public class BookingDetailController implements Initializable {
                 dateOfST.getSelectionModel().select(listDateST.getFirst());
                 updateTheaterComboBox(movie, listDateST.getFirst());
                 updateTimeComboBox(String.valueOf(movie.getId()), dateOfST.getSelectionModel().getSelectedItem(), theaterOfST.getSelectionModel().getSelectedItem());
+
                 LocalDate dateSelected = dateOfST.getSelectionModel().getSelectedItem();
                 String theaterSelected = theaterOfST.getSelectionModel().getSelectedItem();
                 String timeSelected = timeOfST.getSelectionModel().getSelectedItem();
 
                 reservedSeatList = getReservedSeat(String.valueOf(movie.getId()), dateSelected, theaterSelected, timeSelected.split(" ")[0]);
                 createSeats();
+
 
                 choosenDay = dateOfST.getSelectionModel().getSelectedItem();
                 choosenTheater = theaterOfST.getSelectionModel().getSelectedItem().split(" ")[1];
@@ -544,7 +547,7 @@ public class BookingDetailController implements Initializable {
     private void updateTimeComboBox(String idMovie, LocalDate selectedDate, String selectedTheater) {
         List<String> listTimeOfSt = new ArrayList<>();
         try (Connection finalConnection = JDBCUtil.getConnection()) {
-            String getDate = "SELECT date, startTime, endTime FROM ShowTimes WHERE IDMovie = ?" +
+            String getDate = "SELECT distinct date, startTime, endTime FROM ShowTimes WHERE IDMovie = ?" +
                     "AND IDTheater = ? AND (" +
                     "(CONVERT(date, ?) = CONVERT(date, ?) AND " +
                     "CONVERT(time, ShowTimes.StartTime) >= CONVERT(time, ?)) OR " +
@@ -571,6 +574,7 @@ public class BookingDetailController implements Initializable {
             if (!listTimeST.isEmpty()) {
                 timeOfST.getSelectionModel().select(listTimeOfSt.getFirst());
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

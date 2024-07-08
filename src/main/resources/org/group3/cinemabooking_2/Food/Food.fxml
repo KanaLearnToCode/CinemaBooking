@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="740.0" prefWidth="1140.0" stylesheets="@../CSS/Food/cinema.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Food.FoodController">
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1140.0">
+        <children>
+            <TableView fx:id="tvFood" layoutY="52.0" prefHeight="690.0" prefWidth="770.0">
+                <columns>
+                    <TableColumn fx:id="colImg" prefWidth="206.66665244102478" text="IMAGES" />
+                    <TableColumn fx:id="colFood" prefWidth="326.1333923339844" text="FOOD NAME" />
+                    <TableColumn fx:id="colQuantity" prefWidth="118.13330078125" text="QUANTITY" />
+                    <TableColumn fx:id="colPrice" minWidth="9.600006103515625" prefWidth="121.066650390625" text="PRICE" />
+                </columns>
+            </TableView>
+            <AnchorPane layoutX="770.0" layoutY="5.0" prefHeight="750.0" prefWidth="370.0">
+                <children>
+                    <TableView fx:id="tvOrder" layoutY="47.2" prefHeight="331.0" prefWidth="366.0" AnchorPane.bottomAnchor="372.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="47.0">
+                        <columns>
+                            <TableColumn fx:id="orderFood" prefWidth="119.20001220703125" text="Food Name" />
+                            <TableColumn fx:id="orderPrice" minWidth="0.0" prefWidth="116.00006103515625" text="Price" />
+                            <TableColumn fx:id="orderQuantity" prefWidth="132.0" text="Quantity" />
+                        </columns>
+                    </TableView>
+                    <Label layoutX="51.19999999999999" layoutY="553.0" prefHeight="30.0" prefWidth="76.0" styleClass="titlelabel" text="Total:" textFill="WHITE" AnchorPane.bottomAnchor="167.0" AnchorPane.rightAnchor="243.2">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="orderTotal" layoutX="146.39999999999998" layoutY="553.0" prefHeight="30.0" prefWidth="85.0" styleClass="titlelabel" text="\$0" textFill="WHITE" AnchorPane.bottomAnchor="167.0" AnchorPane.rightAnchor="138.4">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Label>
+                    <Button layoutX="6.4" layoutY="583.0" mnemonicParsing="false" onAction="#pay" prefHeight="64.0" prefWidth="357.0" styleClass="payBtnFood" text="PAY" textFill="WHITE" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="7.0">
+                        <font>
+                            <Font name="System Bold" size="33.0" />
+                        </font>
+                    </Button>
+                    <Button layoutX="63.0" layoutY="669.0" mnemonicParsing="false" onAction="#delete" prefHeight="47.0" prefWidth="98.0" styleClass="payBtnFood" text="DELETE" textFill="WHITE" AnchorPane.bottomAnchor="34.19999999999993" AnchorPane.leftAnchor="63.0">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Button>
+                    <Button layoutX="200.0" layoutY="669.0" mnemonicParsing="false" onAction="#add" prefHeight="47.0" prefWidth="106.0" styleClass="payBtnFood" text="ADD" textFill="WHITE" AnchorPane.bottomAnchor="34.19999999999993" AnchorPane.rightAnchor="64.0">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Button>
+                    <Label fx:id="dateTimeLabel" layoutX="165.00000000000003" layoutY="13.0" prefHeight="18.0" prefWidth="166.0" textFill="WHITE" AnchorPane.rightAnchor="0.5999999999999659" AnchorPane.topAnchor="13.0">
+                        <font>
+                            <Font name="System Bold" size="15.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="25.0" layoutY="390.0" styleClass="titlelabel" text="AMOUNT:" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="orderAmount" layoutX="151.0" layoutY="385.0" minHeight="30.0" minWidth="36.0" prefHeight="30.0" prefWidth="42.0">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </TextField>
+                    <Label layoutX="29.0" layoutY="518.0" prefHeight="35.0" prefWidth="63.0" styleClass="titlelabel" text="Name" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="emailClient" layoutX="149.0" layoutY="436.0" minHeight="30.0" minWidth="190.0" prefHeight="30.0" prefWidth="190.0">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </TextField>
+                    <Label layoutX="29.0" layoutY="477.0" prefHeight="35.0" prefWidth="63.0" styleClass="titlelabel" text="Phone" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="29.0" layoutY="433.0" prefHeight="35.0" prefWidth="63.0" styleClass="titlelabel" text="Email:" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="phoneNumber" layoutX="149.0" layoutY="477.0" minHeight="30.0" minWidth="190.0" prefHeight="30.0" prefWidth="190.0">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </TextField>
+                    <TextField fx:id="clientName" layoutX="149.0" layoutY="518.0" minHeight="30.0" minWidth="190.0" prefHeight="30.0" prefWidth="190.0">
+                        <font>
+                            <Font name="System Bold" size="18.0" />
+                        </font>
+                    </TextField>
+                </children>
+            </AnchorPane>
+            <Label alignment="CENTER" layoutX="539.0" layoutY="6.0" prefHeight="42.0" prefWidth="110.0" styleClass="titlelabel" text="MENU" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="30.0" />
+                </font>
+            </Label>
+        </children>
+    </AnchorPane>
+</VBox>

@@ -24,4 +24,8 @@ module org.group.cinemabooking_ {
     opens org.group3.cinemabooking_2.EditProfile to javafx.fxml;
     opens org.group3.cinemabooking_2.Dashboard;
     exports org.group3.cinemabooking_2.Dashboard;
+    opens org.group3.cinemabooking_2.Food;
+    exports org.group3.cinemabooking_2.Food;
+    opens org.group3.cinemabooking_2.History;
+    exports org.group3.cinemabooking_2.History;
 }

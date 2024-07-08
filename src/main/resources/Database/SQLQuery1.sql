@@ -155,15 +155,33 @@ insert into ShowTimes values
 ('13:00:00','15:00:00','2024-08-08',2, 1,6)
 go
 
-
 insert into ShowTimes values
-('13:00:00','15:00:00','2024-07-07',1, 1,5),
-('16:00:00','18:00:00','2024-07-07',1, 1,6),
-('13:00:00','15:00:00','2024-07-07',1, 1,6),
-('13:00:00','15:00:00','2024-07-07',1, 2,6),
-('13:00:00','15:00:00','2024-07-07',1, 3,6),
-('13:00:00','15:00:00','2024-07-07',1, 1,6),
-('13:00:00','15:00:00','2024-07-07',2, 1,5)
+('10:00:00','12:00:00','2024-08-04',5, 1,5),
+('13:00:00','15:00:00','2024-08-06',7, 2,6),
+('13:00:00','15:00:00','2024-08-05',8, 2,6),
+('13:00:00','15:00:00','2024-08-07',9, 3,6),
+('13:00:00','15:00:00','2024-08-08',10, 1,6),
+('13:00:00','15:00:00','2024-08-04',6, 1,5),
+('13:00:00','15:00:00','2024-08-06',2, 1,6),
+('16:00:00','18:00:00','2024-08-05',3, 2,6)
 go
 
+
+insert into ShowTimes values
+('16:00:00','18:00:00','2024-07-08',2, 1,6),
+('15:00:00','17:00:00','2024-07-08',3, 1,6),
+('17:00:00','15:00:00','2024-07-08',4, 1,6),
+('20:00:00','21:00:00','2024-07-08',5, 3,6),
+('20:00:00','21:00:00','2024-07-08',6, 2,6),
+('20:00:00','21:00:00','2024-07-08',10, 4,5)
+go
+
+INSERT INTO Product(ImageProduct, NameProduct, Price, QuantityLeft)
+VALUES
+('file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/7UP_1$.jpg', '7UP', 1, 10),
+('file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/Fanta_1$.jpg', 'FANTA', 1, 10),
+('file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/POPCORN_3$.jpg', 'POPCORN', 3, 10),
+('file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/POPCORN_CARAMEL_3$.jpg', 'CARAMEL POPCORN', 3, 10),
+('file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/POPCORN_CHEESE_3$.jpg', 'CHEESE POPCORN', 3, 10)
+GO
 

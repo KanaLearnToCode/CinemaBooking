@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1150.0" spacing="10" stylesheets="@../CSS/History/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.History.MainController">
+    <children>
+        <!-- Buttons to switch views -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button fx:id="orderHistoryButton" onAction="#showOrderHistory" text="Order History" />
+            <Button fx:id="ticketHistoryButton" onAction="#showTicketHistory" text="Ticket History" />
+        </HBox>
+
+        <!-- Container for the views -->
+        <VBox fx:id="contentArea" alignment="CENTER" spacing="10">
+            <!-- Ticket History View -->
+            <VBox fx:id="ticketHistoryView" alignment="CENTER" visible="false">
+                <Label fx:id="ticketHeaderLabel" alignment="CENTER" text="Ticket History" />
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <TextField fx:id="ticketSearchBox" prefWidth="135.0" promptText="Search Ticket..." />
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <TableView fx:id="ticketHistoryTable" prefHeight="450.0" prefWidth="778.0" styleClass="table-view">
+                        <columns>
+                            <TableColumn fx:id="idTicketColumn" prefWidth="75.0" text="ID Ticket" />
+                            <TableColumn fx:id="clientNameTicketColumn" prefWidth="100.0" text="Client Name" />
+                            <TableColumn fx:id="dateTimeBookColumn" prefWidth="150.0" text="Date Time Book" />
+                            <TableColumn fx:id="idSeatColumn" prefWidth="75.0" text="ID Seat" />
+                            <TableColumn fx:id="idTheaterColumn" prefWidth="75.0" text="ID Theater" />
+                            <TableColumn fx:id="idSeatShowTimeColumn" prefWidth="125.0" text="ID Seat Showtime" />
+                            <TableColumn fx:id="movieNameColumn" prefWidth="100.0" text="Movie Name" />
+                            <TableColumn fx:id="totalTicketColumn" prefWidth="75.0" text="Total" />
+                        </columns>
+                    </TableView>
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button onAction="#handleTicketDelete" text="Delete" />
+                </HBox>
+            </VBox>
+
+            <!-- Order History View -->
+            <VBox fx:id="orderHistoryView" alignment="CENTER" visible="false">
+                <Label fx:id="orderHeaderLabel" alignment="CENTER" text="Order History" />
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <TextField fx:id="orderSearchBox" prefWidth="135.0" promptText="Search Orders..." />
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <TableView fx:id="orderHistoryTable" prefHeight="450.0" prefWidth="593.0" styleClass="table-view">
+                        <columns>
+                            <TableColumn fx:id="idOrderDetailColumn" prefWidth="100.0" text="Order Detail ID" />
+                            <TableColumn fx:id="clientNameOrderColumn" prefWidth="100.0" text="Client Name" />
+                            <TableColumn fx:id="dateTimeColumn" prefWidth="100.0" text="Date Time" />
+                            <TableColumn fx:id="idProductColumn" prefWidth="85.0" text="Product ID" />
+                            <TableColumn fx:id="quantityColumn" prefWidth="85.0" text="Quantity" />
+                            <TableColumn fx:id="priceColumn" prefWidth="60.0" text="Price" />
+                            <TableColumn fx:id="totalOrderColumn" prefWidth="60.0" text="Total" />
+                        </columns>
+                    </TableView>
+                </HBox>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button onAction="#handleOrderDelete" text="Delete" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </children>
+</VBox>

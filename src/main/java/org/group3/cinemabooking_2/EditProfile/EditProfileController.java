@@ -205,7 +205,7 @@ public class EditProfileController implements Initializable {
                     "July", "August", "September", "October", "November", "December"
             );
             ObservableList<Integer> listYear = FXCollections.observableArrayList();
-            for (int i = currentTime.getYear() - 100; i <= currentTime.getYear() - 18; i++) {
+            for (int i = currentTime.getYear() - 50; i <= currentTime.getYear() - 18; i++) {
                 listYear.add(i);
             }
 

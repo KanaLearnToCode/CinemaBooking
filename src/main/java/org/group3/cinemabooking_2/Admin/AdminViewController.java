@@ -63,13 +63,15 @@ public class AdminViewController implements Initializable {
     }
 
     @FXML
-    void onFood(MouseEvent event) {
-
+    void onFood(MouseEvent event) throws IOException {
+        String url = "/org/group3/cinemabooking_2/Food/Food.fxml";
+        App.setTableEventVBox(url, detailTableEvent, 5, 0);
     }
 
     @FXML
-    void onHistoryAd(MouseEvent event) {
-
+    void onHistoryAd(MouseEvent event) throws IOException {
+        String url = "/org/group3/cinemabooking_2/History/History.fxml";
+        App.setTableEventVBox(url, detailTableEvent, 5, 0);
     }
 
     @FXML

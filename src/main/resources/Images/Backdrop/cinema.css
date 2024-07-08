@@ -1,0 +1,63 @@
+.root {
+    -fx-background-color: linear-gradient(from 100.0% 32.9545% to 100.0% 100.0%, #222235 0.0%, #000000 100.0%);
+}
+
+.label {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-text-fill: black;
+}
+
+.paybutton {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-background-color: #33cc00;
+    -fx-text-fill: white;
+    -fx-border-radius: 4px;
+}
+
+.deletebutton{
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-background-color: #ff3333;
+    -fx-text-fill: white;
+    -fx-border-radius: 4px;
+}
+
+.addbutton{
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-font-style: normal;
+    -fx-background-color: #0099ff;
+    -fx-text-fill: white;
+    -fx-border-radius: 4px;
+}
+.text-field {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 4px;
+}
+
+.table-view {
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-font-optical-sizing: auto;
+    -fx-background-color: none;
+
+}
+
+.table-column {
+    -fx-background-color: none;
+    -fx-font-family: "Montserrat SemiBold";
+    -fx-text-fill: black;
+}
+
+.titlelabel {
+    -fx-text-fill: whitesmoke;
+}
+
