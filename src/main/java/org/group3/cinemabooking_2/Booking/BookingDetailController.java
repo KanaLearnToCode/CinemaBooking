@@ -325,53 +325,6 @@ public class BookingDetailController implements Initializable {
 
         if (phonePaymentErr.getText().isBlank() && namePaymentErr.getText().isBlank()
                 && emailPaymentErr.getText().isBlank()) {
-            Connection connection = null;
-            try {
-                connection = JDBCUtil.getConnection();
-
-                String querySelect = "SELECT * from Client where EmailClient = ?"; //check email client
-                PreparedStatement pS = connection.prepareStatement(querySelect);
-                pS.setString(1, txEmail.getText());
-                ResultSet resultSet = pS.executeQuery();
-
-                if (!resultSet.next()) { //insert email client
-                    String queryInsertClient = "INSERT INTO Client(EmailClient, PhoneNumber, Name) VALUES (?, ?, ?)";
-                    pS = connection.prepareStatement(queryInsertClient);
-                    pS.setString(1, txEmail.getText());
-                    pS.setString(2, txPhoneNumber.getText());
-                    pS.setString(3, txName.getText());
-                    pS.executeUpdate();
-                }
-
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-                for (TicketJ ticket : seatIDArrayList) {
-                    String idST = getIDShowTimes(choosenDay, choosenTheater, choosenTime, movie.getId());
-                    String queryInsertSeat = "INSERT INTO Seat (IDSeat, IDShowTime) VALUES (?, ?)"; //insert seat
-                    pS = connection.prepareStatement(queryInsertSeat);
-                    pS.setString(1, ticket.getSeatID());
-                    pS.setString(2, idST);
-                    pS.execute();
-
-                    String queryInsertTicket = "INSERT INTO Ticket " +
-                            "(DateTimeBook, EmailClient, IDSeat, IDSeatShowTime, IDAccountBook, Total) " +
-                            "VALUES (?, ?, ?, ?, ?, ?)"; // insert ticket
-                    pS = connection.prepareStatement(queryInsertTicket);
-                    pS.setString(1, LocalDateTime.now().format(dateTimeFormatter));
-                    pS.setString(2, txEmail.getText());
-                    pS.setString(3, ticket.getSeatID());
-                    pS.setString(4, idST);
-                    pS.setInt(5, LoginController.getLoggedInUser().getId());
-                    pS.setFloat(6, ticket.getTotal());
-                    pS.execute();
-
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-                assert connection != null;
-                JDBCUtil.closeConnection(connection);
-            }
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("");
@@ -391,7 +344,53 @@ public class BookingDetailController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     Platform.runLater(alert::close);
-                    App.setRoot("Admin/AdminView"); //back to admin booking
+                    Connection connection = null;
+                    try {
+                        connection = JDBCUtil.getConnection();
+                        String querySelect = "SELECT * from Client where EmailClient = ?"; //check email client
+                        PreparedStatement pS = connection.prepareStatement(querySelect);
+                        pS.setString(1, txEmail.getText());
+                        ResultSet resultSet = pS.executeQuery();
+
+                        if (!resultSet.next()) { //insert email client
+                            String queryInsertClient = "INSERT INTO Client(EmailClient, PhoneNumber, Name) VALUES (?, ?, ?)";
+                            pS = connection.prepareStatement(queryInsertClient);
+                            pS.setString(1, txEmail.getText());
+                            pS.setString(2, txPhoneNumber.getText());
+                            pS.setString(3, txName.getText());
+                            pS.executeUpdate();
+                        }
+
+                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                        for (TicketJ ticket : seatIDArrayList) {
+                            String idST = getIDShowTimes(choosenDay, choosenTheater, choosenTime, movie.getId());
+                            String queryInsertSeat = "INSERT INTO Seat (IDSeat, IDShowTime) VALUES (?, ?)"; //insert seat
+                            pS = connection.prepareStatement(queryInsertSeat);
+                            pS.setString(1, ticket.getSeatID());
+                            pS.setString(2, idST);
+                            pS.execute();
+
+                            String queryInsertTicket = "INSERT INTO Ticket " +
+                                    "(DateTimeBook, EmailClient, IDSeat, IDSeatShowTime, IDAccountBook, Total) " +
+                                    "VALUES (?, ?, ?, ?, ?, ?)"; // insert ticket
+                            pS = connection.prepareStatement(queryInsertTicket);
+                            pS.setString(1, LocalDateTime.now().format(dateTimeFormatter));
+                            pS.setString(2, txEmail.getText());
+                            pS.setString(3, ticket.getSeatID());
+                            pS.setString(4, idST);
+                            pS.setInt(5, LoginController.getLoggedInUser().getId());
+                            pS.setFloat(6, ticket.getTotal());
+                            pS.execute();
+
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        assert connection != null;
+                        JDBCUtil.closeConnection(connection);
+                    }
+                    App.setRoot("Admin/AdminView");
                 }
             } catch (Exception e) {
                 System.err.println("Could not load CSS file: " + e.getMessage());

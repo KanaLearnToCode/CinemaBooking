@@ -1,14 +1,13 @@
 package org.group3.cinemabooking_2.EditProfile;
 
 import entity.entity.Account;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -20,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.group3.cinemabooking_2.Admin.AdminViewController;
+import org.group3.cinemabooking_2.App;
 import org.group3.cinemabooking_2.Connection.JDBCUtil;
 import org.group3.cinemabooking_2.LoginController;
 
@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,9 @@ public class EditProfileController implements Initializable {
     private Text newPassErr;
 
     @FXML
+    private Text newCfPassErr;
+
+    @FXML
     private Text newPhoneNumberErr;
 
     @FXML
@@ -69,6 +73,9 @@ public class EditProfileController implements Initializable {
 
     @FXML
     private TextField txNewPhoneNumber;
+
+    @FXML
+    private PasswordField txNewCfPass;
 
     @FXML
     private ComboBox<Integer> yearInDOB;
@@ -90,40 +97,34 @@ public class EditProfileController implements Initializable {
         newNameErr.setText("");
         newPassErr.setText("");
         newPhoneNumberErr.setText("");
+        newCfPassErr.setText("");
         Connection connection = null;
         try {
             connection = JDBCUtil.getConnection();
 
             if (!checkPassword(txNewPass.getText())) {
-                newPassErr.setText("password must be letter and number, from 8-16 characters");
+                newPassErr.setText("Password must be letter and number, from 8-16 characters");
             }
             if (!checkName(txNewName.getText())) {
-                newNameErr.setText("name must be alphabet and from 3-50 characters");
+                newNameErr.setText("Name must be alphabet and from 3-50 characters");
             }
             if (!checkPhoneNumber(txNewPhoneNumber.getText())) {
-                newPhoneNumberErr.setText("phone number must be number and 10 characters");
+                newPhoneNumberErr.setText("Phone number must be number and 10 characters");
+            }
+            if (!txNewCfPass.getText().equals(txNewPass.getText())) {
+                newCfPassErr.setText("Confirm Password should be the same with New Pass");
             }
 
-            if (newPassErr.getText().isBlank() && newNameErr.getText().isBlank() && newPhoneNumberErr.getText().isBlank()) {
+            if (newPassErr.getText().isBlank() && newNameErr.getText().isBlank() && newPhoneNumberErr.getText().isBlank()
+                    && newCfPassErr.getText().isBlank()) {
                 int year = yearInDOB.getSelectionModel().getSelectedItem();
                 int month = monthInDOB.getItems().indexOf(monthInDOB.getSelectionModel().getSelectedItem()) + 1;
                 int day = dayInDOB.getSelectionModel().getSelectedItem();
 
 
-                String sqlUpdate = "UPDATE Account SET  Name = ?, Avatar =?, PhoneNumber = ?"
-                        + ", Password = ?, DateOfBirth = ? WHERE IDAccount = ?";
-                PreparedStatement pS = connection.prepareStatement(sqlUpdate);
-                pS.setString(1, txNewName.getText());
-                pS.setString(2, account.getAvatar());
-                pS.setString(3, txNewPhoneNumber.getText());
-                pS.setString(4, txNewPass.getText());
-                pS.setString(5, year + "/" + month + "/" + day);
-                pS.setInt(6, account.getId());
-                pS.executeUpdate();
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText("");
-                alert.setContentText("Update Profile Successfully");
+                alert.setContentText("Confirm Edit Profile ?");
                 alert.setTitle("Notification");
 
                 try {
@@ -135,11 +136,25 @@ public class EditProfileController implements Initializable {
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
                     alert.setGraphic(imageView);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        Platform.runLater(alert::close);
+                        String sqlUpdate = "UPDATE Account SET  Name = ?, Avatar =?, PhoneNumber = ?"
+                                + ", Password = ?, DateOfBirth = ? WHERE IDAccount = ?";
+                        PreparedStatement pS = connection.prepareStatement(sqlUpdate);
+                        pS.setString(1, txNewName.getText());
+                        pS.setString(2, account.getAvatar());
+                        pS.setString(3, txNewPhoneNumber.getText());
+                        pS.setString(4, txNewPass.getText());
+                        pS.setString(5, year + "/" + month + "/" + day);
+                        pS.setInt(6, account.getId());
+                        pS.executeUpdate();
+                    }
                 } catch (Exception e) {
                     System.err.println("Could not load CSS file: " + e.getMessage());
                 }
 
-                alert.showAndWait();
                 account.setDateOfBirth(LocalDate.of(year, month, day));
                 account.setPassword(txNewPass.getText());
                 account.setPhoneNumber(txNewPhoneNumber.getText());
@@ -223,6 +238,7 @@ public class EditProfileController implements Initializable {
             txNewName.setText(account.getName());
             txNewPass.setText(account.getPassword());
             txNewPhoneNumber.setText(account.getPhoneNumber());
+            txNewCfPass.setText(account.getPassword());
 
         } catch (Exception e) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, e);

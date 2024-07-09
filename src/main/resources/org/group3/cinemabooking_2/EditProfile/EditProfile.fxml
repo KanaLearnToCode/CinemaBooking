@@ -52,6 +52,29 @@
                 </font>
             </PasswordField>
         </VBox>
+      <VBox prefHeight="89.0" prefWidth="534.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="136.0" text="Confirm Password" textFill="WHITE">
+                     <font>
+                        <Font name="Lato Heavy" size="16.0" />
+                     </font>
+                  </Label>
+                  <Text fx:id="newCfPassErr" fill="#ff3162" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Error">
+                     <font>
+                        <Font name="Lato Medium" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <PasswordField fx:id="txNewCfPass" prefHeight="36.0" prefWidth="354.0" styleClass="txPass">
+               <font>
+                  <Font name="Roboto Medium" size="15.0" />
+               </font>
+            </PasswordField>
+         </children>
+      </VBox>
         <VBox prefHeight="89.0" prefWidth="534.0">
             <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="534.0">
                 <Label prefHeight="27.0" prefWidth="116.0" text="PhoneNumber" textFill="WHITE">

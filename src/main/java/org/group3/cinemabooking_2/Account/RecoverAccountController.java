@@ -70,7 +70,7 @@ public class RecoverAccountController implements Initializable {
         passwordErr.setText("");
         SignUpController signUpController = new SignUpController();
         if (!signUpController.checkPassword(txNewPass.getText())) {
-            passwordErr.setText("Password should be from 8-16 characters");
+            passwordErr.setText("Password must be letter and number, from 8-16 characters");
         }
         if (!txNewPass.getText().equals(txNewPassCf.getText())) {
             passwordCfErr.setText("Confirm Password should be the same with New Pass");
