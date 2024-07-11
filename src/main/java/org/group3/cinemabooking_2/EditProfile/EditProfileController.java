@@ -157,7 +157,7 @@ public class EditProfileController implements Initializable {
                         account.setPassword(txNewPass.getText());
                         account.setPhoneNumber(txNewPhoneNumber.getText());
                         account.setName(txNewName.getText());
-
+                        adminViewController.updateInformation(account.getAvatar(),account.getName());
                     }
                 } catch (Exception e) {
                     System.err.println("Could not load CSS file: " + e.getMessage());
