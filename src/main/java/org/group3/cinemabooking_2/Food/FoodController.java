@@ -1,6 +1,18 @@
 package org.group3.cinemabooking_2.Food;
 
-import entity.entity.Account;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -11,7 +23,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -19,15 +35,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.converter.IntegerStringConverter;
 import org.group3.cinemabooking_2.LoginController;
-
-import java.io.IOException;
-import java.net.URL;
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FoodController implements Initializable {
 
@@ -75,15 +82,14 @@ public class FoodController implements Initializable {
     private Connection connection;
     private ObservableList<Food> foodList;
     private ObservableList<Food> orderList;
-    private Account logginAccount;
-
+//    private Account logginAccount;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String dburl = "jdbc:sqlserver://localhost:1433;databaseName=CinemaBooking;encrypt=true;trustServerCertificate=true;";
         String username = "sa";
         String password = "123";
-        logginAccount = LoginController.getLoggedInUser();
+//        logginAccount = LoginController.getLoggedInUser();
         try {
             connection = DriverManager.getConnection(dburl, username, password);
 //            System.out.println("Connection successful!");
@@ -266,7 +272,7 @@ public class FoodController implements Initializable {
             PreparedStatement insertOrderStmt = connection.prepareStatement(insertOrderQuery, Statement.RETURN_GENERATED_KEYS);
             insertOrderStmt.setString(1, email);
             insertOrderStmt.setString(2, formattedDateTime);
-            insertOrderStmt.setInt(3, logginAccount.getId());
+            insertOrderStmt.setInt(3, LoginController.getLoggedInUser().getId());
             insertOrderStmt.setFloat(4, totalPrice);
             insertOrderStmt.executeUpdate();
 
@@ -321,6 +327,15 @@ public class FoodController implements Initializable {
             orderSummaryStage.setTitle("Bill");
             orderSummaryStage.setScene(orderSummaryScene);
             orderSummaryStage.show();
+
+            orderSummaryStage.setOnHidden(event -> {
+                orderList.clear();
+                tvOrder.refresh();
+                emailClient.clear();
+                phoneNumber.clear();
+                clientName.clear();
+                orderTotal.setText("$0.00");
+            });
 
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -1,18 +1,16 @@
 package org.group3.cinemabooking_2.History;
 
-import java.sql.Date;
-
 public class OrderHistory {
 
     private int idOrderDetail;
     private String clientName;
-    private Date dateTime;
+    private String dateTime;
     private int idProduct;
     private int quantity;
     private float price;
     private float total;
 
-    public OrderHistory(int idOrderDetail, String clientName, Date dateTime, int idProduct, int quantity, float price, float total) {
+    public OrderHistory(int idOrderDetail, String clientName, String dateTime, int idProduct, int quantity, float price, float total) {
         this.idOrderDetail = idOrderDetail;
         this.clientName = clientName;
         this.dateTime = dateTime;
@@ -39,11 +37,11 @@ public class OrderHistory {
         this.clientName = clientName;
     }
 
-    public Date getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 

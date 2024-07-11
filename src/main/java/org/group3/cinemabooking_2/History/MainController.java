@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -12,10 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +64,9 @@ public class MainController {
     @FXML
     private TextField ticketSearchBox;
 
+    @FXML
+    private ComboBox<String> ticketSearchComboBox;
+
     private ObservableList<TicketHistory> ticketHistoryList;
 
     // Order History Fields
@@ -75,7 +83,7 @@ public class MainController {
     private TableColumn<OrderHistory, String> clientNameOrderColumn;
 
     @FXML
-    private TableColumn<OrderHistory, Date> dateTimeColumn;
+    private TableColumn<OrderHistory, String> dateTimeColumn;
 
     @FXML
     private TableColumn<OrderHistory, Integer> idProductColumn;
@@ -92,7 +100,12 @@ public class MainController {
     @FXML
     private TextField orderSearchBox;
 
+    @FXML
+    private ComboBox<String> orderSearchComboBox;
+
     private ObservableList<OrderHistory> orderHistoryList;
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @FXML
     public void initialize() {
@@ -123,11 +136,17 @@ public class MainController {
         ticketSearchBox.textProperty().addListener((observable, oldValue, newValue) -> filterTicketHistory(newValue));
         orderSearchBox.textProperty().addListener((observable, oldValue, newValue) -> filterOrderHistory(newValue));
 
+        // Set up search field selection options
+        ticketSearchComboBox.setItems(FXCollections.observableArrayList("ID Ticket", "Client Name", "Date Time Book", "ID Seat", "ID Theater", "ID Seat Showtime", "Movie Name", "Total"));
+        ticketSearchComboBox.setValue("ID Ticket");  // Set a default value
+
+        orderSearchComboBox.setItems(FXCollections.observableArrayList("Order Detail ID", "Client Name", "Date Time", "Product ID", "Quantity", "Total"));
+        orderSearchComboBox.setValue("Order Detail ID");  // Set a default value
+
         // Show Order History by default
         showOrderHistory();
     }
 
-    // Unified filtering method
     private <T> void filterHistory(TableView<T> table, ObservableList<T> list, String searchText, String field) {
         if (searchText == null || searchText.isEmpty()) {
             table.setItems(list);
@@ -136,9 +155,27 @@ public class MainController {
             for (T item : list) {
                 String value = "";
                 if (item instanceof TicketHistory) {
-                    if ("idTicket".equals(field)) value = String.valueOf(((TicketHistory) item).getIdTicket());
+                    TicketHistory ticket = (TicketHistory) item;
+                    switch (field) {
+                        case "ID Ticket": value = String.valueOf(ticket.getIdTicket()); break;
+                        case "Client Name": value = ticket.getClientName(); break;
+                        case "Date Time Book": value = ticket.getDateTimeBook(); break;
+                        case "ID Seat": value = ticket.getIdSeat(); break;
+                        case "ID Theater": value = String.valueOf(ticket.getIdTheater()); break;
+                        case "ID Seat Showtime": value = String.valueOf(ticket.getIdSeatShowTime()); break;
+                        case "Movie Name": value = ticket.getMovieName(); break;
+                        case "Total": value = String.valueOf(ticket.getTotal()); break;
+                    }
                 } else if (item instanceof OrderHistory) {
-                    if ("idOrderDetail".equals(field)) value = String.valueOf(((OrderHistory) item).getIdOrderDetail());
+                    OrderHistory order = (OrderHistory) item;
+                    switch (field) {
+                        case "Order Detail ID": value = String.valueOf(order.getIdOrderDetail()); break;
+                        case "Client Name": value = order.getClientName(); break;
+                        case "Date Time": value = String.valueOf(order.getDateTime()); break;
+                        case "Product ID": value = String.valueOf(order.getIdProduct()); break;
+                        case "Quantity": value = String.valueOf(order.getQuantity()); break;               
+                        case "Total": value = String.valueOf(order.getTotal()); break;
+                    }
                 }
                 if (value.contains(searchText)) {
                     filteredList.add(item);
@@ -149,11 +186,13 @@ public class MainController {
     }
 
     private void filterTicketHistory(String searchText) {
-        filterHistory(ticketHistoryTable, ticketHistoryList, searchText, "idTicket");
+        String field = ticketSearchComboBox.getValue();
+        filterHistory(ticketHistoryTable, ticketHistoryList, searchText, field);
     }
 
     private void filterOrderHistory(String searchText) {
-        filterHistory(orderHistoryTable, orderHistoryList, searchText, "idOrderDetail");
+        String field = orderSearchComboBox.getValue();
+        filterHistory(orderHistoryTable, orderHistoryList, searchText, field);
     }
 
     // Ticket History Methods
@@ -198,25 +237,46 @@ public class MainController {
     private void handleTicketDelete() {
         TicketHistory selectedTicket = ticketHistoryTable.getSelectionModel().getSelectedItem();
         if (selectedTicket != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Confirmation");
-            alert.setHeaderText("Delete Ticket");
-            alert.setContentText("Are you sure you want to delete this ticket?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                String query = "DELETE FROM Ticket WHERE IDTicket = ?";
-                try (Connection conn = DBConnect.getConnection();
-                     PreparedStatement ps = conn.prepareStatement(query)) {
-                    ps.setInt(1, selectedTicket.getIdTicket());
-                    ps.executeUpdate();
-                    ticketHistoryList.remove(selectedTicket);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            LocalDateTime currentTime = LocalDateTime.now();
+            String cleanedDateTimeBook = selectedTicket.getDateTimeBook().split("\\.")[0]; // Remove the fractional part
+            try {
+                LocalDateTime ticketTime = LocalDateTime.parse(cleanedDateTimeBook, formatter);
+                if (Duration.between(ticketTime, currentTime).toHours() >= 1) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Delete Error");
+                    alert.setHeaderText("Cannot delete ticket history");
+                    alert.setContentText("Cannot delete ticket history older than one hour.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete Confirmation");
+                    alert.setHeaderText("Delete Ticket");
+                    alert.setContentText("Are you sure you want to delete this ticket?");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        deleteTicket(selectedTicket);
+                        loadTicketHistory(); // Refresh the table after deletion
+                    }
                 }
+            } catch (DateTimeParseException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Parsing Error");
+                alert.setHeaderText("Date Parsing Error");
+                alert.setContentText("There was an error parsing the date. Please check the format.");
+                alert.showAndWait();
             }
-        } else {
-            showAlert("No Selection", "No Ticket Selected", "Please select a ticket in the table.");
+        }
+    }
+
+    private void deleteTicket(TicketHistory ticket) {
+        String query = "DELETE FROM Ticket WHERE IDTicket = ?";
+        try (Connection conn = DBConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, ticket.getIdTicket());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -241,13 +301,14 @@ public class MainController {
             while (rs.next()) {
                 int idOrderDetail = rs.getInt("IDOrdersDetail");
                 String clientName = rs.getString("clientName");
-                Date dateTime = rs.getDate("dateTime");
+                Timestamp dateTime = rs.getTimestamp("dateTime");  // Changed to Timestamp
+                String dateTimeStr = dateTime.toLocalDateTime().format(formatter);  // Format to String
                 int idProduct = rs.getInt("IDProduct");
                 int quantity = rs.getInt("Quantity");
                 float price = rs.getFloat("Price");
                 float total = rs.getFloat("Total");
 
-                OrderHistory orderHistory = new OrderHistory(idOrderDetail, clientName, dateTime, idProduct, quantity, price, total);
+                OrderHistory orderHistory = new OrderHistory(idOrderDetail, clientName, dateTimeStr, idProduct, quantity, price, total);
                 orderHistories.add(orderHistory);
             }
         } catch (SQLException e) {
@@ -261,47 +322,49 @@ public class MainController {
     private void handleOrderDelete() {
         OrderHistory selectedOrder = orderHistoryTable.getSelectionModel().getSelectedItem();
         if (selectedOrder != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Confirmation");
-            alert.setHeaderText("Delete Order History");
-            alert.setContentText("Are you sure you want to delete this order history record?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                String query = "DELETE FROM OrdersDetail WHERE IDOrdersDetail = ?";
-                try (Connection conn = DBConnect.getConnection();
-                     PreparedStatement ps = conn.prepareStatement(query)) {
-                    ps.setInt(1, selectedOrder.getIdOrderDetail());
-                    ps.executeUpdate();
-                    orderHistoryList.remove(selectedOrder);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            LocalDateTime currentTime = LocalDateTime.now();
+            LocalDateTime orderTime = LocalDateTime.parse(selectedOrder.getDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            if (Duration.between(orderTime, currentTime).toHours() >= 1) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Delete Error");
+                alert.setHeaderText("Cannot delete order history");
+                alert.setContentText("Cannot delete order history older than one hour.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete Confirmation");
+                alert.setHeaderText("Delete Order");
+                alert.setContentText("Are you sure you want to delete this order?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    deleteOrder(selectedOrder);
+                    loadOrderHistory(); // Refresh the table after deletion
                 }
             }
-        } else {
-            showAlert("No Selection", "No Order Selected", "Please select an order in the table.");
         }
     }
 
+    private void deleteOrder(OrderHistory order) {
+        String query = "DELETE FROM OrdersDetail WHERE IDOrdersDetail = ?";
+        try (Connection conn = DBConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, order.getIdOrderDetail());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Switching between views
     @FXML
     private void showTicketHistory() {
-        ticketHistoryView.setVisible(true);
-        orderHistoryView.setVisible(false);
-        contentArea.getChildren().setAll(ticketHistoryView);
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(ticketHistoryView);
     }
 
     @FXML
     private void showOrderHistory() {
-        orderHistoryView.setVisible(true);
-        ticketHistoryView.setVisible(false);
-        contentArea.getChildren().setAll(orderHistoryView);
-    }
-
-    private void showAlert(String title, String headerText, String contentText) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(orderHistoryView);
     }
 }
