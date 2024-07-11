@@ -88,7 +88,7 @@ public class AdminViewController implements Initializable {
 
     public void updateInformation(String avatarPath, String newName) {
         try (InputStream inputStream = new FileInputStream(avatarPath)) {
-            Image image = new Image(inputStream, 50, 50, false, false);
+            Image image = new Image(inputStream);
             avatar.setFill(new ImagePattern(image));
             userName.setText(newName);
         } catch (IOException e) {
@@ -114,7 +114,7 @@ public class AdminViewController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Image image = new Image(inputStream, 50, 50, false, false);
+        Image image = new Image(inputStream);
         avatar.setFill(new ImagePattern(image));
         userName.setText(accountLogin.getName());
     }

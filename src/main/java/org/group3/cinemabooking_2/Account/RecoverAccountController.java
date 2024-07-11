@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -66,8 +67,33 @@ public class RecoverAccountController implements Initializable {
 
     @FXML
     void onConfirmNewPass(ActionEvent event) {
+        confirmNewPass();
+    }
+
+    @FXML
+    void onBackToLoginButton(ActionEvent event) throws Exception {
+        App.setRoot("LoginView");
+    }
+
+    @FXML
+    void onBackToLogin(MouseEvent event) throws Exception {
+        App.setRoot("LoginView");
+    }
+
+    @FXML
+    void onConfirmRecover(ActionEvent event) {
+        confirmRecoverCode();
+    }
+
+    @FXML
+    void onContinueRecover(ActionEvent event) {
+        continueRecoverEmail();
+    }
+
+    private void confirmNewPass() {
         passwordCfErr.setText("");
         passwordErr.setText("");
+
         SignUpController signUpController = new SignUpController();
         if (!signUpController.checkPassword(txNewPass.getText())) {
             passwordErr.setText("Password must be letter and number, from 8-16 characters");
@@ -87,6 +113,7 @@ public class RecoverAccountController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
+                assert connection != null;
                 JDBCUtil.closeConnection(connection);
             }
             enterEmailRecover.setVisible(false);
@@ -96,19 +123,7 @@ public class RecoverAccountController implements Initializable {
         }
     }
 
-
-    @FXML
-    void onBackToLoginButton(ActionEvent event) throws Exception {
-        App.setRoot("LoginView");
-    }
-
-    @FXML
-    void onBackToLogin(MouseEvent event) throws Exception {
-        App.setRoot("LoginView");
-    }
-
-    @FXML
-    void onConfirmRecover(ActionEvent event) {
+    private void confirmRecoverCode() {
         codeVerificationErr.setText("");
         if (!txVerificationCode.getText().trim().equals(verificationCode)) {
             codeVerificationErr.setText("Invalid Verification Code");
@@ -117,11 +132,15 @@ public class RecoverAccountController implements Initializable {
             confirmVerificationCode.setVisible(false);
             updatePassTable.setVisible(true);
             Congratulaiton.setVisible(false);
+            updatePassTable.setOnKeyPressed(keyEvent -> {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    confirmNewPass();
+                }
+            });
         }
     }
 
-    @FXML
-    void onContinueRecover(ActionEvent event) {
+    private void continueRecoverEmail() {
         emailErrorRecover.setText("");
         String email = txEmailRecover.getText();
         Connection connection = null;
@@ -143,12 +162,18 @@ public class RecoverAccountController implements Initializable {
                 confirmVerificationCode.setVisible(true);
                 updatePassTable.setVisible(false);
                 Congratulaiton.setVisible(false);
+                confirmVerificationCode.setOnKeyPressed(keyEvent -> {
+                    if (keyEvent.getCode() == KeyCode.ENTER) {
+                        confirmRecoverCode();
+                    }
+                });
             } else {
                 emailErrorRecover.setText("Invalid Email");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
     }
@@ -161,5 +186,11 @@ public class RecoverAccountController implements Initializable {
         confirmVerificationCode.setVisible(false);
         updatePassTable.setVisible(false);
         Congratulaiton.setVisible(false);
+
+        enterEmailRecover.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                continueRecoverEmail();
+            }
+        });
     }
 }

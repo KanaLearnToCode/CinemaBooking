@@ -19,19 +19,20 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.group3.cinemabooking_2.Admin.AdminViewController;
-import org.group3.cinemabooking_2.App;
 import org.group3.cinemabooking_2.Connection.JDBCUtil;
 import org.group3.cinemabooking_2.LoginController;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.YearMonth;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -89,8 +90,8 @@ public class EditProfileController implements Initializable {
 
     private static AdminViewController adminViewController;
 
-    public static AdminViewController setAdminController(AdminViewController admin) {
-        return adminViewController = admin;
+    public static void setAdminController(AdminViewController admin) {
+        adminViewController = admin;
     }
 
     private void confirmEditprofile() {
@@ -140,6 +141,7 @@ public class EditProfileController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         Platform.runLater(alert::close);
+                        adminViewController.updateInformation(account.getAvatar(), account.getName());
                         String sqlUpdate = "UPDATE Account SET  Name = ?, Avatar =?, PhoneNumber = ?"
                                 + ", Password = ?, DateOfBirth = ? WHERE IDAccount = ?";
                         PreparedStatement pS = connection.prepareStatement(sqlUpdate);
@@ -150,20 +152,21 @@ public class EditProfileController implements Initializable {
                         pS.setString(5, year + "/" + month + "/" + day);
                         pS.setInt(6, account.getId());
                         pS.executeUpdate();
+
+                        account.setDateOfBirth(LocalDate.of(year, month, day));
+                        account.setPassword(txNewPass.getText());
+                        account.setPhoneNumber(txNewPhoneNumber.getText());
+                        account.setName(txNewName.getText());
+
                     }
                 } catch (Exception e) {
                     System.err.println("Could not load CSS file: " + e.getMessage());
                 }
-
-                account.setDateOfBirth(LocalDate.of(year, month, day));
-                account.setPassword(txNewPass.getText());
-                account.setPhoneNumber(txNewPhoneNumber.getText());
-                account.setName(txNewName.getText());
-                adminViewController.updateInformation(account.getAvatar(), account.getName());
             }
         } catch (Exception e) {
             Logger.getLogger(EditProfileController.class.getName()).log(Level.SEVERE, null, e);
         } finally {
+            assert connection != null;
             JDBCUtil.closeConnection(connection);
         }
     }
@@ -212,7 +215,7 @@ public class EditProfileController implements Initializable {
             LocalDate currentTime = LocalDate.now();
 
             InputStream inputStream = new FileInputStream(account.getAvatar());
-            Image image = new Image(inputStream, 50, 50, false, false);
+            Image image = new Image(inputStream);
             avatarEdit.setFill(new ImagePattern(image));
 
             ObservableList<String> listMonth = FXCollections.observableArrayList(
