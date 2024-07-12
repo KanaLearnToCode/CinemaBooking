@@ -28,4 +28,6 @@ module org.group.cinemabooking_ {
     exports org.group3.cinemabooking_2.Food;
     opens org.group3.cinemabooking_2.History;
     exports org.group3.cinemabooking_2.History;
+    opens org.group3.cinemabooking_2.Management;
+    exports org.group3.cinemabooking_2.Management;
 }

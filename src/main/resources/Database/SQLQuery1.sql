@@ -203,6 +203,15 @@ insert into ShowTimes values
 ('20:00:00','21:00:00','2024-07-11',10, 4,5)
 go
 
+insert into ShowTimes values
+('16:00:00','18:00:00','2024-07-12',2, 1,6),
+('15:00:00','17:00:00','2024-07-12',3, 1,6),
+('17:00:00','15:00:00','2024-07-12',4, 1,6),
+('15:00:00','17:00:00','2024-07-12',5, 3,6),
+('17:00:00','19:00:00','2024-07-12',6, 2,6),
+('20:00:00','21:00:00','2024-07-12',10, 4,5)
+go
+
 INSERT INTO Product(ImageProduct, NameProduct, Price, QuantityLeft)
 VALUES
 ('file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/7UP_1$.jpg', '7UP', 1, 10),

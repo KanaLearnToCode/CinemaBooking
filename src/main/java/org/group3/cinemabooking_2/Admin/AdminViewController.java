@@ -58,8 +58,9 @@ public class AdminViewController implements Initializable {
     }
 
     @FXML
-    void onDataBaseAd(MouseEvent event) {
-
+    void onDataBaseAd(MouseEvent event) throws IOException {
+        String url = "/org/group3/cinemabooking_2/Management/Main.fxml";
+        App.setTableEventVBox(url, detailTableEvent, 5, 0);
     }
 
     @FXML
