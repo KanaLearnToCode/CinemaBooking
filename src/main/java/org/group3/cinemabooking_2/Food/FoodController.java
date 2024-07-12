@@ -331,6 +331,7 @@ public class FoodController implements Initializable {
             orderSummaryStage.setOnHidden(event -> {
                 orderList.clear();
                 tvOrder.refresh();
+                orderAmount.clear();
                 emailClient.clear();
                 phoneNumber.clear();
                 clientName.clear();
