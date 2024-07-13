@@ -141,7 +141,6 @@ public class EditProfileController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         Platform.runLater(alert::close);
-                        adminViewController.updateInformation(account.getAvatar(), account.getName());
                         String sqlUpdate = "UPDATE Account SET  Name = ?, Avatar =?, PhoneNumber = ?"
                                 + ", Password = ?, DateOfBirth = ? WHERE IDAccount = ?";
                         PreparedStatement pS = connection.prepareStatement(sqlUpdate);
