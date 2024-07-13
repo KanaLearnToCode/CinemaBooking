@@ -106,7 +106,6 @@ public class AdminViewController implements Initializable {
             historyTableAd.setVisible(false);
             databaseTableAd.setVisible(false);
         }
-
         InputStream inputStream;
         try {
             inputStream = new FileInputStream(accountLogin.getAvatar());

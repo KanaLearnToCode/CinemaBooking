@@ -207,6 +207,7 @@ public class EditProfileController implements Initializable {
                 confirmEditprofile();
             }
         });
+
         Connection connection = null;
         try {
             connection = JDBCUtil.getConnection();
