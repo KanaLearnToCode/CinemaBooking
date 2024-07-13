@@ -181,8 +181,8 @@ public class EditProfileController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Image");
         fileChooser.setInitialDirectory(new File("D:\\"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPEG File", "*.jpeg"),
-                new FileChooser.ExtensionFilter("JPG File", "*.jpg"),
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG File", "*.jpg"),
+                new FileChooser.ExtensionFilter("JPEG File", "*.jpeg"),
                 new FileChooser.ExtensionFilter("PNG File", "*.png"),
                 new FileChooser.ExtensionFilter("All Files", "*.jpg", "*.png", "*.jpeg"));
         File file = fileChooser.showOpenDialog(stage);

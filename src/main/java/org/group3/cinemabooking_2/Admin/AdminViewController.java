@@ -50,7 +50,6 @@ public class AdminViewController implements Initializable {
         App.setTableEventVBox(url, detailTableEvent, 5, 0);
     }
 
-
     @FXML
     void onDashboardAd(MouseEvent event) throws IOException {
         String url = "/org/group3/cinemabooking_2/Dashboard/dashboard.fxml";
