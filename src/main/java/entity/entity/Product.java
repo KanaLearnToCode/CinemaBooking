@@ -5,11 +5,12 @@ import jakarta.persistence.*;
 @Entity
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDProduct", nullable = false)
     private Integer id;
 
-    @Column(name = "Name", length = 20)
-    private String name;
+    @Column(name = "NameProduct", length = 20)
+    private String nameProduct;
 
     @Column(name = "Price")
     private Double price;
@@ -17,7 +18,7 @@ public class Product {
     @Column(name = "QuantityLeft")
     private Integer quantityLeft;
 
-    @Column(name = "ImageProduct", length = 50)
+    @Column(name = "ImageProduct", length = 150)
     private String imageProduct;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,12 +33,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNameProduct() {
+        return nameProduct;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
     }
 
     public Double getPrice() {
