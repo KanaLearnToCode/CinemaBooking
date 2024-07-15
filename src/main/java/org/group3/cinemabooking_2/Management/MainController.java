@@ -12,14 +12,25 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
+
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.VBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Timer;
@@ -70,15 +81,13 @@ public class MainController {
 
     private Account accountLogin = new Account();
 
-    //    public void setaccountLogin.getRole()(String role) {
-//        this.accountLogin = role;
-//    }
     @FXML
     public void initialize() {
         entity.entity.Account account = LoginController.getLoggedInUser();
         accountLogin.setRole(account.getRole());
+        accountLogin.setIdAccount(account.getId());
 
-        ObservableList<String> tableOptions = FXCollections.observableArrayList("Account", "Movie", "Client", "CategoryProduct", "ShowTimes");
+        ObservableList<String> tableOptions = FXCollections.observableArrayList("Account", "Movie", "Client", "CategoryProduct", "ShowTimes", "Product");
         tableComboBox.setItems(tableOptions);
         tableComboBox.setValue("Account");
         loadAccountData();
@@ -177,6 +186,8 @@ public class MainController {
                 showTimesTableView.setVisible(true);
                 setupShowTimesTableView();
                 showTimesTableView.setItems(showTimesData);
+                break;
+            case "Product":
                 break;
         }
     }
@@ -410,6 +421,7 @@ public class MainController {
         }
     }
 
+
     private static final String DEFAULT_AVATAR_PATH = "D:\\T1.2308.A0\\7. Java\\3.JP2\\JavaFX\\CinemaBooking_2\\CinemaBooking_2\\src\\main\\resources\\Images\\CinemaPLUSLogo.png";
 
     @FXML
@@ -422,8 +434,14 @@ public class MainController {
         if (selectedTable.equals("Account")) {
             Dialog<Account> dialog = new Dialog<>();
             DialogPane dialogPane = dialog.getDialogPane();
-//            dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
-//            dialogPane.getStyleClass().add("dialog-pane");
+            String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+            URL url = getClass().getResource(cssPath);
+            if (url == null) {
+                System.err.println("Could not find CSS file: " + cssPath);
+            } else {
+                dialogPane.getStylesheets().add(url.toExternalForm());
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
             dialog.setTitle("Add New Account");
             dialog.setHeaderText("Enter details for the new account");
 
@@ -460,6 +478,7 @@ public class MainController {
                 return;
             }
 
+
             GridPane grid = new GridPane();
             grid.add(new Label("Name:"), 0, 0);
             grid.add(nameField, 1, 0);
@@ -485,6 +504,11 @@ public class MainController {
             addButton.addEventFilter(ActionEvent.ACTION, event -> {
                 if (!validateAccountInput(nameField, emailField, passwordField, phoneNumberField, dateOfBirthPicker, roleComboBox)) {
                     event.consume();
+                }
+                if (isEmailAlreadyExists(emailField.getText())) {
+                    showAlert(Alert.AlertType.ERROR, "Input Error", "This email is already in use.");
+                    event.consume();
+                    return;
                 }
             });
             nameField.textProperty().addListener((observable, oldValue, newValue) -> addButton.setDisable(false));
@@ -521,7 +545,7 @@ public class MainController {
                     stmt.setString(4, newAccount.getPhoneNumber());
                     stmt.setString(5, newAccount.getDateOfBirth());
                     stmt.setString(6, newAccount.getRole());
-                    stmt.setString(7, newAccount.getAvatar().equals(DEFAULT_AVATAR_PATH) ? null : newAccount.getAvatar());
+                    stmt.setString(7, newAccount.getAvatar());
                     stmt.executeUpdate();
                     loadAccountData();
                 } catch (SQLException e) {
@@ -534,7 +558,13 @@ public class MainController {
         } else if (selectedTable.equals("Movie")) {
             Dialog<Movie> dialog = new Dialog<>();
             DialogPane dialogPane = dialog.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+            String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+            URL url = getClass().getResource(cssPath);
+            if (url == null) {
+                System.err.println("Could not find CSS file: " + cssPath);
+            } else {
+                dialogPane.getStylesheets().add(url.toExternalForm());
+            }
             dialogPane.getStyleClass().add("dialog-pane");
             dialog.setTitle("Add New Movie");
             dialog.setHeaderText("Enter details for the new movie");
@@ -548,8 +578,22 @@ public class MainController {
             authorField.setPromptText("Author");
             TextField amountOfLimitField = new TextField();
             amountOfLimitField.setPromptText("Amount of Limit");
-            TextField typeOfMovieField = new TextField();
-            typeOfMovieField.setPromptText("Type of Movie");
+            ObservableList<CheckBox> movieTypeCheckBoxes = FXCollections.observableArrayList(
+                    Arrays.asList("Romance", "Science fiction", "Western", "Thriller", "Adventure",
+                                    "Animated", "Musical", "Mystery", "Crime", "Documentary",
+                                    "Romantic comedy", "War", "Film noir", "Historical", "Fantasy",
+                                    "Action", "Sports")
+                            .stream()
+                            .map(CheckBox::new)
+                            .collect(Collectors.toList())
+            );
+
+            VBox typeOfMovieBox = new VBox(5); // 5 is the spacing between elements
+            typeOfMovieBox.getChildren().addAll(movieTypeCheckBoxes);
+
+            ScrollPane scrollPane = new ScrollPane(typeOfMovieBox);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setPrefHeight(150);
             TextField imagesPosterField = new TextField();
             imagesPosterField.setEditable(false);
             Button chooseImagesPosterButton = new Button("Choose Poster");
@@ -579,7 +623,7 @@ public class MainController {
             grid.add(new Label("Amount of Limit:"), 0, 2);
             grid.add(amountOfLimitField, 1, 2);
             grid.add(new Label("Type of Movie:"), 0, 3);
-            grid.add(typeOfMovieField, 1, 3);
+            grid.add(scrollPane, 1, 3);
             grid.add(new Label("Poster Image:"), 0, 4);
             grid.add(imagesPosterField, 1, 4);
             grid.add(chooseImagesPosterButton, 2, 4);
@@ -593,19 +637,23 @@ public class MainController {
             addButton.setDisable(false);
 
             addButton.addEventFilter(ActionEvent.ACTION, event -> {
-                if (!validateMovieInput(movieNameField, authorField, amountOfLimitField, typeOfMovieField)) {
+                if (!validateMovieInput(movieNameField, authorField, amountOfLimitField, movieTypeCheckBoxes)) {
                     event.consume();
                 }
             });
 
             dialog.setResultConverter(dialogButton -> {
                 if (dialogButton == addButtonType) {
+                    String selectedTypes = movieTypeCheckBoxes.stream()
+                            .filter(CheckBox::isSelected)
+                            .map(CheckBox::getText)
+                            .collect(Collectors.joining(", "));
                     return new Movie(
                             0,
                             movieNameField.getText(),
                             authorField.getText(),
                             Integer.parseInt(amountOfLimitField.getText()),
-                            typeOfMovieField.getText(),
+                            selectedTypes,
                             imagesPosterField.getText(),
                             imagesBackdropField.getText()
                     );
@@ -634,7 +682,13 @@ public class MainController {
         } else if (selectedTable.equals("CategoryProduct")) {
             Dialog<CategoryProduct> dialog = new Dialog<>();
             DialogPane dialogPane = dialog.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+            String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+            URL url = getClass().getResource(cssPath);
+            if (url == null) {
+                System.err.println("Could not find CSS file: " + cssPath);
+            } else {
+                dialogPane.getStylesheets().add(url.toExternalForm());
+            }
             dialogPane.getStyleClass().add("dialog-pane");
             dialog.setTitle("Add New Category");
             dialog.setHeaderText("Enter details for the new category");
@@ -696,7 +750,13 @@ public class MainController {
 
                 Dialog<ShowTimes> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+                URL url = getClass().getResource(cssPath);
+                if (url == null) {
+                    System.err.println("Could not find CSS file: " + cssPath);
+                } else {
+                    dialogPane.getStylesheets().add(url.toExternalForm());
+                }
                 dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit ShowTime");
                 dialog.setHeaderText("Edit the details for the selected showtime");
@@ -791,7 +851,13 @@ public class MainController {
                 }
                 Dialog<Account> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+                URL url = getClass().getResource(cssPath);
+                if (url == null) {
+                    System.err.println("Could not find CSS file: " + cssPath);
+                } else {
+                    dialogPane.getStylesheets().add(url.toExternalForm());
+                }
                 dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Account");
                 dialog.setHeaderText("Edit the details for the selected account");
@@ -886,9 +952,19 @@ public class MainController {
         } else if (selectedTable.equals("Movie")) {
             Movie selectedMovie = movieTableView.getSelectionModel().getSelectedItem();
             if (selectedMovie != null) {
+                if (isMovieReferencedInOtherTables(selectedMovie.getIdMovie())) {
+                    showAlert(Alert.AlertType.WARNING, "Cannot Edit", "This movie cannot be edited as it is referenced in other tables.");
+                    return;
+                }
                 Dialog<Movie> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+                URL url = getClass().getResource(cssPath);
+                if (url == null) {
+                    System.err.println("Could not find CSS file: " + cssPath);
+                } else {
+                    dialogPane.getStylesheets().add(url.toExternalForm());
+                }
                 dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Movie");
                 dialog.setHeaderText("Edit the details for the selected movie");
@@ -904,8 +980,22 @@ public class MainController {
                 authorField.setPromptText("Author");
                 TextField amountOfLimitField = new TextField(String.valueOf(selectedMovie.getAmountOfLimit()));
                 amountOfLimitField.setPromptText("Amount of Limit");
-                TextField typeOfMovieField = new TextField(selectedMovie.getTypeOfMovie());
-                typeOfMovieField.setPromptText("Type of Movie");
+                ObservableList<CheckBox> movieTypeCheckBoxes = FXCollections.observableArrayList(
+                        Arrays.asList("Romance", "Science fiction", "Western", "Thriller", "Adventure",
+                                        "Animated", "Musical", "Mystery", "Crime", "Documentary",
+                                        "Romantic comedy", "War", "Film noir", "Historical", "Fantasy",
+                                        "Action", "Sports")
+                                .stream()
+                                .map(CheckBox::new)
+                                .collect(Collectors.toList())
+                );
+
+                VBox typeOfMovieBox = new VBox(5); // 5 is the spacing between elements
+                typeOfMovieBox.getChildren().addAll(movieTypeCheckBoxes);
+
+                ScrollPane scrollPane = new ScrollPane(typeOfMovieBox);
+                scrollPane.setFitToWidth(true);
+                scrollPane.setPrefHeight(150);
                 TextField imagesPosterField = new TextField(selectedMovie.getImagesPoster());
                 imagesPosterField.setEditable(false);
                 Button chooseImagesPosterButton = new Button("Choose Poster");
@@ -933,7 +1023,7 @@ public class MainController {
                 grid.add(new Label("Amount of Limit:"), 0, 2);
                 grid.add(amountOfLimitField, 1, 2);
                 grid.add(new Label("Type of Movie:"), 0, 3);
-                grid.add(typeOfMovieField, 1, 3);
+                grid.add(scrollPane, 1, 3);
                 grid.add(new Label("Poster Image:"), 0, 4);
                 grid.add(imagesPosterField, 1, 4);
                 grid.add(chooseImagesPosterButton, 2, 4);
@@ -946,13 +1036,17 @@ public class MainController {
                 // Convert the result to a Movie object when the edit button is clicked
                 dialog.setResultConverter(dialogButton -> {
                     if (dialogButton == editButtonType) {
-                        if (validateMovieInput(movieNameField, authorField, amountOfLimitField, typeOfMovieField)) {
+                        String selectedTypes = movieTypeCheckBoxes.stream()
+                                .filter(CheckBox::isSelected)
+                                .map(CheckBox::getText)
+                                .collect(Collectors.joining(", "));
+                        if (validateMovieInput(movieNameField, authorField, amountOfLimitField, movieTypeCheckBoxes)) {
                             return new Movie(
                                     selectedMovie.getIdMovie(),
                                     movieNameField.getText(),
                                     authorField.getText(),
                                     Integer.parseInt(amountOfLimitField.getText()),
-                                    typeOfMovieField.getText(),
+                                    selectedTypes,
                                     imagesPosterField.getText(),
                                     imagesBackdropField.getText()
                             );
@@ -973,10 +1067,17 @@ public class MainController {
                         stmt.setString(5, editedMovie.getImagesPoster());
                         stmt.setString(6, editedMovie.getImagesBackdrop());
                         stmt.setInt(7, editedMovie.getIdMovie());
-                        stmt.executeUpdate();
-                        loadMovieData();
+                        int rowsAffected = stmt.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("Movie updated successfully");
+                            loadMovieData();
+                        } else {
+                            System.out.println("No rows were updated. Movie might not exist.");
+                        }
                     } catch (SQLException e) {
+                        System.out.println("SQLException occurred while updating movie:");
                         e.printStackTrace();
+                        showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while updating the movie. Please check the console for details.");
                     }
                 });
             }
@@ -985,7 +1086,13 @@ public class MainController {
             if (selectedClient != null) {
                 Dialog<Client> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+                URL url = getClass().getResource(cssPath);
+                if (url == null) {
+                    System.err.println("Could not find CSS file: " + cssPath);
+                } else {
+                    dialogPane.getStylesheets().add(url.toExternalForm());
+                }
                 dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Client");
                 dialog.setHeaderText("Edit the details for the selected client");
@@ -1046,7 +1153,13 @@ public class MainController {
                 Dialog<CategoryProduct> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
 
-                dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+                URL url = getClass().getResource(cssPath);
+                if (url == null) {
+                    System.err.println("Could not find CSS file: " + cssPath);
+                } else {
+                    dialogPane.getStylesheets().add(url.toExternalForm());
+                }
                 dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Category");
                 dialog.setHeaderText("Edit the details for the selected category");
@@ -1100,7 +1213,13 @@ public class MainController {
 
                 Dialog<ShowTimes> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("dialog-styles.css").toExternalForm());
+                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
+                URL url = getClass().getResource(cssPath);
+                if (url == null) {
+                    System.err.println("Could not find CSS file: " + cssPath);
+                } else {
+                    dialogPane.getStylesheets().add(url.toExternalForm());
+                }
                 dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit ShowTime");
                 dialog.setHeaderText("Edit the details for the selected showtime");
@@ -1188,6 +1307,10 @@ public class MainController {
         if (selectedTable.equals("Account")) {
             Account selectedAccount = accountTableView.getSelectionModel().getSelectedItem();
             if (selectedAccount != null) {
+                if (selectedAccount.getIdAccount() == accountLogin.getIdAccount()) {
+                    showAlert(Alert.AlertType.WARNING, "Permission Denied", "You cannot delete your own account while logged in.");
+                    return;
+                }
                 if ("admin".equals(accountLogin.getRole()) && "owner".equals(selectedAccount.getRole())) {
                     showAlert(Alert.AlertType.WARNING, "Permission Denied", "Admin cannot delete owner accounts.");
                     return;
@@ -1415,6 +1538,24 @@ public class MainController {
             errorMessage.append("Role is required.\n");
             if (firstErrorField == null) firstErrorField = roleComboBox;
         }
+        String nameRegex = "^\\p{L}[\\p{L}0-9 ]*$";
+        if (!nameField.getText().matches(nameRegex)) {
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Name must start with a letter and can only contain letters, numbers, and spaces.");
+            return false;
+        }
+        String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$";
+        if (!passwordField.getText().matches(passwordRegex)) {
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Password must be 8-16 characters long and contain both letters and numbers.");
+            return false;
+        }
+        LocalDate birthDate = dateOfBirthPicker.getValue();
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthDate, currentDate).getYears();
+        if (age < 18) {
+            showAlert(Alert.AlertType.ERROR, "Input Error", "User must be at least 18 years old.");
+            return false;
+        }
+
 
         if (errorMessage.length() > 0) {
             showAlert(Alert.AlertType.ERROR, "Validation Error", errorMessage.toString());
@@ -1424,6 +1565,21 @@ public class MainController {
             return false;
         }
         return true;
+    }
+
+    private boolean isEmailAlreadyExists(String email) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Account WHERE email = ?")) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Could not check email existence. Please try again.");
+        }
+        return false;
     }
 
     private boolean isValidEmail(String email) {
@@ -1436,7 +1592,26 @@ public class MainController {
         return phoneNumber.matches(phoneRegex);
     }
 
-    private boolean validateMovieInput(TextField movieNameField, TextField authorField, TextField amountOfLimitField, TextField typeOfMovieField) {
+    private boolean isMovieReferencedInOtherTables(int movieId) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+
+            String showtimeQuery = "SELECT COUNT(*) FROM ShowTimes WHERE idMovie = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(showtimeQuery)) {
+                stmt.setInt(1, movieId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException occurred in isMovieReferencedInOtherTables:");
+            e.printStackTrace();
+        }
+        System.out.println("Movie is not referenced in any checked table");
+        return false;
+    }
+
+    private boolean validateMovieInput(TextField movieNameField, TextField authorField, TextField amountOfLimitField, ObservableList<CheckBox> movieTypeCheckBoxes) {
         StringBuilder errorMessage = new StringBuilder();
         TextField firstErrorField = null;
 
@@ -1455,10 +1630,12 @@ public class MainController {
             errorMessage.append("Amount of Limit must be a valid number.\n");
             if (firstErrorField == null) firstErrorField = amountOfLimitField;
         }
-        if (typeOfMovieField.getText().isEmpty()) {
-            errorMessage.append("Type of Movie is required.\n");
-            if (firstErrorField == null) firstErrorField = typeOfMovieField;
+
+        if (movieTypeCheckBoxes.stream().noneMatch(CheckBox::isSelected)) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please select at least one movie type.");
+            return false;
         }
+
 
         if (errorMessage.length() > 0) {
             showAlert(Alert.AlertType.ERROR, "Validation Error", errorMessage.toString());
@@ -1520,7 +1697,6 @@ public class MainController {
         }
         return true;
     }
-
 
     private void searchAccounts(String searchTerm) {
         String query = "SELECT * FROM Account WHERE name LIKE ?";
