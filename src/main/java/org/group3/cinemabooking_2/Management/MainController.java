@@ -860,100 +860,10 @@ public class MainController {
                 }
             }
         } else if (selectedTable.equals("ShowTimes")) {
-            ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
-            if (selectedShowTime != null) {
-                if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
-                    showAlert("Cannot Update", "Cannot update showtime from the past.");
-                    return;
-                }
-
-                Dialog<ShowTimes> dialog = new Dialog<>();
-                DialogPane dialogPane = dialog.getDialogPane();
-                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
-                URL url = getClass().getResource(cssPath);
-                if (url == null) {
-                    System.err.println("Could not find CSS file: " + cssPath);
-                } else {
-                    dialogPane.getStylesheets().add(url.toExternalForm());
-                }
-                dialogPane.getStyleClass().add("dialog-pane");
-                dialog.setTitle("Edit ShowTime");
-                dialog.setHeaderText("Edit the details for the selected showtime");
-
-                ButtonType editButtonType = new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE);
-                dialog.getDialogPane().getButtonTypes().addAll(editButtonType, ButtonType.CANCEL);
-
-                // Tạo các trường nhập liệu và đặt giá trị ban đầu
-                ComboBox<Integer> idMovieComboBox = new ComboBox<>();
-                ComboBox<Integer> idTheaterComboBox = new ComboBox<>();
-                populateComboBoxes(idMovieComboBox, idTheaterComboBox);
-                idMovieComboBox.setValue(selectedShowTime.getIdMovie());
-                idTheaterComboBox.setValue(selectedShowTime.getIdTheater());
-
-                TextField startTimeField = new TextField(selectedShowTime.getStartTime().toString().substring(0, 8));
-                DatePicker datePicker = new DatePicker(selectedShowTime.getDate().toLocalDate());
-
-                GridPane grid = new GridPane();
-                grid.add(new Label("Movie:"), 0, 0);
-                grid.add(idMovieComboBox, 1, 0);
-                grid.add(new Label("Theater:"), 0, 1);
-                grid.add(idTheaterComboBox, 1, 1);
-                grid.add(new Label("Start Time:"), 0, 2);
-                grid.add(startTimeField, 1, 2);
-                grid.add(new Label("Date:"), 0, 3);
-                grid.add(datePicker, 1, 3);
-
-                dialog.getDialogPane().setContent(grid);
-
-                dialog.setResultConverter(dialogButton -> {
-                    if (dialogButton == editButtonType) {
-                        try {
-                            Time startTime = validateTime(startTimeField.getText());
-                            Date date = Date.valueOf(datePicker.getValue());
-
-                            if (isDateInPast(date) || isTimeInPast(startTime, date)) {
-                                throw new IllegalArgumentException("Date or time cannot be in the past.");
-                            }
-
-                            int idMovie = idMovieComboBox.getValue();
-                            int idTheater = idTheaterComboBox.getValue();
-
-                            int amountOfLimit = fetchAmountOfLimit(idMovie);
-                            Time endTime = calculateEndTime(startTime, amountOfLimit);
-
-                            return new ShowTimes(selectedShowTime.getIdShowTimes(), startTime, endTime, date, idMovie, idTheater);
-                        } catch (IllegalArgumentException | SQLException e) {
-                            e.printStackTrace();
-                            showAlert("Invalid Input", "Please enter valid time and date values.");
-                            return null;
-                        }
-                    }
-                    return null;
-                });
-
-                Optional<ShowTimes> result = dialog.showAndWait();
-
-                result.ifPresent(editedShowTime -> {
-                    try (Connection conn = DatabaseConnection.getConnection();
-                         PreparedStatement stmt = conn.prepareStatement("UPDATE ShowTimes SET StartTime=?, EndTime=?, Date=?, IDMovie=?, IDTheater=? WHERE IDShowTimes=?")) {
-                        stmt.setTime(1, editedShowTime.getStartTime());
-                        stmt.setTime(2, editedShowTime.getEndTime());
-                        stmt.setDate(3, editedShowTime.getDate());
-                        stmt.setInt(4, editedShowTime.getIdMovie());
-                        stmt.setInt(5, editedShowTime.getIdTheater());
-                        stmt.setInt(6, editedShowTime.getIdShowTimes());
-                        stmt.executeUpdate();
-                        loadShowTimesData();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        showAlert("Database Error", "Could not update showtime in database. Please try again.");
-                    }
-                });
-            }
+            addShowTime();
         } else if (selectedTable.equals("Product")) {
             addProduct();
         }
-
     }
 
     @FXML
@@ -1339,96 +1249,7 @@ public class MainController {
                 });
             }
         } else if (selectedTable.equals("ShowTimes")) {
-            ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
-            if (selectedShowTime != null) {
-                if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
-                    showAlert("Cannot Update", "Cannot update showtime from the past.");
-                    return;
-                }
-
-                Dialog<ShowTimes> dialog = new Dialog<>();
-                DialogPane dialogPane = dialog.getDialogPane();
-                String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
-                URL url = getClass().getResource(cssPath);
-                if (url == null) {
-                    System.err.println("Could not find CSS file: " + cssPath);
-                } else {
-                    dialogPane.getStylesheets().add(url.toExternalForm());
-                }
-                dialogPane.getStyleClass().add("dialog-pane");
-                dialog.setTitle("Edit ShowTime");
-                dialog.setHeaderText("Edit the details for the selected showtime");
-
-                ButtonType editButtonType = new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE);
-                dialog.getDialogPane().getButtonTypes().addAll(editButtonType, ButtonType.CANCEL);
-
-                // Tạo các trường nhập liệu và đặt giá trị ban đầu
-                ComboBox<Integer> idMovieComboBox = new ComboBox<>();
-                ComboBox<Integer> idTheaterComboBox = new ComboBox<>();
-                populateComboBoxes(idMovieComboBox, idTheaterComboBox);
-                idMovieComboBox.setValue(selectedShowTime.getIdMovie());
-                idTheaterComboBox.setValue(selectedShowTime.getIdTheater());
-
-                TextField startTimeField = new TextField(selectedShowTime.getStartTime().toString().substring(0, 8));
-                DatePicker datePicker = new DatePicker(selectedShowTime.getDate().toLocalDate());
-
-                GridPane grid = new GridPane();
-                grid.add(new Label("Movie:"), 0, 0);
-                grid.add(idMovieComboBox, 1, 0);
-                grid.add(new Label("Theater:"), 0, 1);
-                grid.add(idTheaterComboBox, 1, 1);
-                grid.add(new Label("Start Time:"), 0, 2);
-                grid.add(startTimeField, 1, 2);
-                grid.add(new Label("Date:"), 0, 3);
-                grid.add(datePicker, 1, 3);
-
-                dialog.getDialogPane().setContent(grid);
-
-                dialog.setResultConverter(dialogButton -> {
-                    if (dialogButton == editButtonType) {
-                        try {
-                            Time startTime = validateTime(startTimeField.getText());
-                            Date date = Date.valueOf(datePicker.getValue());
-
-                            if (isDateInPast(date) || isTimeInPast(startTime, date)) {
-                                throw new IllegalArgumentException("Date or time cannot be in the past.");
-                            }
-
-                            int idMovie = idMovieComboBox.getValue();
-                            int idTheater = idTheaterComboBox.getValue();
-
-                            int amountOfLimit = fetchAmountOfLimit(idMovie);
-                            Time endTime = calculateEndTime(startTime, amountOfLimit);
-
-                            return new ShowTimes(selectedShowTime.getIdShowTimes(), startTime, endTime, date, idMovie, idTheater);
-                        } catch (IllegalArgumentException | SQLException e) {
-                            e.printStackTrace();
-                            showAlert("Invalid Input", "Please enter valid time and date values.");
-                            return null;
-                        }
-                    }
-                    return null;
-                });
-
-                Optional<ShowTimes> result = dialog.showAndWait();
-
-                result.ifPresent(editedShowTime -> {
-                    try (Connection conn = DatabaseConnection.getConnection();
-                         PreparedStatement stmt = conn.prepareStatement("UPDATE ShowTimes SET StartTime=?, EndTime=?, Date=?, IDMovie=?, IDTheater=? WHERE IDShowTimes=?")) {
-                        stmt.setTime(1, editedShowTime.getStartTime());
-                        stmt.setTime(2, editedShowTime.getEndTime());
-                        stmt.setDate(3, editedShowTime.getDate());
-                        stmt.setInt(4, editedShowTime.getIdMovie());
-                        stmt.setInt(5, editedShowTime.getIdTheater());
-                        stmt.setInt(6, editedShowTime.getIdShowTimes());
-                        stmt.executeUpdate();
-                        loadShowTimesData();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        showAlert("Database Error", "Could not update showtime in database. Please try again.");
-                    }
-                });
-            }
+            updateShowTime();
         } else if (selectedTable.equals("Product")) {
             updateProduct();
         }
@@ -1660,6 +1481,239 @@ public class MainController {
         }
     }
 
+    private Optional<ShowTimes> showTimeDialog(ShowTimes showTime, String title, String buttonText) {
+        Dialog<ShowTimes> dialog = new Dialog<>();
+        dialog.setTitle(title);
+
+        ButtonType actionButtonType = new ButtonType(buttonText, ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(actionButtonType, ButtonType.CANCEL);
+
+        VBox vbox = new VBox();
+        ComboBox<Integer> idMovieComboBox = new ComboBox<>();
+        idMovieComboBox.setPromptText("Select Movie ID");
+
+        ComboBox<Integer> idTheaterComboBox = new ComboBox<>();
+        idTheaterComboBox.setPromptText("Select Theater ID");
+
+        populateComboBoxes(idMovieComboBox, idTheaterComboBox);
+
+        TextField startTimeField = new TextField();
+        startTimeField.setPromptText("Start Time (HH:mm:ss)");
+        DatePicker datePicker = new DatePicker();
+        datePicker.setPromptText("Select Date");
+
+        if (showTime != null) {
+            startTimeField.setText(showTime.getStartTime().toString().substring(0, 8));
+            datePicker.setValue(showTime.getDate().toLocalDate());
+            idMovieComboBox.setValue(showTime.getIdMovie());
+            idTheaterComboBox.setValue(showTime.getIdTheater());
+        }
+
+        vbox.getChildren().addAll(new Label("Movie ID:"), idMovieComboBox, new Label("Theater ID:"), idTheaterComboBox,
+                new Label("Start Time:"), startTimeField, new Label("Date:"), datePicker);
+        dialog.getDialogPane().setContent(vbox);
+
+        Node actionButton = dialog.getDialogPane().lookupButton(actionButtonType);
+        actionButton.addEventFilter(ActionEvent.ACTION, event -> {
+            try {
+                String startTimeString = startTimeField.getText();
+                LocalDate dateValue = datePicker.getValue();
+
+                // Check if any fields are empty or null
+                if (startTimeString == null || startTimeString.isEmpty() || dateValue == null ||
+                        idMovieComboBox.getValue() == null || idTheaterComboBox.getValue() == null) {
+                    showAlert(Alert.AlertType.ERROR, "Invalid Input", "All fields must be filled.", "");
+                    event.consume();
+                    return;
+                }
+
+                String dateString = dateValue.toString();
+                Time startTime = validateTime(startTimeString);
+                Date date = Date.valueOf(dateString);
+
+                if (isDateInPast(date) || isTimeInPast(startTime, date)) {
+                    showAlert(Alert.AlertType.ERROR, "Invalid Input", "Date or time cannot be in the past.", "");
+                    event.consume();
+                    return;
+                }
+
+                int idMovie = idMovieComboBox.getValue();
+                int idTheater = idTheaterComboBox.getValue();
+
+                int amountOfLimit = fetchAmountOfLimit(idMovie);
+                Time endTime = calculateEndTime(startTime, amountOfLimit);
+
+                dialog.setResult(new ShowTimes(
+                        showTime != null ? showTime.getIdShowTimes() : 0,
+                        startTime,
+                        endTime,
+                        date,
+                        idMovie,
+                        idTheater
+                ));
+            } catch (IllegalArgumentException | SQLException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid time and date values.", "");
+                event.consume();
+            }
+        });
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == actionButtonType) {
+                return dialog.getResult();
+            }
+            return null;
+        });
+
+        return dialog.showAndWait();
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content, String type) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private boolean checkConflict(ShowTimes newShowTime) {
+        for (ShowTimes existingShowTime : showTimesData) {
+            if (existingShowTime.getIdTheater() == newShowTime.getIdTheater()
+                    && existingShowTime.getDate().equals(newShowTime.getDate())) {
+
+                // Check if there's a time conflict
+                LocalTime existingStartTime = existingShowTime.getStartTime().toLocalTime();
+                LocalTime existingEndTime = existingShowTime.getEndTime().toLocalTime();
+                LocalTime newStartTime = newShowTime.getStartTime().toLocalTime();
+
+                // Check if new showtime starts within existing showtime
+                if ((newStartTime.isAfter(existingStartTime) || newStartTime.equals(existingStartTime))
+                        && newStartTime.isBefore(existingEndTime)) {
+                    showAlert(Alert.AlertType.ERROR, "Time Conflict",
+                            "You just add a showtime that conflict with another showtime", "");
+                    return true;
+                }
+
+                // Check if existing showtime starts within new showtime
+                if ((existingStartTime.isAfter(newStartTime) || existingStartTime.equals(newStartTime))
+                        && existingStartTime.isBefore(newShowTime.getEndTime().toLocalTime())) {
+                    showAlert(Alert.AlertType.ERROR, "Time Conflict",
+                            "Another showtime already exists for this theater and date with conflicting time.", "");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void addShowTime() {
+        showTimeDialog(null, "Add New ShowTime", "Add").ifPresent(showTime -> {
+            // Check if all fields are filled
+            if (showTime.getStartTime() == null || showTime.getEndTime() == null || showTime.getDate() == null ||
+                    showTime.getIdMovie() == 0 || showTime.getIdTheater() == 0) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Input", "All fields must be filled.", "");
+                return;
+            }
+
+            if (isDateInPast(showTime.getDate()) || isTimeInPast(showTime.getStartTime(), showTime.getDate())) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Input", "Date or time cannot be in the past.", "");
+                return;
+            }
+
+            // Check for conflicts before adding new showtime
+            if (checkConflict(showTime)) {
+                return; // Conflict found, return without adding
+            }
+
+            try (Connection conn = JDBCUtil.getConnection()) {
+                String query = "INSERT INTO ShowTimes (StartTime, EndTime, Date, IDMovie, IDTheater) VALUES (?, ?, ?, ?, ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                    pstmt.setTime(1, showTime.getStartTime());
+                    pstmt.setTime(2, showTime.getEndTime());
+                    pstmt.setDate(3, showTime.getDate());
+                    pstmt.setInt(4, showTime.getIdMovie());
+                    pstmt.setInt(5, showTime.getIdTheater());
+                    pstmt.executeUpdate();
+                }
+                showTimesData.add(showTime);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add new showtime.", "");
+            }
+        });
+    }
+
+    private void updateShowTime() {
+        ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
+        if (selectedShowTime != null) {
+            // Check if selected showtime is in the past
+            if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
+                showAlert(Alert.AlertType.WARNING, "Cannot Update", "Cannot update showtime from the past.", "");
+                return;
+            }
+
+            Optional<ShowTimes> result = showTimeDialog(selectedShowTime, "Update ShowTime", "Update");
+            result.ifPresent(updatedShowTime -> {
+                try {
+                    // Check for conflicts
+                    if (checkConflict(updatedShowTime)) {
+                        return; // Conflict found, return without updating
+                    }
+
+                    // Perform the update operation
+                    String query = "UPDATE ShowTimes SET StartTime = ?, EndTime = ?, Date = ?, IDMovie = ?, IDTheater = ? WHERE IDShowTimes = ?";
+                    try (Connection conn = JDBCUtil.getConnection();
+                         PreparedStatement pstmt = conn.prepareStatement(query)) {
+                        pstmt.setTime(1, updatedShowTime.getStartTime());
+                        pstmt.setTime(2, updatedShowTime.getEndTime());
+                        pstmt.setDate(3, updatedShowTime.getDate());
+                        pstmt.setInt(4, updatedShowTime.getIdMovie());
+                        pstmt.setInt(5, updatedShowTime.getIdTheater());
+                        pstmt.setInt(6, updatedShowTime.getIdShowTimes());
+                        pstmt.executeUpdate();
+
+                        // Update the item in the observable list
+                        showTimesData.set(showTimesData.indexOf(selectedShowTime), updatedShowTime);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to update showtime.", "");
+                }
+            });
+        } else {
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a showtime to update.", "");
+        }
+    }
+
+    private void deleteShowTime() {
+        ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
+        if (selectedShowTime != null) {
+            if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
+                showAlert(Alert.AlertType.WARNING, "Cannot Delete", "Cannot delete showtime from the past.", "");
+                return;
+            }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete ShowTime");
+            alert.setHeaderText("Are you sure you want to delete this showtime?");
+            alert.setContentText("ID: " + selectedShowTime.getIdShowTimes());
+
+            if (alert.showAndWait().filter(ButtonType.OK::equals).isPresent()) {
+                try (Connection conn = JDBCUtil.getConnection()) {
+                    String query = "DELETE FROM ShowTimes WHERE IDShowTimes = ?";
+                    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                        pstmt.setInt(1, selectedShowTime.getIdShowTimes());
+                        pstmt.executeUpdate();
+                    }
+                    showTimesData.remove(selectedShowTime);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to delete showtime.", "");
+                }
+            }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a showtime to delete.", "");
+        }
+    }
 
     @FXML
     private void onDelete() {
@@ -1746,33 +1800,7 @@ public class MainController {
                 }
             }
         } else if (selectedTable.equals("ShowTimes")) {
-            ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
-            if (selectedShowTime != null) {
-                if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
-                    showAlert("Cannot Delete", "Cannot delete showtime from the past.");
-                    return;
-                }
-
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirm Delete");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to delete this showtime?");
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    try (Connection conn = DatabaseConnection.getConnection();
-                         PreparedStatement stmt = conn.prepareStatement("DELETE FROM ShowTimes WHERE IDShowTimes=?")) {
-                        stmt.setInt(1, selectedShowTime.getIdShowTimes());
-                        stmt.executeUpdate();
-                        loadShowTimesData();
-                    } catch (SQLServerException e) {
-                        handleDeleteException(e, "showtime");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        showAlert("Error", "An error occurred while deleting the showtime.");
-                    }
-                }
-            }
+            deleteShowTime();
         } else if (selectedTable.equals("Product")) {
             deleteProduct();
         }
