@@ -20,10 +20,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
 import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,7 +35,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javafx.scene.control.DatePicker;
+import org.group3.cinemabooking_2.Connection.JDBCUtil;
 import org.group3.cinemabooking_2.LoginController;
 
 public class MainController {
@@ -76,15 +81,17 @@ public class MainController {
     private final ObservableList<Movie> movieData = FXCollections.observableArrayList();
     private final ObservableList<Client> clientData = FXCollections.observableArrayList();
     private final ObservableList<CategoryProduct> categoryProductData = FXCollections.observableArrayList();
+    private final ObservableList<Product> productData = FXCollections.observableArrayList();
 
     private Account accountLogin = new Account();
+
     @FXML
     public void initialize() {
         entity.entity.Account account = LoginController.getLoggedInUser();
         accountLogin.setRole(account.getRole());
         accountLogin.setIdAccount(account.getId());
 
-        ObservableList<String> tableOptions = FXCollections.observableArrayList("Account", "Movie", "Client", "CategoryProduct", "ShowTimes");
+        ObservableList<String> tableOptions = FXCollections.observableArrayList("Account", "Movie", "Client", "CategoryProduct", "ShowTimes", "Product");
         tableComboBox.setItems(tableOptions);
         tableComboBox.setValue("Account");
         loadAccountData();
@@ -92,7 +99,7 @@ public class MainController {
         loadClientData();
         loadCategoryProductData();
         loadShowTimesData();
-
+        loadProductData();
 
         updateTableView("Account");
         accountTableView.refresh();
@@ -102,11 +109,12 @@ public class MainController {
         categoryProductTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         showTimesTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-            setupAccountTableView();
-            setupMovieTableView();
-            setupClientTableView();
-            setupCategoryProductTableView();
-            setupShowTimesTableView();
+        setupAccountTableView();
+        setupMovieTableView();
+        setupClientTableView();
+        setupCategoryProductTableView();
+        setupShowTimesTableView();
+        setupProductTableView();
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             onSearch();
@@ -130,9 +138,21 @@ public class MainController {
         updateButtonVisibility("Account");
 
 
+    }
 
+    private void setupProductTableView() {
+        TableColumn<Product, Integer> idProductCol = new TableColumn<>("IDProduct");
+        idProductCol.setCellValueFactory(new PropertyValueFactory<>("idProduct"));
+        TableColumn<Product, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Product, Float> priceCol = new TableColumn<>("Price");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        TableColumn<Product, Integer> quantityLeftCol = new TableColumn<>("QuantityLeft");
+        quantityLeftCol.setCellValueFactory(new PropertyValueFactory<>("quantityLeft"));
+        TableColumn<Product, Integer> idCategoryCol = new TableColumn<>("IDCategory");
+        idCategoryCol.setCellValueFactory(new PropertyValueFactory<>("idCategory"));
 
-
+        productTableView.getColumns().setAll(idProductCol, nameCol, priceCol, quantityLeftCol, idCategoryCol);
     }
 
     private void setupTableSelectionListeners() {
@@ -151,13 +171,18 @@ public class MainController {
         showTimesTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             updateButtonStates();
         });
+        productTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            updateButtonStates();
+        });
     }
+
     private void updateTableView(String tableName) {
         accountTableView.setVisible(false);
         movieTableView.setVisible(false);
         clientTableView.setVisible(false);
         categoryProductTableView.setVisible(false);
         showTimesTableView.setVisible(false);
+        productTableView.setVisible(false);
 
         switch (tableName) {
             case "Account":
@@ -180,13 +205,19 @@ public class MainController {
                 setupCategoryProductTableView();
                 categoryProductTableView.setItems(categoryProductData);
                 break;
-                case "ShowTimes":
-                    showTimesTableView.setVisible(true);
-                    setupShowTimesTableView();
-                    showTimesTableView.setItems(showTimesData);
-                    break;
+            case "ShowTimes":
+                showTimesTableView.setVisible(true);
+                setupShowTimesTableView();
+                showTimesTableView.setItems(showTimesData);
+                break;
+            case "Product":
+                productTableView.setVisible(true);
+                setupProductTableView();
+                productTableView.setItems(productData);
+                break;
         }
     }
+
     private void setupAccountTableView() {
         TableColumn<Account, Integer> idAccountCol = new TableColumn<>("IDAccount");
         idAccountCol.setCellValueFactory(new PropertyValueFactory<>("idAccount"));
@@ -206,6 +237,7 @@ public class MainController {
         avatarCol.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         accountTableView.getColumns().setAll(idAccountCol, nameCol, emailCol, passwordCol, phoneNumberCol, dateOfBirthCol, roleCol, avatarCol);
     }
+
     private void updateButtonStates() {
         boolean isItemSelected = false;
         String selectedTable = tableComboBox.getValue();
@@ -225,6 +257,9 @@ public class MainController {
                 break;
             case "ShowTimes":
                 isItemSelected = showTimesTableView.getSelectionModel().getSelectedItem() != null;
+                break;
+            case "Product":
+                isItemSelected = productTableView.getSelectionModel().getSelectedItem() != null;
                 break;
         }
 
@@ -250,6 +285,7 @@ public class MainController {
         deleteButton.setDisable(!isItemSelected || !canDelete);
         addButton.setDisable(!canAdd);
     }
+
     private void setupMovieTableView() {
         TableColumn<Movie, Integer> idMovieCol = new TableColumn<>("IDMovie");
         idMovieCol.setCellValueFactory(new PropertyValueFactory<>("idMovie"));
@@ -267,6 +303,7 @@ public class MainController {
         imagesBackdropCol.setCellValueFactory(new PropertyValueFactory<>("imagesBackdrop"));
         movieTableView.getColumns().setAll(idMovieCol, movieNameCol, authorCol, amountOfLimitCol, typeOfMovieCol, imagesPosterCol, imagesBackdropCol);
     }
+
     private void setupClientTableView() {
         TableColumn<Client, String> emailClientCol = new TableColumn<>("EmailClient");
         emailClientCol.setCellValueFactory(new PropertyValueFactory<>("emailClient"));
@@ -276,6 +313,7 @@ public class MainController {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         clientTableView.getColumns().setAll(emailClientCol, phoneNumberCol, nameCol);
     }
+
     private void setupCategoryProductTableView() {
         TableColumn<CategoryProduct, Integer> idCategoryCol = new TableColumn<>("IDCategory");
         idCategoryCol.setCellValueFactory(new PropertyValueFactory<>("idCategory"));
@@ -283,6 +321,7 @@ public class MainController {
         productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         categoryProductTableView.getColumns().setAll(idCategoryCol, productNameCol);
     }
+
     private void setupShowTimesTableView() {
         TableColumn<ShowTimes, Integer> idShowTimesCol = new TableColumn<>("IDShowTimes");
         idShowTimesCol.setCellValueFactory(new PropertyValueFactory<>("idShowTimes"));
@@ -299,6 +338,28 @@ public class MainController {
         showTimesTableView.getColumns().setAll(idShowTimesCol, startTimeCol, endTimeCol, dateCol, idMovieCol, idTheaterCol);
     }
 
+    private void loadProductData() {
+        String query = "SELECT * FROM Product";
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            productData.clear();
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt("idProduct"),
+                        rs.getString("nameproduct"),
+                        rs.getFloat("price"),
+                        rs.getInt("quantityLeft"),
+                        rs.getString("imageProduct"),
+                        rs.getInt("idCategory")
+                );
+                productData.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void loadAccountData() {
         String query = "SELECT * FROM Account";
@@ -324,6 +385,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
     private void loadMovieData() {
         String query = "SELECT * FROM Movie";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -347,6 +409,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
     private void loadClientData() {
         String query = "SELECT * FROM Client";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -366,6 +429,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
     private void loadCategoryProductData() {
         String query = "SELECT * FROM CategoryProduct";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -384,6 +448,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
     private void loadShowTimesData() {
         String query = "SELECT * FROM ShowTimes";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -409,6 +474,7 @@ public class MainController {
 
 
     private static final String DEFAULT_AVATAR_PATH = "D:\\T1.2308.A0\\7. Java\\3.JP2\\JavaFX\\CinemaBooking_2\\CinemaBooking_2\\src\\main\\resources\\Images\\CinemaPLUSLogo.png";
+
     @FXML
     private void onAdd() {
         if (!"owner".equals(accountLogin.getRole()) && !"admin".equals(accountLogin.getRole())) {
@@ -538,8 +604,7 @@ public class MainController {
             });
 
 
-        }
-        else if (selectedTable.equals("Movie")) {
+        } else if (selectedTable.equals("Movie")) {
             Dialog<Movie> dialog = new Dialog<>();
             DialogPane dialogPane = dialog.getDialogPane();
             String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
@@ -632,7 +697,7 @@ public class MainController {
                             .filter(CheckBox::isSelected)
                             .map(CheckBox::getText)
                             .collect(Collectors.joining(", "));
-                            return new Movie(
+                    return new Movie(
                             0,
                             movieNameField.getText(),
                             authorField.getText(),
@@ -663,8 +728,7 @@ public class MainController {
                     showAlert("Database Error", "Could not add movie to database. Please try again.");
                 }
             });
-        }
-        else if (selectedTable.equals("Client")) {
+        } else if (selectedTable.equals("Client")) {
             Dialog<Client> dialog = new Dialog<>();
             DialogPane dialogPane = dialog.getDialogPane();
             String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
@@ -673,7 +737,8 @@ public class MainController {
                 System.err.println("Could not find CSS file: " + cssPath);
             } else {
                 dialogPane.getStylesheets().add(url.toExternalForm());
-            }            dialogPane.getStyleClass().add("dialog-pane");
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
             dialog.setTitle("Add New Client");
             dialog.setHeaderText("Enter details for the new client");
 
@@ -733,8 +798,7 @@ public class MainController {
                     e.printStackTrace();
                 }
             });
-        }
-        else if (selectedTable.equals("CategoryProduct")) {
+        } else if (selectedTable.equals("CategoryProduct")) {
             Dialog<CategoryProduct> dialog = new Dialog<>();
             DialogPane dialogPane = dialog.getDialogPane();
             String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
@@ -743,7 +807,8 @@ public class MainController {
                 System.err.println("Could not find CSS file: " + cssPath);
             } else {
                 dialogPane.getStylesheets().add(url.toExternalForm());
-            }            dialogPane.getStyleClass().add("dialog-pane");
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
             dialog.setTitle("Add New Category");
             dialog.setHeaderText("Enter details for the new category");
 
@@ -794,8 +859,7 @@ public class MainController {
                     break;
                 }
             }
-        }
-        else if (selectedTable.equals("ShowTimes")) {
+        } else if (selectedTable.equals("ShowTimes")) {
             ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
             if (selectedShowTime != null) {
                 if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
@@ -811,7 +875,8 @@ public class MainController {
                     System.err.println("Could not find CSS file: " + cssPath);
                 } else {
                     dialogPane.getStylesheets().add(url.toExternalForm());
-                }                dialogPane.getStyleClass().add("dialog-pane");
+                }
+                dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit ShowTime");
                 dialog.setHeaderText("Edit the details for the selected showtime");
 
@@ -885,9 +950,11 @@ public class MainController {
                     }
                 });
             }
+        } else if (selectedTable.equals("Product")) {
+            addProduct();
         }
 
-        }
+    }
 
     @FXML
     private void onEdit() {
@@ -899,10 +966,10 @@ public class MainController {
         if (selectedTable.equals("Account")) {
             Account selectedAccount = accountTableView.getSelectionModel().getSelectedItem();
             if (selectedAccount != null) {
-                    if ("admin".equals(accountLogin.getRole()) && "owner".equals(selectedAccount.getRole())) {
-                        showAlert("Permission Denied", "Admin cannot edit owner accounts.");
-                        return;
-                    }
+                if ("admin".equals(accountLogin.getRole()) && "owner".equals(selectedAccount.getRole())) {
+                    showAlert("Permission Denied", "Admin cannot edit owner accounts.");
+                    return;
+                }
                 Dialog<Account> dialog = new Dialog<>();
                 DialogPane dialogPane = dialog.getDialogPane();
                 String cssPath = "/org/group3/cinemabooking_2/CSS/Management/dialog-styles.css";
@@ -911,7 +978,8 @@ public class MainController {
                     System.err.println("Could not find CSS file: " + cssPath);
                 } else {
                     dialogPane.getStylesheets().add(url.toExternalForm());
-                }                dialogPane.getStyleClass().add("dialog-pane");
+                }
+                dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Account");
                 dialog.setHeaderText("Edit the details for the selected account");
 
@@ -1010,8 +1078,7 @@ public class MainController {
                     }
                 });
             }
-        }
-        else if (selectedTable.equals("Movie")) {
+        } else if (selectedTable.equals("Movie")) {
             Movie selectedMovie = movieTableView.getSelectionModel().getSelectedItem();
             if (selectedMovie != null) {
                 if (isMovieReferencedInOtherTables(selectedMovie.getIdMovie())) {
@@ -1026,7 +1093,8 @@ public class MainController {
                     System.err.println("Could not find CSS file: " + cssPath);
                 } else {
                     dialogPane.getStylesheets().add(url.toExternalForm());
-                }                dialogPane.getStyleClass().add("dialog-pane");
+                }
+                dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Movie");
                 dialog.setHeaderText("Edit the details for the selected movie");
 
@@ -1142,8 +1210,7 @@ public class MainController {
                     }
                 });
             }
-        }
-        else if (selectedTable.equals("Client")) {
+        } else if (selectedTable.equals("Client")) {
             Client selectedClient = clientTableView.getSelectionModel().getSelectedItem();
             if (selectedClient != null) {
                 Dialog<Client> dialog = new Dialog<>();
@@ -1154,7 +1221,8 @@ public class MainController {
                     System.err.println("Could not find CSS file: " + cssPath);
                 } else {
                     dialogPane.getStylesheets().add(url.toExternalForm());
-                }                dialogPane.getStyleClass().add("dialog-pane");
+                }
+                dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Client");
                 dialog.setHeaderText("Edit the details for the selected client");
 
@@ -1214,8 +1282,7 @@ public class MainController {
                     }
                 });
             }
-        }
-        else if (selectedTable.equals("CategoryProduct")) {
+        } else if (selectedTable.equals("CategoryProduct")) {
             CategoryProduct selectedCategory = categoryProductTableView.getSelectionModel().getSelectedItem();
             if (selectedCategory != null) {
                 Dialog<CategoryProduct> dialog = new Dialog<>();
@@ -1227,7 +1294,8 @@ public class MainController {
                     System.err.println("Could not find CSS file: " + cssPath);
                 } else {
                     dialogPane.getStylesheets().add(url.toExternalForm());
-                }                dialogPane.getStyleClass().add("dialog-pane");
+                }
+                dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit Category");
                 dialog.setHeaderText("Edit the details for the selected category");
 
@@ -1270,8 +1338,7 @@ public class MainController {
                     }
                 });
             }
-        }
-        else if (selectedTable.equals("ShowTimes")) {
+        } else if (selectedTable.equals("ShowTimes")) {
             ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
             if (selectedShowTime != null) {
                 if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
@@ -1287,7 +1354,8 @@ public class MainController {
                     System.err.println("Could not find CSS file: " + cssPath);
                 } else {
                     dialogPane.getStylesheets().add(url.toExternalForm());
-                }                dialogPane.getStyleClass().add("dialog-pane");
+                }
+                dialogPane.getStyleClass().add("dialog-pane");
                 dialog.setTitle("Edit ShowTime");
                 dialog.setHeaderText("Edit the details for the selected showtime");
 
@@ -1361,8 +1429,237 @@ public class MainController {
                     }
                 });
             }
+        } else if (selectedTable.equals("Product")) {
+            updateProduct();
         }
     }
+
+    private void addProduct() {
+        Dialog<Product> dialog = new Dialog<>();
+        dialog.setTitle("Add New Product");
+
+        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+
+        VBox vbox = new VBox();
+        TextField nameField = new TextField();
+        nameField.setPromptText("Name");
+        TextField priceField = new TextField();
+        priceField.setPromptText("Price");
+        TextField quantityField = new TextField();
+        quantityField.setPromptText("QuantityLeft");
+        TextField imageProductField = new TextField();
+        imageProductField.setEditable(false);
+
+        Button chooseAvatarButton = new Button("Choose Avatar");
+        chooseAvatarButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+            );
+            File selectedFile = fileChooser.showOpenDialog(dialog.getDialogPane().getScene().getWindow());
+            if (selectedFile != null) {
+                imageProductField.setText(selectedFile.toURI().toString());
+            }
+        });
+
+        ChoiceBox<String> categoryChoiceBox = new ChoiceBox<>();
+        categoryChoiceBox.setItems(FXCollections.observableArrayList("Drink", "Food"));
+
+        vbox.getChildren().addAll(nameField, priceField, quantityField, imageProductField, chooseAvatarButton, categoryChoiceBox);
+        dialog.getDialogPane().setContent(vbox);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == addButtonType) {
+                if (nameField.getText().isEmpty() || priceField.getText().isEmpty()
+                        || quantityField.getText().isEmpty() || categoryChoiceBox.getValue() == null) {
+                    showAlert("Input Error", "Please fill in all fields.");
+                    return null;
+                }
+
+                String selectedCategory = categoryChoiceBox.getValue();
+                int idCategory = "Drink".equals(selectedCategory) ? 1 : 2;
+                String imagePath = imageProductField.getText().isEmpty() ? "file:///C:/T1.2308.A0/JP2/CINEMA/src/main/resources/CINEMAPLUS/DFIMG.jpg" : imageProductField.getText();
+                try {
+                    float price = Float.parseFloat(priceField.getText());
+                    int quantityLeft = Integer.parseInt(quantityField.getText());
+
+                    if (price < 0) {
+                        showAlert("Input Error", "Price must be a non-negative number.");
+                        return null;
+                    }
+
+                    if (quantityLeft <= 0) {
+                        showAlert("Input Error", "QuantityLeft must be a positive integer.");
+                        return null;
+                    }
+
+                    return new Product(0, nameField.getText(), price, quantityLeft, imagePath, idCategory);
+                } catch (NumberFormatException ex) {
+                    showAlert("Input Error", "Please enter valid numeric values for Price and QuantityLeft.");
+                    return null;
+                }
+            }
+            return null;
+        });
+
+        dialog.showAndWait().ifPresent(product -> {
+            Connection connection = JDBCUtil.getConnection();
+            try (PreparedStatement pstmt = connection.prepareStatement(
+                    "INSERT INTO Product (IDCategory, ImageProduct, NameProduct, Price, QuantityLeft) VALUES (?, ?, ?, ?, ?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS)) {
+                pstmt.setInt(1, product.getIdCategory());
+                pstmt.setString(2, product.getImageProduct());
+                pstmt.setString(3, product.getName());
+                pstmt.setFloat(4, product.getPrice());
+                pstmt.setInt(5, product.getQuantityLeft());
+
+                pstmt.executeUpdate();
+
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        product.setIdProduct(generatedKeys.getInt(1));
+                    }
+                }
+
+                productData.add(product);
+                showAlert("ADD PRODUCT", "Add Successfully!", "");
+            } catch (SQLException ex) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, "SQL error: " + ex.getMessage(), ex);
+                showAlert("Database Error", "Failed to add product to the database. Error: " + ex.getMessage());
+            } finally {
+                JDBCUtil.closeConnection(connection);
+            }
+        });
+    }
+
+    private void updateProduct() {
+        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            Dialog<Product> dialog = new Dialog<>();
+            dialog.setTitle("Update Product");
+
+            ButtonType updateButtonType = new ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(updateButtonType, ButtonType.CANCEL);
+
+            VBox vbox = new VBox();
+            TextField nameField = new TextField(selectedProduct.getName());
+            TextField priceField = new TextField(String.valueOf(selectedProduct.getPrice()));
+            TextField quantityField = new TextField(String.valueOf(selectedProduct.getQuantityLeft()));
+            TextField imageProductField = new TextField(selectedProduct.getImageProduct());
+            imageProductField.setEditable(false);
+
+            Button chooseAvatarButton = new Button("Choose Avatar");
+            chooseAvatarButton.setOnAction(event -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(
+                        new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                );
+                File selectedFile = fileChooser.showOpenDialog(dialog.getDialogPane().getScene().getWindow());
+                if (selectedFile != null) {
+                    imageProductField.setText(selectedFile.toURI().toString());
+                }
+            });
+
+            ChoiceBox<String> categoryChoiceBox = new ChoiceBox<>();
+            categoryChoiceBox.setItems(FXCollections.observableArrayList("Drink", "Food"));
+            categoryChoiceBox.setValue(selectedProduct.getIdCategory() == 1 ? "Drink" : "Food");
+
+            vbox.getChildren().addAll(nameField, priceField, quantityField, imageProductField, chooseAvatarButton, categoryChoiceBox);
+            dialog.getDialogPane().setContent(vbox);
+
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == updateButtonType) {
+                    if (nameField.getText().isEmpty() || priceField.getText().isEmpty()
+                            || quantityField.getText().isEmpty() || categoryChoiceBox.getValue() == null) {
+                        showAlert("Input Error", "Please fill in all fields.");
+                        return null;
+                    }
+
+                    String selectedCategory = categoryChoiceBox.getValue();
+                    int idCategory = "Drink".equals(selectedCategory) ? 1 : 2;
+
+                    try {
+                        float price = Float.parseFloat(priceField.getText());
+                        int quantityLeft = Integer.parseInt(quantityField.getText());
+
+                        if (price < 0) {
+                            showAlert("Input Error", "Price must be a non-negative number.");
+                            return null;
+                        }
+
+                        if (quantityLeft <= 0) {
+                            showAlert("Input Error", "QuantityLeft must be a positive integer.");
+                            return null;
+                        }
+
+                        return new Product(selectedProduct.getIdProduct(), nameField.getText(), price, quantityLeft, imageProductField.getText(), idCategory);
+                    } catch (NumberFormatException ex) {
+                        showAlert("Input Error", "Please enter valid numeric values for Price and QuantityLeft.", "");
+                        return null;
+                    }
+                }
+                return null;
+            });
+
+            dialog.showAndWait().ifPresent(updatedProduct -> {
+                Connection connection = JDBCUtil.getConnection();
+                try (PreparedStatement pstmt = connection.prepareStatement(
+                        "UPDATE Product SET NameProduct = ?, Price = ?, QuantityLeft = ?, ImageProduct = ?, IDCategory = ? WHERE IDProduct = ?")) {
+                    pstmt.setString(1, updatedProduct.getName());
+                    pstmt.setFloat(2, updatedProduct.getPrice());
+                    pstmt.setInt(3, updatedProduct.getQuantityLeft());
+                    pstmt.setString(4, updatedProduct.getImageProduct());
+                    pstmt.setInt(5, updatedProduct.getIdCategory());
+                    pstmt.setInt(6, updatedProduct.getIdProduct());
+                    pstmt.executeUpdate();
+
+                    selectedProduct.setName(updatedProduct.getName());
+                    selectedProduct.setPrice(updatedProduct.getPrice());
+                    selectedProduct.setQuantityLeft(updatedProduct.getQuantityLeft());
+                    selectedProduct.setImageProduct(updatedProduct.getImageProduct());
+                    selectedProduct.setIdCategory(updatedProduct.getIdCategory());
+
+                    productTableView.refresh();
+                    showAlert("UPDATE PRODUCT", "Update Successfully!");
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                    showAlert("Database Error", "Failed to update product in the database. Error: " + ex.getMessage());
+                } finally {
+                    JDBCUtil.closeConnection(connection);
+                }
+            });
+        } else {
+            showAlert("No Selection", "Please select a product to update.");
+        }
+    }
+
+    private void deleteProduct() {
+        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Confirmation");
+            alert.setHeaderText("Are you sure you want to delete this product?");
+            alert.setContentText(selectedProduct.getName());
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                Connection connection = JDBCUtil.getConnection();
+                try (PreparedStatement pstmt = connection.prepareStatement("DELETE FROM Product WHERE IDProduct = ?")) {
+                    pstmt.setInt(1, selectedProduct.getIdProduct());
+                    pstmt.executeUpdate();
+                    productData.remove(selectedProduct);
+                    showAlert("DELETE PRODUCT", "Delete Successfully!", "");
+                } catch (SQLException ex) {
+                    showAlert("DELETE PRODUCT", "Can Not Delete", "");
+                } finally {
+                    JDBCUtil.closeConnection(connection);
+                }
+            }
+        } else {
+            showAlert("No Selection", "Please select a product to delete.");
+        }
+    }
+
 
     @FXML
     private void onDelete() {
@@ -1402,8 +1699,7 @@ public class MainController {
                     }
                 }
             }
-        }
-        else if (selectedTable.equals("Movie")) {
+        } else if (selectedTable.equals("Movie")) {
             Movie selectedMovie = movieTableView.getSelectionModel().getSelectedItem();
             if (selectedMovie != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1426,8 +1722,7 @@ public class MainController {
                     }
                 }
             }
-        }
-        else if (selectedTable.equals("CategoryProduct")) {
+        } else if (selectedTable.equals("CategoryProduct")) {
             CategoryProduct selectedCategory = categoryProductTableView.getSelectionModel().getSelectedItem();
             if (selectedCategory != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1450,8 +1745,7 @@ public class MainController {
                     }
                 }
             }
-        }
-        else if (selectedTable.equals("ShowTimes")) {
+        } else if (selectedTable.equals("ShowTimes")) {
             ShowTimes selectedShowTime = showTimesTableView.getSelectionModel().getSelectedItem();
             if (selectedShowTime != null) {
                 if (isDateInPast(selectedShowTime.getDate()) || isTimeInPast(selectedShowTime.getStartTime(), selectedShowTime.getDate())) {
@@ -1479,9 +1773,12 @@ public class MainController {
                     }
                 }
             }
+        } else if (selectedTable.equals("Product")) {
+            deleteProduct();
         }
 
     }
+
     @FXML
     private void onSearch() {
         String searchTerm = searchField.getText().trim();
@@ -1514,6 +1811,7 @@ public class MainController {
         updateButtonStates();
         updateButtonVisibility(selectedTable);
     }
+
     private void updateButtonVisibility(String selectedTable) {
         if (addButton != null) {
             addButton.setVisible(true);
@@ -1530,6 +1828,14 @@ public class MainController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    private void showAlert(String title, String content, String type) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
     private String extractTableName(String errorMessage) {
         int startIndex = errorMessage.indexOf("table \"") + 7;
         int endIndex = errorMessage.indexOf("\", column");
@@ -1538,6 +1844,7 @@ public class MainController {
         }
         return "unknown";
     }
+
     private void handleDeleteException(SQLServerException e, String itemType) {
         if (e.getMessage().contains("The DELETE statement conflicted with the REFERENCE constraint")) {
             String referencedTable = extractTableName(e.getMessage());
@@ -1547,8 +1854,9 @@ public class MainController {
             showAlert("Error", "An error occurred while deleting the " + itemType + ".");
         }
     }
+
     private boolean validateAccountInput(TextField nameField, TextField emailField, PasswordField passwordField,
-                                                 TextField phoneNumberField, DatePicker dateOfBirthPicker, ComboBox<String> roleComboBox) {
+                                         TextField phoneNumberField, DatePicker dateOfBirthPicker, ComboBox<String> roleComboBox) {
         StringBuilder errorMessage = new StringBuilder();
         Node firstErrorField = null;
 
@@ -1613,6 +1921,7 @@ public class MainController {
         }
         return true;
     }
+
     private boolean isEmailAlreadyExists(String email) {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Account WHERE email = ?")) {
@@ -1627,6 +1936,7 @@ public class MainController {
         }
         return false;
     }
+
     private boolean isEmailExists(String email) {
         String query = "SELECT COUNT(*) FROM Client WHERE emailClient = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -1642,14 +1952,17 @@ public class MainController {
         }
         return false;
     }
+
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return email.matches(emailRegex);
     }
+
     private boolean isValidPhoneNumber(String phoneNumber) {
         String phoneRegex = "^\\d{10}$";  // Assumes a 10-digit phone number
         return phoneNumber.matches(phoneRegex);
     }
+
     private boolean isMovieReferencedInOtherTables(int movieId) {
         try (Connection conn = DatabaseConnection.getConnection()) {
 
@@ -1668,6 +1981,7 @@ public class MainController {
         System.out.println("Movie is not referenced in any checked table");
         return false;
     }
+
     private boolean validateMovieInput(TextField movieNameField, TextField authorField, TextField amountOfLimitField, ObservableList<CheckBox> movieTypeCheckBoxes) {
         StringBuilder errorMessage = new StringBuilder();
         TextField firstErrorField = null;
@@ -1703,6 +2017,7 @@ public class MainController {
         }
         return true;
     }
+
     private boolean isValidNumber(String str) {
         try {
             Integer.parseInt(str);
@@ -1711,6 +2026,7 @@ public class MainController {
             return false;
         }
     }
+
     private boolean validateClientInput(TextField emailField, TextField phoneNumberField, TextField nameField) {
         StringBuilder errorMessage = new StringBuilder();
         TextField firstErrorField = null;
@@ -1785,6 +2101,7 @@ public class MainController {
             showAlert("Database Error", "Error searching accounts.");
         }
     }
+
     private void searchMovies(String searchTerm) {
         String query = "SELECT * FROM Movie WHERE movieName LIKE ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -1810,6 +2127,7 @@ public class MainController {
             showAlert("Database Error", "Error searching movies.");
         }
     }
+
     private void searchClients(String searchTerm) {
         String query = "SELECT * FROM Client WHERE name LIKE ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -1831,6 +2149,7 @@ public class MainController {
             showAlert("Database Error", "Error searching clients.");
         }
     }
+
     private void searchShowTimes(String searchTerm) {
         String query = "SELECT * FROM ShowTimes WHERE CAST(IDShowTimes AS VARCHAR) LIKE ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -1855,6 +2174,7 @@ public class MainController {
             showAlert("Database Error", "Error searching showtimes.");
         }
     }
+
     private void searchCategoryProducts(String searchTerm) {
         String query = "SELECT * FROM CategoryProduct WHERE productName LIKE ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -1875,6 +2195,7 @@ public class MainController {
             showAlert("Database Error", "Error searching category products.");
         }
     }
+
     private String openFileChooser(String title) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
@@ -1887,6 +2208,7 @@ public class MainController {
         }
         return null;
     }
+
     private Time validateTime(String timeString) {
         try {
             return Time.valueOf(LocalTime.parse(timeString));
@@ -1924,6 +2246,7 @@ public class MainController {
         LocalTime endLocalTime = startLocalTime.plus(amountOfLimit, ChronoUnit.MINUTES).plus(15, ChronoUnit.MINUTES);
         return Time.valueOf(endLocalTime);
     }
+
     private void populateComboBoxes(ComboBox<Integer> idMovieComboBox, ComboBox<Integer> idTheaterComboBox) {
         // Fetch available IDs from database and populate the ComboBoxes
         String movieQuery = "SELECT IDMovie FROM Movie";

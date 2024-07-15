@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox prefHeight="740.0" prefWidth="1140.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Management.MainController">
     <BorderPane prefHeight="740.0" prefWidth="1140.0">
         <top>
@@ -92,6 +93,39 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
+                <TableView fx:id="productTableView" styleClass="dbtable-view">
+                    <columns>
+                        <TableColumn text="IDProduct">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="idProduct"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Price">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="price"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="QuantityLeft">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="quantityLeft"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="IDCategory">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="idCategory"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+
             </StackPane>
 
         </center>
