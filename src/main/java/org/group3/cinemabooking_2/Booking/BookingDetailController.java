@@ -234,7 +234,9 @@ public class BookingDetailController implements Initializable {
         });
 
         try {
-            List<LocalDate> listDateOfST = getDatesForShowTimes(String.valueOf(movie.getId()), String.valueOf(App.currentDay));
+            String sql = "SELECT DISTINCT date FROM ShowTimes WHERE IDMovie = ? AND CONVERT(date, ShowTimes.date) >= ? " +
+                    "ORDER BY date ASC";
+            List<LocalDate> listDateOfST = getDatesForShowTimes(String.valueOf(movie.getId()), String.valueOf(App.currentDay), sql);
             ObservableList<LocalDate> listDateST = FXCollections.observableArrayList(listDateOfST);
             dateOfST.setItems(listDateST);
             if (!listDateST.isEmpty()) {
@@ -260,6 +262,7 @@ public class BookingDetailController implements Initializable {
                     try {
                         choosenDay = newValue;
                         updateTheaterComboBox(movie, newValue);
+                        updateTimeComboBox(String.valueOf(movie.getId()), newValue, theaterOfST.getSelectionModel().getSelectedItem());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -482,12 +485,10 @@ public class BookingDetailController implements Initializable {
         return id;
     }
 
-    private List<LocalDate> getDatesForShowTimes(String movieId, String specificDate) throws SQLException {
+    private List<LocalDate> getDatesForShowTimes(String movieId, String specificDate, String sql) throws SQLException {
         List<LocalDate> listDateOfST = new ArrayList<>();
         try (Connection connection = JDBCUtil.getConnection()) {
-            String getDate = "SELECT DISTINCT date FROM ShowTimes WHERE IDMovie = ? AND CONVERT(date, ShowTimes.date) >= ? " +
-                    "ORDER BY date ASC";
-            PreparedStatement pS = connection.prepareStatement(getDate);
+            PreparedStatement pS = connection.prepareStatement(sql);
             pS.setString(1, movieId);
             pS.setString(2, specificDate);
 
@@ -546,30 +547,81 @@ public class BookingDetailController implements Initializable {
     private void updateTimeComboBox(String idMovie, LocalDate selectedDate, String selectedTheater) {
         List<String> listTimeOfSt = new ArrayList<>();
         try (Connection finalConnection = JDBCUtil.getConnection()) {
-            String getDate = "SELECT distinct date, startTime, endTime FROM ShowTimes WHERE IDMovie = ?" +
-                    "AND IDTheater = ? AND (" +
-                    "(CONVERT(date, ?) = CONVERT(date, ?) AND " +
-                    "CONVERT(time, ShowTimes.StartTime) >= CONVERT(time, ?)) OR " +
-                    "(CONVERT(date, ?) > CONVERT(date, ?))) AND CONVERT(date, ShowTimes.date) = ?";
-            PreparedStatement pS = finalConnection.prepareStatement(getDate);
-            pS.setString(1, idMovie);
-            pS.setString(2, selectedTheater.split(" ")[1]);
-            pS.setString(3, String.valueOf(selectedDate));
-            pS.setString(4, String.valueOf(App.currentDay));
-            pS.setString(5, String.valueOf(App.currentTime));
-            pS.setString(6, String.valueOf(selectedDate));
-            pS.setString(7, String.valueOf(App.currentDay));
-            pS.setString(8, String.valueOf(selectedDate));
+            String getDate = "";
+            if (selectedDate.equals(LocalDate.now())) {
+                getDate = "SELECT DISTINCT date, startTime, endTime\n" +
+                        "FROM ShowTimes\n" +
+                        "WHERE IDMovie = ?\n" +
+                        "AND IDTheater = ?\n" +
+                        "AND (" +
+                        "(date = ?) AND startTime >= CONVERT(time, GETDATE()))\n" +
+                        "ORDER BY startTime";
+                PreparedStatement pS = finalConnection.prepareStatement(getDate);
+                pS.setString(1, idMovie);
+                pS.setString(2, selectedTheater.split(" ")[1]);
+                pS.setString(3, String.valueOf(selectedDate));
+                ResultSet rs = pS.executeQuery();
+                while (rs.next()) {
+                    String startTime = rs.getString("startTime").split("\\.")[0]; // Remove fractional seconds
+                    String endTime = rs.getString("endTime").split("\\.")[0]; // Remove fractional seconds
+                    listTimeOfSt.add(startTime + " - " + endTime);
+                }
 
-            ResultSet rs = pS.executeQuery();
-            while (rs.next()) {
-                String startTime = rs.getString("startTime").split("\\.")[0]; // Remove fractional seconds
-                String endTime = rs.getString("endTime").split("\\.")[0]; // Remove fractional seconds
-                listTimeOfSt.add(startTime + " - " + endTime);
+                if (listTimeOfSt.isEmpty()) {
+                    String sql = "SELECT DISTINCT date FROM ShowTimes WHERE IDMovie = ? AND CONVERT(date, ShowTimes.date) > ? " +
+                            "ORDER BY date ASC";
+                    List<LocalDate> listDateOfST = getDatesForShowTimes(String.valueOf(movie.getId()), String.valueOf(App.currentDay), sql);
+                    ObservableList<LocalDate> listDateST = FXCollections.observableArrayList(listDateOfST);
+                    dateOfST.setItems(listDateST);
+                    dateOfST.getSelectionModel().select(listDateST.getFirst());
+                    updateTheaterComboBox(movie,dateOfST.getSelectionModel().getSelectedItem());
+
+                    getDate = "SELECT DISTINCT date, startTime, endTime\n" +
+                            "FROM ShowTimes\n" +
+                            "WHERE IDMovie = ?\n" +
+                            "AND IDTheater = ?\n" +
+                            "AND (date = ?)\n" +
+                            "ORDER BY date, startTime";
+                    pS = finalConnection.prepareStatement(getDate);
+                    pS.setString(1, idMovie);
+                    pS.setString(2, selectedTheater.split(" ")[1]);
+                    pS.setString(3, String.valueOf(dateOfST.getSelectionModel().getSelectedItem()));
+                    rs = pS.executeQuery();
+                    while (rs.next()) {
+                        String startTime = rs.getString("startTime").split("\\.")[0]; // Remove fractional seconds
+                        String endTime = rs.getString("endTime").split("\\.")[0]; // Remove fractional seconds
+                        listTimeOfSt.add(startTime + " - " + endTime);
+                    }
+                    for (String s : listTimeOfSt) {
+                        System.out.println(s);
+                    }
+                }
+            } else {
+                getDate = "SELECT DISTINCT date, startTime, endTime\n" +
+                        "FROM ShowTimes\n" +
+                        "WHERE IDMovie = ?\n" +
+                        "AND IDTheater = ?\n" +
+                        "AND (date = ?)\n" +
+                        "ORDER BY date, startTime";
+                PreparedStatement pS = finalConnection.prepareStatement(getDate);
+                pS.setString(1, idMovie);
+                pS.setString(2, selectedTheater.split(" ")[1]);
+                pS.setString(3, String.valueOf(selectedDate));
+                ResultSet rs = pS.executeQuery();
+                while (rs.next()) {
+                    String startTime = rs.getString("startTime").split("\\.")[0]; // Remove fractional seconds
+                    String endTime = rs.getString("endTime").split("\\.")[0]; // Remove fractional seconds
+                    listTimeOfSt.add(startTime + " - " + endTime);
+                }
+                for (String s : listTimeOfSt) {
+                    System.out.println(s);
+                }
             }
+
 
             ObservableList<String> listTimeST = FXCollections.observableArrayList(listTimeOfSt);
             timeOfST.setItems(listTimeST);
+
             if (!listTimeST.isEmpty()) {
                 timeOfST.getSelectionModel().select(listTimeOfSt.getFirst());
             }
