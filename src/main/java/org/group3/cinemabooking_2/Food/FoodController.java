@@ -239,8 +239,9 @@ public class FoodController implements Initializable {
             String phone = phoneNumber.getText().trim();
             String name = clientName.getText().trim();
 
-            if (email.isEmpty() || phone.isEmpty() || name.isEmpty()) {
-                showAlert("Error", "Email, Phone Number, and Name cannot be empty.");
+            if(orderList.isEmpty())
+            {
+                showAlert("Error", "The order is empty. Please add items to the order before paying.");
                 return;
             }
 

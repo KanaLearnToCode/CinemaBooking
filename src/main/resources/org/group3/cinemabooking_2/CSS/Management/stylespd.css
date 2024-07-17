@@ -1,0 +1,20 @@
+.vbox {
+    -fx-background-color: black;
+    -fx-spacing: 10;
+    -fx-padding: 10;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.choice-box {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.button {
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}

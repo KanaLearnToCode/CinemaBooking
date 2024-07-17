@@ -7,7 +7,6 @@
     <file url="file://$PROJECT_DIR$/src/main/java/org/group3/cinemabooking_2/Booking/MovieCard/ComingSoonController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/group3/cinemabooking_2/Booking/MovieCard/ShowTimesController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/group3/cinemabooking_2/EditProfile/EditProfileController.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/org/group3/cinemabooking_2/Food/FoodController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/group3/cinemabooking_2/LoginController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/group3/cinemabooking_2/Management/MainController.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/Database/SQLQuery1.sql" dialect="TSQL" />

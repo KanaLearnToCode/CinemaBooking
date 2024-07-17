@@ -1,0 +1,74 @@
+
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-font-family: "Montserrat SemiBold";
+}
+
+.dashboard-stats {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.stat-box {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-pref-width: 200px;
+    -fx-min-width: 200px;
+    -fx-max-width: 200px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+    -fx-translate-y: -2px;
+}
+
+.stat-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6c757d;
+}
+
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #007bff;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 4px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: white;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #6c757d;
+}
+
+.chart {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #f0f0f0;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #f0f0f0;
+}
+
+.default-color0.chart-bar { -fx-bar-fill: #007bff; }

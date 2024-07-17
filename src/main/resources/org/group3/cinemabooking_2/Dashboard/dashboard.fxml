@@ -3,22 +3,69 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1150.0" spacing="20.0" stylesheets="@../CSS/Dashboard/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Dashboard.DashBoard1">
+<VBox alignment="CENTER" prefHeight="740.0" prefWidth="1140.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group3.cinemabooking_2.Dashboard.DashBoard1">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <HBox prefHeight="17.0" prefWidth="1140.0" spacing="30.0">
-        <Button mnemonicParsing="false" onAction="#ticketdashboardByDay" styleClass="dBButton" text="Ticket Dashboard" />
-        <Button mnemonicParsing="false" onAction="#fooddashboardByDay" styleClass="dBButton" text="Food Dashboard" />
-        <Button mnemonicParsing="false" onAction="#totaldashboardByDay" styleClass="dBButton" text="Total DashBoard" />
-    </HBox>
-    <HBox prefHeight="22.0" prefWidth="1140.0" spacing="10.0">
-        <ComboBox fx:id="periodComboBox" onAction="#handlePeriodComboBoxAction" prefHeight="25.0" prefWidth="113.0" styleClass="sortConditionDB" />
-        <ComboBox fx:id="tableComboBox" onAction="#handlePeriodComboBoxAction" visible="false" />
-    </HBox>
-    <AnchorPane fx:id="anchorPane" prefHeight="765.0" prefWidth="1140.0" />
+    <children>
+        <HBox prefHeight="56.0" prefWidth="1100.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#ticketdashboardByHours" prefHeight="50.0" prefWidth="130.0" text="Ticket Dashboard" />
+                <Button mnemonicParsing="false" onAction="#fooddashboardByHours" prefHeight="50.0" prefWidth="130.0" text="Food Dashboard" />
+                <Button mnemonicParsing="false" onAction="#totaldashboardByHours" prefHeight="50.0" prefWidth="130.0" text="Total DashBoard" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="57.0" prefWidth="1100.0" spacing="20.0" styleClass="dashboard-stats">
+            <children>
+                <VBox alignment="CENTER" prefHeight="66.0" prefWidth="285.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-radius: 5;">
+                    <children>
+                        <Label styleClass="stat-label" text="Total Income Today" />
+                        <Label fx:id="totalIncomeLabel" styleClass="stat-value" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="285.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-radius: 5;">
+                    <children>
+                        <Label styleClass="stat-label" text="New customers of the month" />
+                        <Label fx:id="newCustomersLabel" styleClass="stat-value" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="285.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-radius: 5;">
+                    <children>
+                        <Label styleClass="stat-label" text="Total tickets sold this month" />
+                        <Label fx:id="totalTicketsSoldLabel" styleClass="stat-value" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </VBox>
+                <VBox alignment="CENTER" prefWidth="285.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-radius: 5;">
+                    <children>
+                        <Label styleClass="stat-label" text="Total revenue this year" />
+                        <Label fx:id="totalYearlyRevenueLabel" styleClass="stat-value" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox prefHeight="22.0" prefWidth="1140.0" spacing="10.0">
+            <children>
+                <ComboBox fx:id="periodComboBox" onAction="#handlePeriodComboBoxAction" prefHeight="25.0" prefWidth="165.0" />
+                <ComboBox fx:id="tableComboBox" onAction="#handlePeriodComboBoxAction" visible="false" />
+            </children>
+        </HBox>
+        <AnchorPane fx:id="anchorPane" prefHeight="526.0" prefWidth="1100.0" style="-fx-background-color: black;" VBox.vgrow="ALWAYS" />
+    </children>
 </VBox>
