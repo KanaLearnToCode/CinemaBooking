@@ -1300,7 +1300,7 @@ public class MainController {
 
                 String selectedCategory = categoryChoiceBox.getValue();
                 int idCategory = "Drink".equals(selectedCategory) ? 1 : 2;
-                String imagePath = imageProductField.getText().isEmpty() ? "file:///C:/T1.2308.A0/JP2/CINEMA/src/main/resources/CINEMAPLUS/DFIMG.jpg" : imageProductField.getText();
+                String imagePath = imageProductField.getText().isEmpty() ? "file:///D:/T1.2308.A0/7. Java/3.JP2/JavaFX/CinemaBooking_2/CinemaBooking_2/src/main/resources/Images/Food/No_Image_Available.jpg" : imageProductField.getText();
                 try {
                     float price = Float.parseFloat(priceField.getText());
                     int quantityLeft = Integer.parseInt(quantityField.getText());

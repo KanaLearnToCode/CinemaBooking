@@ -98,13 +98,13 @@ public class LoginController implements Initializable {
                 emailError.setText("Invalid email");
                 passErr.setText("Invalid password");
             } else {
-                if (!account.getEmail().equals(txEmail.getText())) {
+                if (!account.getEmail().equalsIgnoreCase(txEmail.getText())) {
                     emailError.setText("Invalid email");
                 }
                 if (!account.getPassword().equals(txPass.getText())) {
                     passErr.setText("Invalid password");
                 }
-                if (account.getEmail().equals(txEmail.getText()) && account.getPassword().equals(txPass.getText())) {
+                if (account.getEmail().equalsIgnoreCase(txEmail.getText()) && account.getPassword().equals(txPass.getText())) {
                     App.setRoot("Admin/AdminView");
                 }
             }
